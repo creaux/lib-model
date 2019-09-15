@@ -1,3 +1,3 @@
-export interface ISectionModel extends Document {
+export interface SectionModel extends Document {
   name: string;
 }

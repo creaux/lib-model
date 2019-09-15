@@ -1,6 +1,6 @@
 import { Types } from 'mongoose';
 
-export interface IUserModel {
+export interface UserModel {
   readonly _id: Types.ObjectId;
   readonly forname: string;
   readonly surname: string;
