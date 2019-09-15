@@ -1,0 +1,21 @@
+language: node_js
+
+node_js:
+  - 10.15.3
+
+script:
+  - npm run lint
+  - npm run prettier:lint
+
+jobs:
+  include:
+    # Define the release stage that runs semantic-release
+    - stage: release
+      node_js: 10.15.3
+      # Advanced: optionally overwrite your default `script` step to skip the tests
+      # script: skip
+      deploy:
+        provider: script
+        skip_cleanup: true
+        script:
+          - npm run release

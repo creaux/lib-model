@@ -1,0 +1,43 @@
+{
+  "name": "@pyxismedia/lib-model",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "lint": "eslint -c .eslintrc '**/*.ts'",
+    "prettier": "prettier --config .prettierrc --fix --write '**/*.ts'",
+    "prettier:lint": "prettier --config .prettierrc --check '**/*.ts'",
+    "commit": "commit",
+    "release": "semantic-release"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^8.0.0",
+    "@commitlint/config-conventional": "^8.0.0",
+    "@commitlint/prompt-cli": "^8.0.0",
+    "@typescript-eslint/eslint-plugin": "^1.13.0",
+    "@typescript-eslint/parser": "^2.2.0",
+    "eslint": "^6.3.0",
+    "eslint-config-prettier": "^6.3.0",
+    "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-prettier": "^3.1.0",
+    "husky": "2.7.0",
+    "lint-staged": "8.2.1",
+    "mongoose": "^5.7.1",
+    "prettier": "^1.18.2",
+    "typescript": "^3.6.3"
+  },
+  "author": "",
+  "license": "ISC",
+  "lint-staged": {
+    "{src}/**/*.ts*": [
+      "npm run prettier",
+      "git add"
+    ]
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged",
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+    }
+  }
+}
