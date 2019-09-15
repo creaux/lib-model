@@ -8,7 +8,8 @@
     "prettier": "prettier --config .prettierrc --fix --write '**/*.ts'",
     "prettier:lint": "prettier --config .prettierrc --check '**/*.ts'",
     "commit": "commit",
-    "release": "semantic-release"
+    "release": "semantic-release",
+    "tsc": "tsc"
   },
   "devDependencies": {
     "@commitlint/cli": "^8.0.0",
@@ -38,6 +39,7 @@
   "husky": {
     "hooks": {
       "pre-commit": "lint-staged",
+      "pre-push": "npm run tsc && npm run lint",
       "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
     }
   }

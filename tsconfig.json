@@ -1,0 +1,11 @@
+{
+  "compilerOptions": {
+    "allowJs": false,
+    "noEmit": true,
+    "isolatedModules": false,
+    "declaration": false,
+    "emitDeclarationOnly": false,
+    "declarationMap": false
+  },
+  "exclude": ["**/*.spec.tsx"]
+}
