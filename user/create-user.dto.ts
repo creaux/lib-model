@@ -1,4 +1,3 @@
-
 export class CreateUserDto {
   public readonly forname: string;
   public readonly surname: string;
