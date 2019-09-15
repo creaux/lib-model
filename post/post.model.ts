@@ -1,7 +1,7 @@
 import { Types, Document } from 'mongoose';
 import { PostState } from './post-state.enum';
 
-export interface PostModel extends Document {
+export interface IPostModel extends Document {
   title: string;
   subtitle: string;
   content: string;
