@@ -1,11 +1,31 @@
 {
   "compilerOptions": {
+    "target": "es5",
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
     "allowJs": false,
-    "noEmit": true,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "module": "esnext",
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "noEmit": false,
+    "jsx": "preserve",
+    "experimentalDecorators": true,
     "isolatedModules": false,
-    "declaration": false,
-    "emitDeclarationOnly": false,
-    "declarationMap": false
+    "declaration": true,
+    "declarationMap": true,
+    "outDir": "./build"
   },
-  "exclude": ["**/*.spec.tsx"]
+  "include": [
+    "src/**/*.ts"
+  ],
+  "exclude": ["src/**/test.ts"]
 }
+
