@@ -10,6 +10,6 @@ export class CreatePostModel {
     public readonly state: PostStateEnum,
     public readonly labels: string[],
     public readonly createdBy: Types.ObjectId,
-    public readonly section: Types.ObjectId
+    public readonly section: Types.ObjectId,
   ) {}
 }

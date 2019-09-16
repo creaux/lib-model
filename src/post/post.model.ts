@@ -14,6 +14,6 @@ export class PostModel {
     public readonly id: Types.ObjectId,
     public readonly updatedBy: Types.ObjectId,
     public readonly createdAt: Date,
-    public readonly updatedAt: Date
+    public readonly updatedAt: Date,
   ) {}
 }
