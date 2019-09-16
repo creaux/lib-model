@@ -2,7 +2,7 @@ import { Types } from 'mongoose';
 import { PostStateEnum } from './post-state.enum';
 
 export class PostModel {
-  constructor(
+  public constructor(
     public readonly title: string,
     public readonly subtitle: string,
     public readonly content: string,

@@ -1,5 +1,5 @@
 export class CreateUserModel {
-  constructor(
+  public constructor(
     public readonly forname: string,
     public readonly surname: string,
     public readonly email: string,

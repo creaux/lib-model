@@ -1,7 +1,7 @@
 import { Types } from 'mongoose';
 
 export class UserModel {
-  constructor(
+  public constructor(
     public readonly _id: Types.ObjectId,
     public readonly forname: string,
     public readonly surname: string,

@@ -1,3 +1,3 @@
-export interface SectionModel {
-  name: string;
+export class SectionModel {
+  public constructor(public readonly name: string) {}
 }
