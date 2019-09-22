@@ -9,7 +9,7 @@
     "prettier:lint": "prettier --config .prettierrc --check './src/**/*.ts'",
     "commit": "commit",
     "release": "semantic-release",
-    "build": "rm -rf build && tsc -p tsconfig.json && find ./src -name '*.json' -exec cp --parents {} ./build ';'",
+    "build": "rm -rf build && tsc -p tsconfig.json && rsync -avm --include='*.json' -f 'hide,! */' ./src/ ./build",
     "env": "eval $(egrep -v '^#' .env | xargs)",
     "mongoimport": "mongoimport -h $DB_HOSTNAME -d $DB_NAME -u $DB_USER -p $DB_PASSWORD --collection posts --file ./src/post/post.data.json --drop --jsonArray && mongoimport -h $DB_HOSTNAME -d $DB_NAME -u $DB_USER -p $DB_PASSWORD --collection sections --file ./src/post/section.data.json --drop --jsonArray && mongoimport -h $DB_HOSTNAME -d $DB_NAME -u $DB_USER -p $DB_PASSWORD --collection users --file ./src/user/user.data.json --drop --jsonArray"
   },
