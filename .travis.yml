@@ -7,7 +7,7 @@ script:
   - npm run lint
   - npm run prettier:lint
   - npm run build
-  - npm run mongoimport:mlab
+  - npm run mongoimport
 
 jobs:
   include:

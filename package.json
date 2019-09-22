@@ -10,8 +10,8 @@
     "commit": "commit",
     "release": "semantic-release",
     "build": "rm -rf build && tsc -p tsconfig.json",
-    "mongoimport": "mongoimport -d pyxis --collection posts --file ./src/post/post.data.json --drop --jsonArray && mongoimport -d pyxis --collection sections --file ./src/post/section.data.json --drop --jsonArray && mongoimport -d pyxis --collection users --file ./src/user/user.data.json --drop --jsonArray",
-    "mongoimport:mlab": "mongoimport -h $DB_HOSTNAME -d $DB_NAME -u $DB_USER -p $DB_PASSWORD --collection posts --file ./src/post/post.data.json --drop --jsonArray && mongoimport -h $DB_HOSTNAME -d $DB_NAME -u $DB_USER -p $DB_PASSWORD --collection sections --file ./src/post/section.data.json --drop --jsonArray && mongoimport -h $DB_HOSTNAME -d $DB_NAME -u $DB_USER -p $DB_PASSWORD --collection users --file ./src/user/user.data.json --drop --jsonArray"
+    "env": "eval $(egrep -v '^#' .env | xargs)",
+    "mongoimport": "mongoimport -h $DB_HOSTNAME -d $DB_NAME -u $DB_USER -p $DB_PASSWORD --collection posts --file ./src/post/post.data.json --drop --jsonArray && mongoimport -h $DB_HOSTNAME -d $DB_NAME -u $DB_USER -p $DB_PASSWORD --collection sections --file ./src/post/section.data.json --drop --jsonArray && mongoimport -h $DB_HOSTNAME -d $DB_NAME -u $DB_USER -p $DB_PASSWORD --collection users --file ./src/user/user.data.json --drop --jsonArray"
   },
   "devDependencies": {
     "@commitlint/cli": "^8.0.0",
