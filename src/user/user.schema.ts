@@ -27,12 +27,14 @@ UserSchema.pre('save', function(next) {
     }
 
     // hash the password using our new salt
+    // @ts-ignore
     bcrypt.hash(this.password, salt, (err2: Error, hash: string) => {
       if (err2) {
         return next(err2);
       }
 
       // override the cleartext password with the hashed one
+      // @ts-ignore
       this.password = hash;
       next();
     });
