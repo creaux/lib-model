@@ -13,6 +13,9 @@
     "env": "eval $(egrep -v '^#' .env | xargs)",
     "mongoimport": "mongoimport -h $DB_HOSTNAME -d $DB_NAME -u $DB_USER -p $DB_PASSWORD --collection posts --file ./src/post/post.data.json --drop --jsonArray && mongoimport -h $DB_HOSTNAME -d $DB_NAME -u $DB_USER -p $DB_PASSWORD --collection sections --file ./src/post/section.data.json --drop --jsonArray && mongoimport -h $DB_HOSTNAME -d $DB_NAME -u $DB_USER -p $DB_PASSWORD --collection users --file ./src/user/user.data.json --drop --jsonArray"
   },
+  "peerDependencies": {
+    "mongoose": "^5.7.1"
+  },
   "devDependencies": {
     "@commitlint/cli": "^8.0.0",
     "@commitlint/config-conventional": "^8.0.0",

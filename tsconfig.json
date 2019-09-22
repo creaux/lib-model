@@ -11,7 +11,6 @@
     "module": "umd",
     "moduleResolution": "node",
     "noEmit": false,
-    "jsx": "preserve",
     "experimentalDecorators": true,
     "isolatedModules": false,
     "declaration": true,
