@@ -10,8 +10,9 @@
     "commit": "commit",
     "release": "semantic-release",
     "build": "rm -rf build && tsc -p tsconfig.json && rsync -avm --include='*.json' -f 'hide,! */' ./src/ ./build",
-    "env": "eval $(egrep -v '^#' .env | xargs)",
-    "mongoimport": "mongoimport -h $DB_HOSTNAME -d $DB_NAME -u $DB_USER -p $DB_PASSWORD --collection posts --file ./src/post/post.data.json --drop --jsonArray && mongoimport -h $DB_HOSTNAME -d $DB_NAME -u $DB_USER -p $DB_PASSWORD --collection sections --file ./src/post/section.data.json --drop --jsonArray && mongoimport -h $DB_HOSTNAME -d $DB_NAME -u $DB_USER -p $DB_PASSWORD --collection users --file ./src/user/user.data.json --drop --jsonArray"
+    "env": "export $(egrep -v '^#' .env | xargs)",
+    "mongoimport": "mongoimport -h $DB_HOSTNAME -d $DB_NAME -u $DB_USER -p $DB_PASSWORD --collection posts --file ./src/post/post.data.json --drop --jsonArray && mongoimport -h $DB_HOSTNAME -d $DB_NAME -u $DB_USER -p $DB_PASSWORD --collection sections --file ./src/post/section.data.json --drop --jsonArray && mongoimport -h $DB_HOSTNAME -d $DB_NAME -u $DB_USER -p $DB_PASSWORD --collection users --file ./src/user/user.data.json --drop --jsonArray",
+    "start": "nodemon"
   },
   "peerDependencies": {
     "mongoose": "^5.7.1",
@@ -21,9 +22,11 @@
     "@commitlint/cli": "^8.0.0",
     "@commitlint/config-conventional": "^8.0.0",
     "@commitlint/prompt-cli": "^8.0.0",
+    "@types/bcrypt": "^3.0.0",
     "@types/mongoose": "^5.5.17",
     "@typescript-eslint/eslint-plugin": "^1.13.0",
     "@typescript-eslint/parser": "^2.2.0",
+    "bcrypt": "^3.0.6",
     "eslint": "^6.3.0",
     "eslint-config-prettier": "^6.3.0",
     "eslint-plugin-import": "^2.18.2",
@@ -31,11 +34,10 @@
     "husky": "2.7.0",
     "lint-staged": "8.2.1",
     "mongoose": "^5.7.1",
+    "nodemon": "^1.19.2",
     "prettier": "^1.18.2",
     "semantic-release": "^15.13.17",
-    "typescript": "^3.6.3",
-    "bcrypt": "^3.0.6",
-    "@types/bcrypt": "^3.0.0"
+    "typescript": "^3.6.3"
   },
   "author": "",
   "license": "ISC",
