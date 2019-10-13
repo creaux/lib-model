@@ -10,13 +10,15 @@
     "commit": "commit",
     "release": "semantic-release",
     "build": "rm -rf build && tsc -p tsconfig.json && rsync -avm --include='*.json' -f 'hide,! */' ./src/ ./build",
+    "build:watch": "nodemon",
     "env": "export $(egrep -v '^#' .env | xargs)",
     "mongoimport": "mongoimport -h $DB_HOSTNAME -d $DB_NAME -u $DB_USER -p $DB_PASSWORD --collection posts --file ./src/post/post.data.json --drop --jsonArray && mongoimport -h $DB_HOSTNAME -d $DB_NAME -u $DB_USER -p $DB_PASSWORD --collection sections --file ./src/post/section.data.json --drop --jsonArray && mongoimport -h $DB_HOSTNAME -d $DB_NAME -u $DB_USER -p $DB_PASSWORD --collection users --file ./src/user/user.data.json --drop --jsonArray",
-    "start": "nodemon"
+    "test": "ava",
+    "test:watch": "ava --watch"
   },
   "peerDependencies": {
-    "mongoose": "^5.7.1",
-    "bcrypt": "^3.0.6"
+    "bcrypt": "^3.0.6",
+    "mongoose": "^5.7.1"
   },
   "devDependencies": {
     "@commitlint/cli": "^8.0.0",
@@ -33,11 +35,11 @@
     "eslint-plugin-prettier": "^3.1.0",
     "husky": "2.7.0",
     "lint-staged": "8.2.1",
-    "mongoose": "^5.7.1",
     "nodemon": "^1.19.2",
     "prettier": "^1.18.2",
     "semantic-release": "^15.13.17",
-    "typescript": "^3.6.3"
+    "typescript": "^3.6.3",
+    "mongoose": "^5.7.1"
   },
   "author": "",
   "license": "ISC",
@@ -61,5 +63,11 @@
     "node": "10.15.3",
     "yarn": "1.17.3",
     "npm": "6.4.1"
+  },
+  "dependencies": {
+    "ava": "^2.4.0",
+    "class-validator": "^0.10.1",
+    "dotenv-flow": "^3.1.0",
+    "ts-node": "^8.4.1"
   }
 }

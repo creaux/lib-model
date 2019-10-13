@@ -19,9 +19,18 @@ export const PostSchema = new Schema(
     section: { type: Types.ObjectId, ref: 'Section' },
   },
   {
+    versionKey: false,
     toJSON: {
       // To work with mongoose-intl
       virtuals: true,
     },
   },
 );
+
+// PostSchema.method('toClient', function() {
+//   // @ts-ignore
+//   const result = this.toObject();
+//   result.id = result._id;
+//   delete result._id;
+//   return result;
+// });
