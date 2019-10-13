@@ -1,6 +1,6 @@
 import { Types } from 'mongoose';
 import { PostStateEnum } from './post-state.enum';
-import { IsString, IsUrl, IsEnum, IsMongoId, Max, Min, Length, IsArray } from 'class-validator';
+import { IsString, IsUrl, IsEnum, IsMongoId, Length, IsArray } from 'class-validator';
 
 export class CreatePostModel {
   public static MOCK_PROPERTIES = {

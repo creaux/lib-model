@@ -21,6 +21,7 @@ UserSchema.pre('save', function(next) {
   }
 
   // generate a salt
+  // @ts-ignore
   bcrypt.genSalt(SALT_WORK_FACTOR, (err: Error, salt: string) => {
     if (err) {
       return next(err);
