@@ -4,7 +4,7 @@
   "description": "",
   "main": "./build/index.js",
   "scripts": {
-    "lint": "eslint -c .eslintrc './src/**/*.ts'",
+    "lint": "eslint -c .eslintrc.json './src/**/*.ts'",
     "prettier": "prettier --config .prettierrc --fix --write './src/**/*.ts'",
     "prettier:lint": "prettier --config .prettierrc --check './src/**/*.ts'",
     "commit": "commit",
