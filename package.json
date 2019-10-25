@@ -44,7 +44,9 @@
     "prettier": "^1.18.2",
     "semantic-release": "^15.13.17",
     "typescript": "^3.6.3",
-    "mongoose": "^5.7.1"
+    "mongoose": "^5.7.1",
+    "class-validator": "^0.10.1",
+    "class-transformer": "0.2.0"
   },
   "author": "",
   "license": "ISC",
