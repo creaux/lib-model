@@ -1,8 +1,7 @@
-import { Schema } from 'mongoose';
+import { Types } from 'mongoose';
+import { BaseScheme } from '../schemas/base.schema';
 
-const { Types } = Schema;
-
-export const SectionSchema = new Schema(
+export const SectionSchema = new BaseScheme(
   {
     _id: { type: Types.ObjectId },
     name: { type: String, intl: true },

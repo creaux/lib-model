@@ -1,8 +1,7 @@
-import { Schema } from 'mongoose';
+import { BaseScheme } from '../schemas/base.schema';
+import { Types } from 'mongoose';
 
-const { Types } = Schema;
-
-export const PostSchema = new Schema(
+export const PostSchema = new BaseScheme(
   {
     _id: { type: Types.ObjectId },
     title: { type: String, intl: true },
@@ -26,11 +25,3 @@ export const PostSchema = new Schema(
     },
   },
 );
-
-// PostSchema.method('toClient', function() {
-//   // @ts-ignore
-//   const result = this.toObject();
-//   result.id = result._id;
-//   delete result._id;
-//   return result;
-// });

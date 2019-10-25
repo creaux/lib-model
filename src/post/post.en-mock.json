@@ -1,6 +1,5 @@
 [
   {
-    "_id": "000000000000000000000a00",
     "content": "Integer posuere erat. en",
     "createdAt": "2019-06-23T14:13:05.000Z",
     "createdBy": "0000000000000000000000a0",
@@ -8,7 +7,6 @@
     "image": "someimage.png",
     "labels": ["lorem-ipsum-1"],
     "section": {
-      "_id": "00000000000000000000000a",
       "id": "00000000000000000000000a",
       "name": "Section"
     },
@@ -20,7 +18,6 @@
     "updatedBy": "0000000000000000000000b0"
   },
   {
-    "_id": "000000000000000000000b00",
     "content": "Integer posuere erat. en",
     "createdAt": "2019-06-23T14:13:06.000Z",
     "createdBy": "0000000000000000000000a0",
@@ -28,7 +25,6 @@
     "image": "someimage.png",
     "labels": ["lorem-ipsum-1"],
     "section": {
-      "_id": "00000000000000000000000a",
       "id": "00000000000000000000000a",
       "name": "Section"
     },
@@ -40,7 +36,6 @@
     "updatedBy": "0000000000000000000000a0"
   },
   {
-    "_id": "000000000000000000000c00",
     "content": "Integer posuere erat. en",
     "createdAt": "2019-06-23T14:13:07.000Z",
     "createdBy": "0000000000000000000000b0",
@@ -48,7 +43,6 @@
     "image": "someimage.png",
     "labels": ["lorem-ipsum-1"],
     "section": {
-      "_id": "00000000000000000000000b",
       "id": "00000000000000000000000b",
       "name": "Section 2"
     },
@@ -60,7 +54,6 @@
     "updatedBy": "0000000000000000000000a0"
   },
   {
-    "_id": "000000000000000000000d00",
     "content": "Integer posuere erat. en",
     "createdAt": "2019-06-23T14:13:08.000Z",
     "createdBy": "0000000000000000000000b0",
@@ -68,7 +61,6 @@
     "image": "someimage.png",
     "labels": ["lorem-ipsum-1"],
     "section": {
-      "_id": "00000000000000000000000b",
       "id": "00000000000000000000000b",
       "name": "Section 2"
     },
@@ -80,7 +72,6 @@
     "updatedBy": "0000000000000000000000b0"
   },
   {
-    "_id": "000000000000000000000e00",
     "content": "Integer posuere erat. en",
     "createdAt": "2019-06-23T14:13:09.000Z",
     "createdBy": "0000000000000000000000a0",
@@ -88,7 +79,6 @@
     "image": "someimage.png",
     "labels": ["lorem-ipsum-1"],
     "section": {
-      "_id": "00000000000000000000000b",
       "id": "00000000000000000000000b",
       "name": "Section 2"
     },

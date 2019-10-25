@@ -1,3 +1,5 @@
+export { PostSchemaInterface } from './post-schema.interface';
+export { DeletePostModel } from './delete-post.model';
 export { RequestPostsModel } from './request-posts.model';
 export { SectionSchema } from './section.schema';
 export { PostSchema } from './post.schema';

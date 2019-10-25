@@ -47,10 +47,10 @@ export class CreatePostModel {
   public readonly labels: string[];
 
   @IsMongoId()
-  public readonly createdBy: string | Types.ObjectId;
+  public readonly createdBy: string;
 
   @IsMongoId()
-  public readonly section: string | Types.ObjectId;
+  public readonly section: string;
 
   public constructor(
     title: string,
@@ -59,8 +59,8 @@ export class CreatePostModel {
     image: string,
     state: PostStateEnum,
     labels: string[],
-    createdBy: string | Types.ObjectId,
-    section: string | Types.ObjectId,
+    createdBy: string,
+    section: string,
   ) {
     this.title = title;
     this.subtitle = subtitle;
