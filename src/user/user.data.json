@@ -12,5 +12,25 @@
     "surname": "Medvidek",
     "email": "frantisek@medvidek.cz",
     "password": "$2b$10$0JCol.4vgoaiy70z9XX8ZOyJHYV6PMidts.WToOrAZmj90wgbPIou"
+  },
+  {
+    "_id": {
+      "$oid": "000000000000000000000c00"
+    },
+    "forname": "Jindrich",
+    "surname": "Sidlo",
+    "email": "jindrich@sidlo.cz",
+    "password": "$2b$10$0JCol.4vgoaiy70z9XX8ZOyJHYV6PMidts.WToOrAZmj90wgbPIou",
+    "roles": ["507f1f77bcf86cd799439011"]
+  },
+  {
+    "_id": {
+      "$oid": "000000000000000000000d00"
+    },
+    "forname": "Boris",
+    "surname": "Johnson",
+    "email": "boris@johnson.cz",
+    "password": "$2b$10$0JCol.4vgoaiy70z9XX8ZOyJHYV6PMidts.WToOrAZmj90wgbPIou",
+    "roles": ["507f1f77bcf86cd799439011", "507f191e810c19729de860ea"]
   }
 ]

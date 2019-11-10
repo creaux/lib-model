@@ -14,6 +14,9 @@ export class CreateUserModel extends CreateEntityAbstract {
   @IsString()
   public readonly password!: string;
 
+  @IsString()
+  public readonly roles!: string[];
+
   public constructor(data: Partial<CreateUserModel>) {
     super();
     Object.assign(this, data);

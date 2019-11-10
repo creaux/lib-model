@@ -15,7 +15,8 @@
     "mongoimport:posts": "mongoimport -h $DB_HOSTNAME -d $DB_NAME -u $DB_USER -p $DB_PASSWORD --collection posts --file ./src/post/post.data.json --drop --jsonArray",
     "mongoimport:sections": "mongoimport -h $DB_HOSTNAME -d $DB_NAME -u $DB_USER -p $DB_PASSWORD --collection sections --file ./src/post/section.data.json --drop --jsonArray ",
     "mongoimport:users": "mongoimport -h $DB_HOSTNAME -d $DB_NAME -u $DB_USER -p $DB_PASSWORD --collection users --file ./src/user/user.data.json --drop --jsonArray",
-    "mongoimport": "npm run mongoimport:posts && npm run mongoimport:sections && npm run mongoimport:users",
+    "mongoimport:users:roles": "mongoimport -h $DB_HOSTNAME -d $DB_NAME -u $DB_USER -p $DB_PASSWORD --collection roles --file ./src/user/role.data.json --drop --jsonArray",
+    "mongoimport": "npm run mongoimport:posts && npm run mongoimport:sections && npm run mongoimport:users && npm run mongoimport:users:roles",
     "test": "ava",
     "test:watch": "ava --watch"
   },
