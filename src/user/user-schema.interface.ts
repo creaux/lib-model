@@ -6,4 +6,5 @@ export interface UserSchemaInterface extends Document {
   readonly surname: string;
   readonly email: string;
   readonly password: string;
+  readonly roles: string[];
 }

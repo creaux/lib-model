@@ -1,23 +1,26 @@
 import { exec } from 'child_process';
 import { join } from 'path';
 
-export enum Entities {
+export enum DataMockEntities {
   POSTS = 'posts',
   SECTIONS = 'sections',
   USERS = 'users',
+  ROLES = 'roles',
 }
 
 export class DataMock {
   private static ENTITIES = {
-    [Entities.POSTS]: '@pyxismedia/lib-model/build/post/post.data.json',
-    [Entities.SECTIONS]: '@pyxismedia/lib-model/build/post/section.data.json',
-    [Entities.USERS]: '@pyxismedia/lib-model/build/user/user.data.json',
+    [DataMockEntities.POSTS]: '@pyxismedia/lib-model/build/post/post.data.json',
+    [DataMockEntities.SECTIONS]: '@pyxismedia/lib-model/build/post/section.data.json',
+    [DataMockEntities.USERS]: '@pyxismedia/lib-model/build/user/user.data.json',
+    [DataMockEntities.ROLES]: '@pyxismedia/lib-model/build/user/role.data.json',
   };
 
   private static MOCKS = {
-    [Entities.POSTS]: '@pyxismedia/lib-model/build/post/post.en-mock.json',
-    [Entities.SECTIONS]: '@pyxismedia/lib-model/build/post/section.en-mock.json',
-    [Entities.USERS]: '@pyxismedia/lib-model/build/user/user.en-mock.json',
+    [DataMockEntities.POSTS]: '@pyxismedia/lib-model/build/post/post.en-mock.json',
+    [DataMockEntities.SECTIONS]: '@pyxismedia/lib-model/build/post/section.en-mock.json',
+    [DataMockEntities.USERS]: '@pyxismedia/lib-model/build/user/user.en-mock.json',
+    [DataMockEntities.ROLES]: '@pyxismedia/lib-model/build/user/role.en-mock.json',
   };
 
   private static exec(cmd: string): Promise<{}> {
@@ -38,9 +41,9 @@ export class DataMock {
     this.data = new Map();
   }
 
-  public async import(entity: Entities): Promise<{}> {
+  public async import(entity: DataMockEntities): Promise<{}> {
     // eslint-disable-next-line @typescript-eslint/no-var-requires
-    this.data.set(entity, require(DataMock.MOCKS[entity]));
+    this.data.set(entity, require(DataMock.MOCKS[entity as keyof typeof DataMock.MOCKS]));
     return DataMock.exec(
       `mongoimport --uri=${await this.uri} --collection=${entity} --file=${join(
         'node_modules',
@@ -56,7 +59,7 @@ export class DataMock {
   }
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  public get(entity: Entities): any {
+  public get(entity: DataMockEntities): any {
     return this.data.get(entity);
   }
 }

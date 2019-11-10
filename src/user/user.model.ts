@@ -1,4 +1,4 @@
-import { IsMongoId, IsString } from 'class-validator';
+import { IsMongoId, IsString, IsArray } from 'class-validator';
 import { Exclude } from 'class-transformer';
 
 export class UserModel {
@@ -7,6 +7,7 @@ export class UserModel {
     surname: 'Votrapa',
     email: 'frantisek@votrapa.cz',
     password: '12345',
+    roles: ['000000000000000000000e00'],
   };
 
   public static MOCK = new UserModel(UserModel.MOCK_PROPERTIES);
@@ -26,6 +27,9 @@ export class UserModel {
   @IsString()
   @Exclude()
   public readonly password!: string;
+
+  @IsArray()
+  public readonly roles!: string[];
 
   public constructor(partial: Partial<UserModel>) {
     Object.assign(this, partial);
