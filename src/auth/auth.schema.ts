@@ -1,10 +1,11 @@
 import { Schema, Types } from 'mongoose';
 import { BaseScheme } from '../schemas/base.schema';
+import { USER_MODEL } from '../user';
 
 export const AuthSchema: Schema = new BaseScheme(
   {
     _id: Types.ObjectId,
-    userId: { type: Types.ObjectId },
+    user: { type: Types.ObjectId, ref: USER_MODEL },
     token: {
       type: String,
       unique: true,

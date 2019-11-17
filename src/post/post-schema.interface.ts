@@ -1,8 +1,7 @@
 import { PostStateEnum } from './post-state.enum';
-import { PostModel } from './post.model';
 import { Document } from 'mongoose';
 
-export interface PostSchemaInterface extends PostModel, Document {
+export interface PostSchemaInterface extends Document {
   readonly title: string;
   readonly subtitle: string;
   readonly content: string;

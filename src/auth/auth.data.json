@@ -1,0 +1,10 @@
+[
+  {
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoia2FyZWxAdm9tYWNrYS5jeiIsImlhdCI6MTU3Mzc0MTY3Mjg4M30.NT_5eAX5uiznVlE2-35TntbK6mr1cNwCEkJaK503SbY",
+    "user": "000000000000000000000a00",
+    "createdAt": "2019-11-14T14:27:52.887Z",
+    "_id": {
+      "$oid": "5dcd6468ab6d7c2d5af67189"
+    }
+  }
+]

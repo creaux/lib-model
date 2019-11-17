@@ -1,27 +1,22 @@
+import { UserAbstract } from './user.abstract';
 import { IsArray } from 'class-validator';
 import { RoleModel } from './role.model';
-import { UserAbstract } from './user.abstract';
 
-export class UserModel extends UserAbstract {
+export class UserPopulatedModel extends UserAbstract {
   public static MOCK_PROPERTIES = {
     forname: 'Frantisek',
     surname: 'Votrapa',
     email: 'frantisek@votrapa.cz',
     password: '12345',
-    roles: [
-      {
-        id: '5dc84787046b05067ec1adc5',
-        name: 'Executive',
-      },
-    ],
+    roles: [{ name: 'Superadmin', id: '000000000000000000000e00' }],
   };
 
-  public static MOCK = new UserModel(UserModel.MOCK_PROPERTIES);
+  public static MOCK = new UserPopulatedModel(UserPopulatedModel.MOCK_PROPERTIES);
 
   @IsArray()
   public readonly roles!: RoleModel[];
 
-  public constructor(partial: Partial<UserModel>) {
+  public constructor(partial: Partial<UserPopulatedModel>) {
     super();
     Object.assign(this, partial);
   }

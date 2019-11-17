@@ -1,8 +1,9 @@
-import { IsMongoId, IsDateString } from 'class-validator';
+import { IsMongoId, IsDateString, IsString, Length, IsUrl, IsEnum, IsArray } from 'class-validator';
 import { PostStateEnum } from './post-state.enum';
 import { CreatePostModel } from './create-post.model';
+import { UserModel } from '../user';
 
-export class PostModel extends CreatePostModel {
+export class PostModel {
   public static MOCK_PROPERTIES = {
     title: 'Mocked Post Title',
     subtitle: 'Mocked Post Subtitle',
@@ -10,60 +11,56 @@ export class PostModel extends CreatePostModel {
     image: 'https://picsum.photos/200/300',
     state: PostStateEnum.DRAFT,
     labels: ['label1', 'label2', 'label3'],
-    createdBy: '507f1f77bcf86cd799439011',
+    createdBy: UserModel.MOCK,
     section: '507f1f77bcf86cd799439011',
     id: '507f1f77bcf86cd799439011',
-    updatedBy: '507f1f77bcf86cd799439011',
+    updatedBy: UserModel.MOCK,
     createdAt: new Date().toISOString(),
     updatedAt: new Date().toISOString(),
   };
 
-  public static MOCK = new PostModel(
-    PostModel.MOCK_PROPERTIES.title,
-    PostModel.MOCK_PROPERTIES.subtitle,
-    PostModel.MOCK_PROPERTIES.content,
-    PostModel.MOCK_PROPERTIES.image,
-    PostModel.MOCK_PROPERTIES.state,
-    PostModel.MOCK_PROPERTIES.labels,
-    PostModel.MOCK_PROPERTIES.createdBy,
-    PostModel.MOCK_PROPERTIES.section,
-    PostModel.MOCK_PROPERTIES.id,
-    PostModel.MOCK_PROPERTIES.updatedBy,
-    PostModel.MOCK_PROPERTIES.createdAt,
-    PostModel.MOCK_PROPERTIES.updatedAt,
-  );
+  public static MOCK = new PostModel(PostModel.MOCK_PROPERTIES);
 
   @IsMongoId()
-  public readonly id: string;
+  public readonly id!: string;
 
   @IsMongoId()
-  public readonly updatedBy: string;
+  public readonly updatedBy!: UserModel;
 
   @IsDateString()
-  public readonly createdAt: string;
+  public readonly createdAt!: string;
 
   @IsDateString()
-  public readonly updatedAt: string;
+  public readonly updatedAt!: string;
 
-  public constructor(
-    title: string,
-    subtitle: string,
-    content: string,
-    image: string,
-    state: PostStateEnum,
-    labels: string[],
-    createdBy: string,
-    section: string,
-    id: string,
-    updatedBy: string,
-    createdAt: string,
-    updatedAt: string,
-  ) {
-    super(title, subtitle, content, image, state, labels, createdBy, section);
+  @IsString()
+  @Length(0, 120)
+  public readonly title!: string;
 
-    this.id = id;
-    this.updatedBy = updatedBy;
-    this.createdAt = createdAt;
-    this.updatedAt = updatedAt;
+  @IsString()
+  @Length(0, 360)
+  public readonly subtitle!: string;
+
+  @IsString()
+  public readonly content!: string;
+
+  @IsUrl()
+  public readonly image!: string;
+
+  @IsEnum(PostStateEnum)
+  public readonly state!: PostStateEnum;
+
+  @IsString({ each: true })
+  @IsArray()
+  public readonly labels!: string[];
+
+  @IsMongoId()
+  public readonly createdBy!: UserModel;
+
+  @IsMongoId()
+  public readonly section!: string;
+
+  public constructor(model: PostModel) {
+    Object.assign(this, model);
   }
 }

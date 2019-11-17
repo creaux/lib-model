@@ -30,8 +30,8 @@
     "updatedAt": "Sun Jun 23 2019 16:13:05 GMT+0200 (CEST)",
     "labels": ["lorem-ipsum-1"],
     "image": "someimage.png",
-    "createdBy": "0000000000000000000000a0",
-    "updatedBy": "0000000000000000000000b0",
+    "createdBy": "000000000000000000000a00",
+    "updatedBy": "000000000000000000000b00",
     "section": "00000000000000000000000a"
   },
   {
@@ -65,8 +65,8 @@
     "updatedAt": "Sun Jun 23 2019 16:13:06 GMT+0200 (CEST)",
     "labels": ["lorem-ipsum-1"],
     "image": "someimage.png",
-    "createdBy": "0000000000000000000000a0",
-    "updatedBy": "0000000000000000000000a0",
+    "createdBy": "000000000000000000000a00",
+    "updatedBy": "000000000000000000000a00",
     "section": "00000000000000000000000a"
   },
   {
@@ -100,8 +100,8 @@
     "updatedAt": "Sun Jun 23 2019 16:13:07 GMT+0200 (CEST)",
     "labels": ["lorem-ipsum-1"],
     "image": "someimage.png",
-    "createdBy": "0000000000000000000000b0",
-    "updatedBy": "0000000000000000000000a0",
+    "createdBy": "000000000000000000000b00",
+    "updatedBy": "000000000000000000000a00",
     "section": "00000000000000000000000b"
   },
   {
@@ -135,8 +135,8 @@
     "updatedAt": "Sun Jun 23 2019 16:13:08 GMT+0200 (CEST)",
     "labels": ["lorem-ipsum-1"],
     "image": "someimage.png",
-    "createdBy": "0000000000000000000000b0",
-    "updatedBy": "0000000000000000000000b0",
+    "createdBy": "000000000000000000000b00",
+    "updatedBy": "000000000000000000000b00",
     "section": "00000000000000000000000b"
   },
   {
@@ -170,8 +170,8 @@
     "updatedAt": "Sun Jun 23 2019 16:13:09 GMT+0200 (CEST)",
     "labels": ["lorem-ipsum-1"],
     "image": "someimage.png",
-    "createdBy": "0000000000000000000000a0",
-    "updatedBy": "0000000000000000000000a0",
+    "createdBy": "000000000000000000000a00",
+    "updatedBy": "000000000000000000000a00",
     "section": "00000000000000000000000b"
   }
 ]

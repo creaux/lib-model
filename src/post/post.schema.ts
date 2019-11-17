@@ -1,5 +1,6 @@
 import { BaseScheme } from '../schemas/base.schema';
 import { Types } from 'mongoose';
+import { USER_MODEL } from '../user';
 
 export const PostSchema = new BaseScheme(
   {
@@ -13,8 +14,8 @@ export const PostSchema = new BaseScheme(
     createdAt: { type: Date },
     updatedAt: { type: Date },
     image: { type: String },
-    createdBy: { type: Types.ObjectId },
-    updatedBy: { type: Types.ObjectId },
+    createdBy: { type: Types.ObjectId, ref: USER_MODEL },
+    updatedBy: { type: Types.ObjectId, ref: USER_MODEL },
     section: { type: Types.ObjectId, ref: 'Section' },
   },
   {

@@ -6,6 +6,8 @@ export enum DataMockEntities {
   SECTIONS = 'sections',
   USERS = 'users',
   ROLES = 'roles',
+  ACCESS = 'accesses',
+  AUTHS = 'auths',
 }
 
 export class DataMock {
@@ -14,6 +16,8 @@ export class DataMock {
     [DataMockEntities.SECTIONS]: '@pyxismedia/lib-model/build/post/section.data.json',
     [DataMockEntities.USERS]: '@pyxismedia/lib-model/build/user/user.data.json',
     [DataMockEntities.ROLES]: '@pyxismedia/lib-model/build/user/role.data.json',
+    [DataMockEntities.ACCESS]: '@pyxismedia/lib-model/build/user/access.data.json',
+    [DataMockEntities.AUTHS]: '@pyxismedia/lib-model/build/auth/auth.data.json',
   };
 
   private static MOCKS = {
@@ -21,6 +25,7 @@ export class DataMock {
     [DataMockEntities.SECTIONS]: '@pyxismedia/lib-model/build/post/section.en-mock.json',
     [DataMockEntities.USERS]: '@pyxismedia/lib-model/build/user/user.en-mock.json',
     [DataMockEntities.ROLES]: '@pyxismedia/lib-model/build/user/role.en-mock.json',
+    [DataMockEntities.ACCESS]: '@pyxismedia/lib-model/build/user/access.en-mock.json',
   };
 
   private static exec(cmd: string): Promise<{}> {
@@ -42,14 +47,23 @@ export class DataMock {
   }
 
   public async import(entity: DataMockEntities): Promise<{}> {
-    // eslint-disable-next-line @typescript-eslint/no-var-requires
-    this.data.set(entity, require(DataMock.MOCKS[entity as keyof typeof DataMock.MOCKS]));
+    const mock = DataMock.MOCKS[entity as keyof typeof DataMock.MOCKS];
+    if (mock) {
+      // eslint-disable-next-line @typescript-eslint/no-var-requires
+      this.data.set(entity, require(mock));
+    }
     return DataMock.exec(
       `mongoimport --uri=${await this.uri} --collection=${entity} --file=${join(
         'node_modules',
         DataMock.ENTITIES[entity],
       )} --drop --jsonArray`,
     );
+  }
+
+  public async importAll() {
+    Object.keys(DataMockEntities).forEach(async (key: string) => {
+      await this.import(DataMockEntities[key as keyof typeof DataMockEntities]);
+    });
   }
 
   public get uri(): Promise<string> {

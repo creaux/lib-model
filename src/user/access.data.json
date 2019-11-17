@@ -1,0 +1,90 @@
+[
+  {
+    "_id": {
+      "$oid": "507f1f77bcf86cd799439012"
+    },
+    "role": ["Superadmin"],
+    "resource": ["post"],
+    "attributes": ["*"],
+    "action": "read",
+    "possession": "any",
+    "denied": true
+  },
+  {
+    "_id": {
+      "$oid": "5dcc634a6a5a108f837936a4"
+    },
+    "role": ["Superadmin"],
+    "resource": ["post"],
+    "attributes": ["*"],
+    "action": "create",
+    "possession": "any",
+    "denied": false
+  },
+  {
+    "_id": {
+      "$oid": "5dcc635008707c9ee0f66d53"
+    },
+    "role": ["Superadmin"],
+    "resource": ["post"],
+    "attributes": ["*"],
+    "action": "update",
+    "possession": "any",
+    "denied": false
+  },
+  {
+    "_id": {
+      "$oid": "5dcc6355ddd59453030e2732"
+    },
+    "role": ["Superadmin"],
+    "resource": ["post"],
+    "attributes": ["*"],
+    "action": "delete",
+    "possession": "any",
+    "denied": false
+  },
+  {
+    "_id": {
+      "$oid": "5dcc635cdd97ad374b8899c1"
+    },
+    "role": ["Admin"],
+    "resource": ["post"],
+    "attributes": ["*"],
+    "action": "read",
+    "possession": "any",
+    "denied": false
+  },
+  {
+    "_id": {
+      "$oid": "5dcc636099120d698692a7f1"
+    },
+    "role": ["Admin"],
+    "resource": ["post"],
+    "attributes": ["*"],
+    "action": "create",
+    "possession": "any",
+    "denied": true
+  },
+  {
+    "_id": {
+      "$oid": "5dcc63665f39664940ccdccb"
+    },
+    "role": ["Admin"],
+    "resource": ["post"],
+    "attributes": ["*"],
+    "action": "update",
+    "possession": "any",
+    "denied": true
+  },
+  {
+    "_id": {
+      "$oid": "5dcc636cc751851ba8aaee02"
+    },
+    "role": ["Admin"],
+    "resource": ["post"],
+    "attributes": ["*"],
+    "action": "delete",
+    "possession": "any",
+    "denied": true
+  }
+]
