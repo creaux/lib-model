@@ -1,6 +1,7 @@
 import { Types } from 'mongoose';
 import { PostStateEnum } from './post-state.enum';
 import { IsString, IsUrl, IsEnum, IsMongoId, Length, IsArray } from 'class-validator';
+import { UserModel } from '../user';
 
 export class CreatePostModel {
   public static MOCK_PROPERTIES = {
@@ -14,61 +15,36 @@ export class CreatePostModel {
     section: '507f1f77bcf86cd799439011',
   };
 
-  public static MOCK = new CreatePostModel(
-    CreatePostModel.MOCK_PROPERTIES.title,
-    CreatePostModel.MOCK_PROPERTIES.subtitle,
-    CreatePostModel.MOCK_PROPERTIES.content,
-    CreatePostModel.MOCK_PROPERTIES.image,
-    CreatePostModel.MOCK_PROPERTIES.state,
-    CreatePostModel.MOCK_PROPERTIES.labels,
-    CreatePostModel.MOCK_PROPERTIES.createdBy,
-    CreatePostModel.MOCK_PROPERTIES.section,
-  );
+  public static MOCK = new CreatePostModel(CreatePostModel.MOCK_PROPERTIES);
 
   @IsString()
   @Length(0, 120)
-  public readonly title: string;
+  public readonly title!: string;
 
   @IsString()
   @Length(0, 360)
-  public readonly subtitle: string;
+  public readonly subtitle!: string;
 
   @IsString()
-  public readonly content: string;
+  public readonly content!: string;
 
   @IsUrl()
-  public readonly image: string;
+  public readonly image!: string;
 
   @IsEnum(PostStateEnum)
-  public readonly state: PostStateEnum;
+  public readonly state!: PostStateEnum;
 
   @IsString({ each: true })
   @IsArray()
-  public readonly labels: string[];
+  public readonly labels!: string[];
 
   @IsMongoId()
-  public readonly createdBy: string;
+  public readonly createdBy!: string;
 
   @IsMongoId()
-  public readonly section: string;
+  public readonly section!: string;
 
-  public constructor(
-    title: string,
-    subtitle: string,
-    content: string,
-    image: string,
-    state: PostStateEnum,
-    labels: string[],
-    createdBy: string,
-    section: string,
-  ) {
-    this.title = title;
-    this.subtitle = subtitle;
-    this.content = content;
-    this.image = image;
-    this.state = state;
-    this.labels = labels;
-    this.createdBy = createdBy;
-    this.section = section;
+  public constructor(model: CreatePostModel) {
+    Object.assign(this, model);
   }
 }

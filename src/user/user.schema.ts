@@ -1,8 +1,8 @@
-import { Types, SchemaDefinition, SchemaOptions } from 'mongoose';
+import { Types } from 'mongoose';
 import { PasswordSchema } from '../schemas/password.schema';
 import { ROLE_MODEL } from './role.schema';
 
-export const USER_MODEL = 'users';
+export const USER_MODEL = 'User';
 
 // class UserSchemaIs extends PasswordSchema {
 //   constructor(definition?: SchemaDefinition, options?: SchemaOptions) {

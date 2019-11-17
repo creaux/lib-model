@@ -1,6 +1,7 @@
 import test from 'ava';
 import { CreatePostModel } from './create-post.model';
-import { Validator, ValidationError } from 'class-validator';
+import { Validator } from 'class-validator';
+import { PostStateEnum } from './post-state.enum';
 
 let createPostModel: CreatePostModel;
 let validator: Validator;
@@ -45,14 +46,17 @@ test('should contain section', t => {
 test('should raise error when title is not string', async t => {
   const model = new CreatePostModel(
     // @ts-ignore
-    123,
-    CreatePostModel.MOCK_PROPERTIES.subtitle,
-    CreatePostModel.MOCK_PROPERTIES.content,
-    CreatePostModel.MOCK_PROPERTIES.image,
-    CreatePostModel.MOCK_PROPERTIES.state,
-    CreatePostModel.MOCK_PROPERTIES.labels,
-    CreatePostModel.MOCK_PROPERTIES.createdBy,
-    CreatePostModel.MOCK_PROPERTIES.section,
+    {
+      // @ts-ignore
+      title: 123,
+      subtitle: CreatePostModel.MOCK_PROPERTIES.subtitle,
+      content: CreatePostModel.MOCK_PROPERTIES.content,
+      image: CreatePostModel.MOCK_PROPERTIES.image,
+      state: CreatePostModel.MOCK_PROPERTIES.state,
+      labels: CreatePostModel.MOCK_PROPERTIES.labels,
+      createdBy: CreatePostModel.MOCK_PROPERTIES.createdBy,
+      section: CreatePostModel.MOCK_PROPERTIES.section,
+    },
   );
   const validated = await validator.validate(model);
   t.deepEqual(
@@ -63,17 +67,17 @@ test('should raise error when title is not string', async t => {
 });
 
 test('should raise error when subtitle is not string', async t => {
-  const model = new CreatePostModel(
-    CreatePostModel.MOCK_PROPERTIES.title,
+  const model = new CreatePostModel({
+    title: CreatePostModel.MOCK_PROPERTIES.title,
     // @ts-ignore
-    123,
-    CreatePostModel.MOCK_PROPERTIES.content,
-    CreatePostModel.MOCK_PROPERTIES.image,
-    CreatePostModel.MOCK_PROPERTIES.state,
-    CreatePostModel.MOCK_PROPERTIES.labels,
-    CreatePostModel.MOCK_PROPERTIES.createdBy,
-    CreatePostModel.MOCK_PROPERTIES.section,
-  );
+    subtitle: 123,
+    content: CreatePostModel.MOCK_PROPERTIES.content,
+    image: CreatePostModel.MOCK_PROPERTIES.image,
+    state: CreatePostModel.MOCK_PROPERTIES.state,
+    labels: CreatePostModel.MOCK_PROPERTIES.labels,
+    createdBy: CreatePostModel.MOCK_PROPERTIES.createdBy,
+    section: CreatePostModel.MOCK_PROPERTIES.section,
+  });
   const validated = await validator.validate(model);
   t.deepEqual(
     validated[0].toString(),
@@ -83,17 +87,17 @@ test('should raise error when subtitle is not string', async t => {
 });
 
 test('should raise error when content is not string', async t => {
-  const model = new CreatePostModel(
-    CreatePostModel.MOCK_PROPERTIES.title,
-    CreatePostModel.MOCK_PROPERTIES.subtitle,
+  const model = new CreatePostModel({
+    title: CreatePostModel.MOCK_PROPERTIES.title,
+    subtitle: CreatePostModel.MOCK_PROPERTIES.subtitle,
     // @ts-ignore
-    123,
-    CreatePostModel.MOCK_PROPERTIES.image,
-    CreatePostModel.MOCK_PROPERTIES.state,
-    CreatePostModel.MOCK_PROPERTIES.labels,
-    CreatePostModel.MOCK_PROPERTIES.createdBy,
-    CreatePostModel.MOCK_PROPERTIES.section,
-  );
+    content: 123,
+    image: CreatePostModel.MOCK_PROPERTIES.image,
+    state: CreatePostModel.MOCK_PROPERTIES.state,
+    labels: CreatePostModel.MOCK_PROPERTIES.labels,
+    createdBy: CreatePostModel.MOCK_PROPERTIES.createdBy,
+    section: CreatePostModel.MOCK_PROPERTIES.section,
+  });
   const validated = await validator.validate(model);
   t.deepEqual(
     validated[0].toString(),
@@ -103,16 +107,16 @@ test('should raise error when content is not string', async t => {
 });
 
 test('should raise error when image is not url', async t => {
-  const model = new CreatePostModel(
-    CreatePostModel.MOCK_PROPERTIES.title,
-    CreatePostModel.MOCK_PROPERTIES.subtitle,
-    CreatePostModel.MOCK_PROPERTIES.content,
-    'abc',
-    CreatePostModel.MOCK_PROPERTIES.state,
-    CreatePostModel.MOCK_PROPERTIES.labels,
-    CreatePostModel.MOCK_PROPERTIES.createdBy,
-    CreatePostModel.MOCK_PROPERTIES.section,
-  );
+  const model = new CreatePostModel({
+    title: CreatePostModel.MOCK_PROPERTIES.title,
+    subtitle: CreatePostModel.MOCK_PROPERTIES.subtitle,
+    content: CreatePostModel.MOCK_PROPERTIES.content,
+    image: 'abc',
+    state: CreatePostModel.MOCK_PROPERTIES.state,
+    labels: CreatePostModel.MOCK_PROPERTIES.labels,
+    createdBy: CreatePostModel.MOCK_PROPERTIES.createdBy,
+    section: CreatePostModel.MOCK_PROPERTIES.section,
+  });
   const validated = await validator.validate(model);
   t.deepEqual(
     validated[0].toString(),
@@ -122,17 +126,17 @@ test('should raise error when image is not url', async t => {
 });
 
 test('should raise validation error when state is not enum', async t => {
-  const model = new CreatePostModel(
-    CreatePostModel.MOCK_PROPERTIES.title,
-    CreatePostModel.MOCK_PROPERTIES.subtitle,
-    CreatePostModel.MOCK_PROPERTIES.content,
-    CreatePostModel.MOCK_PROPERTIES.image,
+  const model = new CreatePostModel({
+    title: CreatePostModel.MOCK_PROPERTIES.title,
+    subtitle: CreatePostModel.MOCK_PROPERTIES.subtitle,
+    content: CreatePostModel.MOCK_PROPERTIES.content,
+    image: CreatePostModel.MOCK_PROPERTIES.image,
     // @ts-ignore
-    'abc',
-    CreatePostModel.MOCK_PROPERTIES.labels,
-    CreatePostModel.MOCK_PROPERTIES.createdBy,
-    CreatePostModel.MOCK_PROPERTIES.section,
-  );
+    state: 'abc',
+    labels: CreatePostModel.MOCK_PROPERTIES.labels,
+    createdBy: CreatePostModel.MOCK_PROPERTIES.createdBy,
+    section: CreatePostModel.MOCK_PROPERTIES.section,
+  });
   const validated = await validator.validate(model);
   t.is(
     validated[0].toString(),
@@ -142,17 +146,17 @@ test('should raise validation error when state is not enum', async t => {
 });
 
 test('should raise validation error when labels are not array of strings', async t => {
-  const model = new CreatePostModel(
-    CreatePostModel.MOCK_PROPERTIES.title,
-    CreatePostModel.MOCK_PROPERTIES.subtitle,
-    CreatePostModel.MOCK_PROPERTIES.content,
-    CreatePostModel.MOCK_PROPERTIES.image,
-    CreatePostModel.MOCK_PROPERTIES.state,
+  const model = new CreatePostModel({
+    title: CreatePostModel.MOCK_PROPERTIES.title,
+    subtitle: CreatePostModel.MOCK_PROPERTIES.subtitle,
+    content: CreatePostModel.MOCK_PROPERTIES.content,
+    image: CreatePostModel.MOCK_PROPERTIES.image,
+    state: CreatePostModel.MOCK_PROPERTIES.state,
     // @ts-ignore
-    'abc',
-    CreatePostModel.MOCK_PROPERTIES.createdBy,
-    CreatePostModel.MOCK_PROPERTIES.section,
-  );
+    labels: 123,
+    createdBy: CreatePostModel.MOCK_PROPERTIES.createdBy,
+    section: CreatePostModel.MOCK_PROPERTIES.section,
+  });
   const validated = await validator.validate(model);
   t.is(
     validated[0].toString(),
@@ -162,17 +166,17 @@ test('should raise validation error when labels are not array of strings', async
 });
 
 test('should raise validation error when createdBy is not ObjectId', async t => {
-  const model = new CreatePostModel(
-    CreatePostModel.MOCK_PROPERTIES.title,
-    CreatePostModel.MOCK_PROPERTIES.subtitle,
-    CreatePostModel.MOCK_PROPERTIES.content,
-    CreatePostModel.MOCK_PROPERTIES.image,
-    CreatePostModel.MOCK_PROPERTIES.state,
-    CreatePostModel.MOCK_PROPERTIES.labels,
+  const model = new CreatePostModel({
+    title: CreatePostModel.MOCK_PROPERTIES.title,
+    subtitle: CreatePostModel.MOCK_PROPERTIES.subtitle,
+    content: CreatePostModel.MOCK_PROPERTIES.content,
+    image: CreatePostModel.MOCK_PROPERTIES.image,
+    state: CreatePostModel.MOCK_PROPERTIES.state,
+    labels: CreatePostModel.MOCK_PROPERTIES.labels,
     // @ts-ignore
-    'abc',
-    CreatePostModel.MOCK_PROPERTIES.section,
-  );
+    createdBy: 'abc',
+    section: CreatePostModel.MOCK_PROPERTIES.section,
+  });
   const validated = await validator.validate(model);
   t.is(
     validated[0].toString(),
@@ -182,17 +186,17 @@ test('should raise validation error when createdBy is not ObjectId', async t => 
 });
 
 test('should raise validation error when section is not ObjectId', async t => {
-  const model = new CreatePostModel(
-    CreatePostModel.MOCK_PROPERTIES.title,
-    CreatePostModel.MOCK_PROPERTIES.subtitle,
-    CreatePostModel.MOCK_PROPERTIES.content,
-    CreatePostModel.MOCK_PROPERTIES.image,
-    CreatePostModel.MOCK_PROPERTIES.state,
-    CreatePostModel.MOCK_PROPERTIES.labels,
-    CreatePostModel.MOCK_PROPERTIES.createdBy,
+  const model = new CreatePostModel({
+    title: CreatePostModel.MOCK_PROPERTIES.title,
+    subtitle: CreatePostModel.MOCK_PROPERTIES.subtitle,
+    content: CreatePostModel.MOCK_PROPERTIES.content,
+    image: CreatePostModel.MOCK_PROPERTIES.image,
+    state: CreatePostModel.MOCK_PROPERTIES.state,
+    labels: CreatePostModel.MOCK_PROPERTIES.labels,
+    createdBy: CreatePostModel.MOCK_PROPERTIES.createdBy,
     // @ts-ignore
-    'abc',
-  );
+    section: 'abc',
+  });
   const validated = await validator.validate(model);
   t.is(
     validated[0].toString(),

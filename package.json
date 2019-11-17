@@ -16,15 +16,16 @@
     "mongoimport:sections": "mongoimport -h $DB_HOSTNAME -d $DB_NAME -u $DB_USER -p $DB_PASSWORD --collection sections --file ./src/post/section.data.json --drop --jsonArray ",
     "mongoimport:users": "mongoimport -h $DB_HOSTNAME -d $DB_NAME -u $DB_USER -p $DB_PASSWORD --collection users --file ./src/user/user.data.json --drop --jsonArray",
     "mongoimport:users:roles": "mongoimport -h $DB_HOSTNAME -d $DB_NAME -u $DB_USER -p $DB_PASSWORD --collection roles --file ./src/user/role.data.json --drop --jsonArray",
-    "mongoimport": "npm run mongoimport:posts && npm run mongoimport:sections && npm run mongoimport:users && npm run mongoimport:users:roles",
+    "mongoimport:users:access": "mongoimport -h $DB_HOSTNAME -d $DB_NAME -u $DB_USER -p $DB_PASSWORD --collection accesses --file ./src/user/access.data.json --drop --jsonArray",
+    "mongoimport": "npm run mongoimport:posts && npm run mongoimport:sections && npm run mongoimport:users && npm run mongoimport:users:roles && npm run mongoimport:users:access",
     "test": "ava",
     "test:watch": "ava --watch"
   },
   "peerDependencies": {
     "bcrypt": "^3.0.6",
-    "mongoose": "^5.7.1",
+    "class-transformer": "0.2.0",
     "class-validator": "^0.10.1",
-    "class-transformer": "0.2.0"
+    "mongoose": "^5.7.1"
   },
   "devDependencies": {
     "@commitlint/cli": "^8.0.0",
@@ -35,19 +36,19 @@
     "@typescript-eslint/eslint-plugin": "^2.3.3",
     "@typescript-eslint/parser": "^2.2.0",
     "bcrypt": "^3.0.6",
+    "class-transformer": "0.2.0",
+    "class-validator": "^0.10.1",
     "eslint": "^6.3.0",
     "eslint-config-prettier": "^6.3.0",
     "eslint-plugin-import": "^2.18.2",
     "eslint-plugin-prettier": "^3.1.0",
     "husky": "3.0.9",
     "lint-staged": "9.4.2",
+    "mongoose": "^5.7.1",
     "nodemon": "^1.19.2",
     "prettier": "^1.18.2",
     "semantic-release": "^15.13.17",
-    "typescript": "^3.6.3",
-    "mongoose": "^5.7.1",
-    "class-validator": "^0.10.1",
-    "class-transformer": "0.2.0"
+    "typescript": "^3.6.3"
   },
   "author": "",
   "license": "ISC",
@@ -73,6 +74,7 @@
     "npm": "6.4.1"
   },
   "dependencies": {
+    "accesscontrol": "^2.2.1",
     "ava": "^2.4.0",
     "dotenv-flow": "^3.1.0",
     "ts-node": "^8.4.1"
