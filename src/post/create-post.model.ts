@@ -1,7 +1,5 @@
-import { Types } from 'mongoose';
 import { PostStateEnum } from './post-state.enum';
 import { IsString, IsUrl, IsEnum, IsMongoId, Length, IsArray } from 'class-validator';
-import { UserModel } from '../user';
 
 export class CreatePostModel {
   public static MOCK_PROPERTIES = {
@@ -11,8 +9,8 @@ export class CreatePostModel {
     image: 'https://picsum.photos/200/300',
     state: PostStateEnum.DRAFT,
     labels: ['label1', 'label2', 'label3'],
-    createdBy: '507f1f77bcf86cd799439011',
-    section: '507f1f77bcf86cd799439011',
+    createdBy: '000000000000000000000a00',
+    section: '00000000000000000000000a',
   };
 
   public static MOCK = new CreatePostModel(CreatePostModel.MOCK_PROPERTIES);

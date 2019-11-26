@@ -1,3 +1,9 @@
 export class SectionModel {
-  public constructor(public readonly name: string) {}
+  public id!: string;
+
+  public name!: string;
+
+  public constructor(model: SectionModel) {
+    Object.assign(this, model);
+  }
 }
