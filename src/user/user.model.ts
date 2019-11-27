@@ -14,6 +14,7 @@ export class UserModel extends UserAbstract {
         name: 'Executive',
       },
     ],
+    id: '5dde8b96ed14209384f74d14',
   };
 
   public static MOCK = new UserModel(UserModel.MOCK_PROPERTIES);

@@ -1,10 +1,9 @@
-import { IsMongoId, IsDateString, IsString, Length, IsUrl, IsEnum, IsArray } from 'class-validator';
+import { IsMongoId, IsDateString, IsString, Length, IsUrl, IsEnum, IsArray, ValidateNested } from 'class-validator';
 import { PostStateEnum } from './post-state.enum';
-import { CreatePostModel } from './create-post.model';
 import { UserModel } from '../user';
 
 export class PostModel {
-  public static MOCK_PROPERTIES = {
+  public static MOCK_PROPERTIES: PostModel = {
     title: 'Mocked Post Title',
     subtitle: 'Mocked Post Subtitle',
     content: 'Mocked Post Content',
@@ -19,12 +18,12 @@ export class PostModel {
     updatedAt: new Date().toISOString(),
   };
 
-  public static MOCK = new PostModel(PostModel.MOCK_PROPERTIES);
+  public static MOCK: PostModel = new PostModel(PostModel.MOCK_PROPERTIES);
 
   @IsMongoId()
   public readonly id!: string;
 
-  @IsMongoId()
+  @ValidateNested()
   public readonly updatedBy!: UserModel;
 
   @IsDateString()
@@ -54,7 +53,7 @@ export class PostModel {
   @IsArray()
   public readonly labels!: string[];
 
-  @IsMongoId()
+  @ValidateNested()
   public readonly createdBy!: UserModel;
 
   @IsMongoId()

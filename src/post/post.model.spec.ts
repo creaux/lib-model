@@ -206,7 +206,7 @@ test('should raise validation error when createdBy is not ObjectId', async t => 
   t.is(
     validated[0].toString(),
     'An instance of PostModel has failed the validation:\n' +
-      ' - property createdBy has failed the following constraints: isMongoId \n',
+      ' - property createdBy.createdBy has failed the following constraints: nestedValidation \n',
   );
 });
 
@@ -276,7 +276,7 @@ test('should raise validation error when updatedBy is not ObjectId', async t => 
   t.is(
     validated[0].toString(),
     'An instance of PostModel has failed the validation:\n' +
-      ' - property updatedBy has failed the following constraints: isMongoId \n',
+      ' - property updatedBy.updatedBy has failed the following constraints: nestedValidation \n',
   );
 });
 
