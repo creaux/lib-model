@@ -33,11 +33,11 @@ export class PostModel {
   public readonly updatedAt!: string;
 
   @IsString()
-  @Length(0, 120)
+  @Length(1, 120)
   public readonly title!: string;
 
   @IsString()
-  @Length(0, 360)
+  @Length(1, 360)
   public readonly subtitle!: string;
 
   @IsString()
