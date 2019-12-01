@@ -1,59 +1,25 @@
 import { Validator } from 'class-validator';
 import test from 'ava';
-import { ProductModelMap, ProductModelMapParams } from './product.model-map';
+import { CreateProductModelMap, CreateProductParams } from './create-product.model-map';
 import { ImageModel } from '../../common/image.model';
 import { MOCK_TOKEN } from '../../common/model-mock.decorator';
+
 const { keys } = Object;
 
-let productModel: ProductModelMapParams;
+let productModel: CreateProductParams;
 let validator: Validator;
 let Mock: any;
 
 test.before(() => {
-  Mock = Reflect.getMetadata(MOCK_TOKEN, ProductModelMap);
+  Mock = Reflect.getMetadata(MOCK_TOKEN, CreateProductModelMap);
+
   productModel = new Mock();
   validator = new Validator();
 });
 
-test('should contain one mock', t => {
-  t.truthy([new Mock()].length === 1);
-});
-
-test('should contain five mocks', t => {
-  t.truthy([...new Mock(5)].length === 5);
-});
-
-test('should raise error when id is not defined', async t => {
-  const { id, ...props } = productModel;
-  const model = new ProductModelMap({
-    // @ts-ignore
-    id: undefined,
-    ...props,
-  });
-
-  const validated = (await validator.validate(model))[0];
-
-  t.is(validated.property, 'id');
-  t.deepEqual(keys(validated.constraints), ['isDefined', 'isMongoId']);
-});
-
-test('should raise error when id is not mongo id', async t => {
-  const { id, ...props } = productModel;
-  const model = new ProductModelMap({
-    // @ts-ignore
-    id: 'abc',
-    ...props,
-  });
-
-  const validated = (await validator.validate(model))[0];
-
-  t.is(validated.property, 'id');
-  t.deepEqual(keys(validated.constraints), ['isMongoId']);
-});
-
 test('should raise error when title is defined', async t => {
   const { title, ...props } = productModel;
-  const model = new ProductModelMap({
+  const model = new CreateProductModelMap({
     // @ts-ignore
     title: undefined,
     ...props,
@@ -67,7 +33,7 @@ test('should raise error when title is defined', async t => {
 
 test('should raise error when title is not string', async t => {
   const { title, ...props } = productModel;
-  const model = new ProductModelMap({
+  const model = new CreateProductModelMap({
     // @ts-ignore
     title: 123,
     ...props,
@@ -81,7 +47,7 @@ test('should raise error when title is not string', async t => {
 
 test('should raise error when title is not of required length', async t => {
   const { title, ...props } = productModel;
-  const model = new ProductModelMap({
+  const model = new CreateProductModelMap({
     // @ts-ignore
     title: '',
     ...props,
@@ -95,7 +61,7 @@ test('should raise error when title is not of required length', async t => {
 
 test('should raise error when description is not defined', async t => {
   const { description, ...props } = productModel;
-  const model = new ProductModelMap({
+  const model = new CreateProductModelMap({
     // @ts-ignore
     description: undefined,
     ...props,
@@ -109,7 +75,7 @@ test('should raise error when description is not defined', async t => {
 
 test('should raise error when description is not string', async t => {
   const { description, ...props } = productModel;
-  const model = new ProductModelMap({
+  const model = new CreateProductModelMap({
     // @ts-ignore
     description: 123,
     ...props,
@@ -123,7 +89,7 @@ test('should raise error when description is not string', async t => {
 
 test('should raise error when images are not defined', async t => {
   const { images, ...props } = productModel;
-  const model = new ProductModelMap({
+  const model = new CreateProductModelMap({
     // @ts-ignore
     images: [undefined],
     ...props,
@@ -135,7 +101,7 @@ test('should raise error when images are not defined', async t => {
 
 test("should raise error when images don't have at least one member", async t => {
   const { images, ...props } = productModel;
-  const model = new ProductModelMap({
+  const model = new CreateProductModelMap({
     images: [],
     ...props,
   });
@@ -146,7 +112,7 @@ test("should raise error when images don't have at least one member", async t =>
 
 test('should raise error when images are not valid urls', async t => {
   const { images, ...props } = productModel;
-  const model = new ProductModelMap({
+  const model = new CreateProductModelMap({
     // @ts-
     images: [new ImageModel({ src: 'abc', alt: 'Some description' })],
     ...props,
@@ -158,7 +124,7 @@ test('should raise error when images are not valid urls', async t => {
 
 test('should raise error when price is not defined', async t => {
   const { price, ...props } = productModel;
-  const model = new ProductModelMap({
+  const model = new CreateProductModelMap({
     // @ts-ignore
     price: undefined,
     ...props,
@@ -170,7 +136,7 @@ test('should raise error when price is not defined', async t => {
 
 test('should raise error when price is not valid', async t => {
   const { price, ...props } = productModel;
-  const model = new ProductModelMap({
+  const model = new CreateProductModelMap({
     // @ts-ignore
     price: 'abc',
     ...props,

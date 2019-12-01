@@ -1,13 +1,16 @@
-import { IsNumber, IsString } from 'class-validator';
+import { IsDefined, IsNumber, IsString } from 'class-validator';
 
 export class PriceModel {
+  @IsDefined()
   @IsNumber()
   public readonly amount!: number;
 
+  @IsDefined()
   @IsString()
   public readonly currency!: string;
 
-  constructor(model: PriceModel) {
-    Object.assign(this, model);
+  constructor({ currency, amount }: PriceModel) {
+    this.currency = currency;
+    this.amount = amount;
   }
 }

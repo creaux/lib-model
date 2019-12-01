@@ -1,74 +1,84 @@
-import { IsArray, IsDefined, IsNumber, IsString, IsUrl, Length } from 'class-validator';
+import { IsDefined, IsMongoId, IsNumber, IsString, IsUrl, Length } from 'class-validator';
+import { ImageModel } from '../../common/image.model';
+import { ModelMap } from '../../common/model-map.abstract';
+import { ModelMapParams } from '../../generics/model-map-params';
+import { Types } from 'mongoose';
+import { lorem, random } from 'faker';
+import { ModelMock } from '../../common/model-mock.decorator';
 
-enum ProductMapKeys {
-  TITLE = 'title',
-  DESCRIPTION = 'description',
-  PRICE = 'price',
-}
-
-export interface ProductInterface {
-  title: string;
-  description: string;
-  images: Set<string>;
-  price: number;
-}
-
-export class ProductModelMap extends Map<keyof ProductInterface, ProductInterface[keyof ProductInterface]> {
-  public static MOCK_PROPERTIES: ProductInterface = {
-    title: 'Mock title',
-    description: 'Lorem ipsum dolor sit amet',
-    images: new Set(['https://picsum.photos/200/300', 'https://picsum.photos/200/300']),
-    price: 400,
+@ModelMock({
+  id: () => Types.ObjectId().toHexString(),
+  title: lorem.words,
+  description: lorem.words,
+  images: () => [ImageModel.MOCK],
+  price: random.number,
+})
+export class ProductModelMap extends ModelMap<ProductModelMap, typeof ProductModelMap.KEYS> {
+  public static KEYS = {
+    ID: Symbol('id'),
+    TITLE: Symbol('title'),
+    DESCRIPTION: Symbol('description'),
+    PRICE: Symbol('price'),
   };
 
-  public static MOCK: ProductModelMap = new ProductModelMap(ProductModelMap.MOCK_PROPERTIES);
+  @IsDefined()
+  @IsMongoId()
+  public set id(value: string) {
+    this.map.set(ProductModelMap.KEYS.ID, value);
+  }
 
-  public static setToArray<T>(value: Set<T>): T[] {
-    return Array.from(value);
+  public get id(): string {
+    return this.map.get(ProductModelMap.KEYS.ID) as string;
   }
 
   @IsDefined()
   @IsString()
   @Length(1, 120)
   public set title(value: string) {
-    this.set(ProductMapKeys.TITLE, value);
+    this.map.set(ProductModelMap.KEYS.TITLE, value);
   }
 
   public get title(): string {
-    return this.get(ProductMapKeys.TITLE) as string;
+    return this.map.get(ProductModelMap.KEYS.TITLE) as string;
   }
 
   @IsDefined()
   @IsString()
   public set description(value: string) {
-    this.set(ProductMapKeys.DESCRIPTION, value);
+    this.map.set(ProductModelMap.KEYS.DESCRIPTION, value);
   }
 
   public get description(): string {
-    return this.get(ProductMapKeys.DESCRIPTION) as string;
+    return this.map.get(ProductModelMap.KEYS.DESCRIPTION) as string;
   }
 
   @IsDefined({ each: true })
   @IsUrl({}, { each: true })
   @Length(1)
-  public readonly images: Set<string>;
+  public readonly images: Set<ImageModel>;
 
   @IsDefined()
   @IsNumber()
   public set price(value: number) {
-    this.set(ProductMapKeys.PRICE, value);
+    this.map.set(ProductModelMap.KEYS.PRICE, value);
   }
 
   public get price(): number {
-    return this.get(ProductMapKeys.PRICE) as number;
+    return this.map.get(ProductModelMap.KEYS.PRICE) as number;
   }
 
-  public constructor(model: ProductInterface) {
+  public constructor({ id, title, description, images, price }: ProductModelMapParams) {
     super();
 
-    this.title = model.title;
-    this.description = model.description;
-    this.images = model.images;
-    this.price = model.price;
+    this.id = id;
+    this.title = title;
+    this.description = description;
+    this.price = price;
+
+    this.images = new Set<ImageModel>(images);
   }
 }
+
+export type ProductModelMapParams = Omit<ModelMapParams<ProductModelMap, typeof ProductModelMap.KEYS>, 'images'> & {
+  images: ImageModel[];
+};
