@@ -1,6 +1,8 @@
 import { exec } from 'child_process';
 import { join } from 'path';
 
+// TODO: Move mocks of database to the @Decorators and apply them onto models
+
 export enum DataMockEntities {
   POSTS = 'posts',
   SECTIONS = 'sections',
@@ -8,6 +10,7 @@ export enum DataMockEntities {
   ROLES = 'roles',
   ACCESS = 'accesses',
   AUTHS = 'auths',
+  PRODUCTS = 'products',
 }
 
 export class DataMock {
@@ -18,6 +21,7 @@ export class DataMock {
     [DataMockEntities.ROLES]: '@pyxismedia/lib-model/build/user/role.data.json',
     [DataMockEntities.ACCESS]: '@pyxismedia/lib-model/build/user/access.data.json',
     [DataMockEntities.AUTHS]: '@pyxismedia/lib-model/build/auth/auth.data.json',
+    [DataMockEntities.PRODUCTS]: '@pyxismedia/lib-model/build/eshop/product/product.data.json',
   };
 
   private static MOCKS = {
@@ -26,6 +30,7 @@ export class DataMock {
     [DataMockEntities.USERS]: '@pyxismedia/lib-model/build/user/user.en-mock.json',
     [DataMockEntities.ROLES]: '@pyxismedia/lib-model/build/user/role.en-mock.json',
     [DataMockEntities.ACCESS]: '@pyxismedia/lib-model/build/user/access.en-mock.json',
+    [DataMockEntities.PRODUCTS]: '@pyxismedia/lib-model/build/eshop/product/product.en-mock.json',
   };
 
   private static exec(cmd: string): Promise<{}> {

@@ -17,7 +17,8 @@
     "mongoimport:users": "mongoimport -h $DB_HOSTNAME -d $DB_NAME -u $DB_USER -p $DB_PASSWORD --collection users --file ./src/user/user.data.json --drop --jsonArray",
     "mongoimport:users:roles": "mongoimport -h $DB_HOSTNAME -d $DB_NAME -u $DB_USER -p $DB_PASSWORD --collection roles --file ./src/user/role.data.json --drop --jsonArray",
     "mongoimport:users:access": "mongoimport -h $DB_HOSTNAME -d $DB_NAME -u $DB_USER -p $DB_PASSWORD --collection accesses --file ./src/user/access.data.json --drop --jsonArray",
-    "mongoimport": "npm run mongoimport:posts && npm run mongoimport:sections && npm run mongoimport:users && npm run mongoimport:users:roles && npm run mongoimport:users:access",
+    "mongoimport:products": "mongoimport -h $DB_HOSTNAME -d $DB_NAME -u $DB_USER -p $DB_PASSWORD --collection products --file ./src/eshop/product/product.data.json --drop --jsonArray",
+    "mongoimport": "npm run mongoimport:posts && npm run mongoimport:sections && npm run mongoimport:users && npm run mongoimport:users:roles && npm run mongoimport:users:access && npm run mongoimport:products",
     "test": "ava",
     "test:watch": "ava --watch"
   },
@@ -25,13 +26,20 @@
     "bcrypt": "^3.0.6",
     "class-transformer": "0.2.0",
     "class-validator": "^0.11.0",
-    "mongoose": "^5.7.1"
+    "mongoose": "^5.7.1",
+    "@nestjs/common": "6.9.0",
+    "@nestjs/swagger": "^3.0.2",
+    "@nestjs/core": "^6.9.0"
   },
   "devDependencies": {
+    "@nestjs/core": "^6.9.0",
+    "@nestjs/common": "6.9.0",
     "@commitlint/cli": "^8.0.0",
     "@commitlint/config-conventional": "^8.0.0",
     "@commitlint/prompt-cli": "^8.0.0",
+    "@nestjs/swagger": "^3.0.2",
     "@types/bcrypt": "^3.0.0",
+    "@types/faker": "^4.1.8",
     "@types/mongoose": "^5.5.17",
     "@typescript-eslint/eslint-plugin": "^2.3.3",
     "@typescript-eslint/parser": "^2.2.0",
@@ -78,6 +86,8 @@
     "ava": "^2.4.0",
     "dotenv-flow": "^3.1.0",
     "reflect-metadata": "^0.1.13",
-    "ts-node": "^8.4.1"
+    "ts-node": "^8.4.1",
+    "typescript-json-serializer": "^1.4.2",
+    "faker": "^4.1.0"
   }
 }

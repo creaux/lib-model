@@ -1,0 +1,42 @@
+[
+  {
+    "_id": {
+      "$oid": "5de3e0a388e99a666e8ee8ad"
+    },
+    "title": {
+      "en": "aMock title EN",
+      "de": "aMock title DE",
+      "fr": "aMock title FR"
+    },
+    "description": {
+      "en": "aThis is mock description EN",
+      "de": "aThis is mock description DE",
+      "fr": "aThis is mock description FR"
+    },
+    "images": {
+      "src": "https://picsum.photos/200/300",
+      "alt": "aThis is alt of image"
+    },
+    "price": 123
+  },
+  {
+    "_id": {
+      "$oid": "5de3e0a388e99a666e8ee8ab"
+    },
+    "title": {
+      "en": "Mock title EN",
+      "de": "Mock title DE",
+      "fr": "Mock title FR"
+    },
+    "description": {
+      "en": "This is mock description EN",
+      "de": "This is mock description DE",
+      "fr": "This is mock description FR"
+    },
+    "images": {
+      "src": "https://picsum.photos/200/300",
+      "alt": "This is alt of image"
+    },
+    "price": 124
+  }
+]

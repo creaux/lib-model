@@ -1,23 +1,24 @@
 import { Validator } from 'class-validator';
 import test from 'ava';
-import { DeleteCategoryModelMap } from './delete-category.model-map';
-import { MOCK_TOKEN } from '../../common/model-mock.decorator';
+import { CategoryModel } from './category.model';
+import { MOCK_TOKEN } from '../../common/mockerizer.decorator';
 
 const { keys } = Object;
 
-let categoryModel: DeleteCategoryModelMap;
+let categoryModel: CategoryModel;
 let validator: Validator;
 let Mock: any;
 
 test.before(() => {
-  Mock = Reflect.getMetadata(MOCK_TOKEN, DeleteCategoryModelMap);
+  Mock = Reflect.getMetadata(MOCK_TOKEN, CategoryModel);
+
   categoryModel = new Mock();
   validator = new Validator();
 });
 
 test('should raise error when name is not defined', async t => {
   const { name, ...props } = categoryModel;
-  const model = new DeleteCategoryModelMap({
+  const model = new CategoryModel({
     // @ts-ignore
     name: undefined,
     ...props,
@@ -31,7 +32,7 @@ test('should raise error when name is not defined', async t => {
 
 test('should raise error when name is not string', async t => {
   const { name, ...props } = categoryModel;
-  const model = new DeleteCategoryModelMap({
+  const model = new CategoryModel({
     // @ts-ignore
     name: 123,
     ...props,

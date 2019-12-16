@@ -17,4 +17,11 @@ export abstract class UserAbstract {
   @IsString()
   @Exclude()
   public readonly password!: string;
+
+  constructor({ forname, surname, email, id }: UserAbstract) {
+    this.id = id;
+    this.email = email;
+    this.forname = forname;
+    this.surname = surname;
+  }
 }
