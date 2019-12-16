@@ -1,0 +1,12 @@
+[
+  {
+    "id": "5de3e0a388e99a666e8ee8ad",
+    "title": "Mock title EN",
+    "description": "This is mock description EN",
+    "images": {
+      "src": "https://picsum.photos/200/300",
+      "alt": "This is alt of image"
+    },
+    "price": 123
+  }
+]
