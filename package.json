@@ -33,7 +33,7 @@
   },
   "devDependencies": {
     "@nestjs/core": "^6.9.0",
-    "@nestjs/common": "6.9.0",
+    "@nestjs/common": "6.10.13",
     "@commitlint/cli": "^8.0.0",
     "@commitlint/config-conventional": "^8.0.0",
     "@commitlint/prompt-cli": "^8.0.0",
