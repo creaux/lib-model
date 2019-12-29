@@ -11,6 +11,7 @@ export enum DataMockEntities {
   ACCESS = 'accesses',
   AUTHS = 'auths',
   PRODUCTS = 'products',
+  ORDERS = 'orders',
 }
 
 export class DataMock {
@@ -22,6 +23,7 @@ export class DataMock {
     [DataMockEntities.ACCESS]: '@pyxismedia/lib-model/build/user/access.data.json',
     [DataMockEntities.AUTHS]: '@pyxismedia/lib-model/build/auth/auth.data.json',
     [DataMockEntities.PRODUCTS]: '@pyxismedia/lib-model/build/eshop/product/product.data.json',
+    [DataMockEntities.ORDERS]: '@pyxismedia/lib-model/build/eshop/order/order.data.json',
   };
 
   private static MOCKS = {

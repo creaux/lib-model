@@ -1,26 +1,35 @@
-import test from 'ava';
 import { ORDER_MODEL, OrderSchema } from './order.schema';
 import * as mongoose from 'mongoose';
 
-let ProductModel: mongoose.Model<mongoose.Document, {}>;
-let instance: any;
+describe('OrderSchema', () => {
+  let ProductModel: mongoose.Model<mongoose.Document, {}>;
+  let instance: any;
 
-test.before(() => {
-  try {
-    ProductModel = mongoose.model(ORDER_MODEL);
-  } catch (error) {
-    ProductModel = mongoose.model(ORDER_MODEL, OrderSchema);
-  }
-});
+  beforeEach(() => {
+    try {
+      ProductModel = mongoose.model(ORDER_MODEL);
+    } catch (error) {
+      ProductModel = mongoose.model(ORDER_MODEL, OrderSchema);
+    }
+  });
 
-test.skip('products are required', t => {
-  instance = new ProductModel({ products: [] });
-  const validated = instance.validateSync();
-  t.truthy(validated.errors['products']);
-});
+  it('products should be ObjectId string', () => {
+    instance = new ProductModel({ user: '5e175a8890ba3efd65bdcb4e', products: ['abc'] });
+    const validated = instance.validateSync();
+    expect(validated.errors['products'].message).toEqual(
+      'Cast to Array failed for value "[ \'abc\' ]" at path "products"',
+    );
+  });
 
-test('user is required', t => {
-  instance = new ProductModel({ user: undefined });
-  const validated = instance.validateSync();
-  t.is(validated.errors['user'].message, 'Path `user` is required.');
+  it('user is required', () => {
+    instance = new ProductModel({ user: undefined });
+    const validated = instance.validateSync();
+    expect(validated.errors['user'].message).toEqual('Path `user` is required.');
+  });
+
+  it('user should be ObjectID string', () => {
+    instance = new ProductModel({ user: 'abc' });
+    const validated = instance.validateSync();
+    expect(validated.errors['user'].message).toEqual('Cast to ObjectID failed for value "abc" at path "user"');
+  });
 });

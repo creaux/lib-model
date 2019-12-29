@@ -6,3 +6,5 @@ export * from './generics';
 export * from './eshop';
 export { ImageModel } from './common/image.model';
 export * from './common';
+export * from './eshop';
+export * from './decorators';

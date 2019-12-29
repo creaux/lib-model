@@ -18,9 +18,10 @@
     "mongoimport:users:roles": "mongoimport -h $DB_HOSTNAME -d $DB_NAME -u $DB_USER -p $DB_PASSWORD --collection roles --file ./src/user/role.data.json --drop --jsonArray",
     "mongoimport:users:access": "mongoimport -h $DB_HOSTNAME -d $DB_NAME -u $DB_USER -p $DB_PASSWORD --collection accesses --file ./src/user/access.data.json --drop --jsonArray",
     "mongoimport:products": "mongoimport -h $DB_HOSTNAME -d $DB_NAME -u $DB_USER -p $DB_PASSWORD --collection products --file ./src/eshop/product/product.data.json --drop --jsonArray",
+    "mongoimport:orders": "mongoimport -h $DB_HOSTNAME -d $DB_NAME -u $DB_USER -p $DB_PASSWORD --collection products --file ./src/eshop/order/order.data.json --drop --jsonArray",
     "mongoimport": "npm run mongoimport:posts && npm run mongoimport:sections && npm run mongoimport:users && npm run mongoimport:users:roles && npm run mongoimport:users:access && npm run mongoimport:products",
-    "test": "ava",
-    "test:watch": "ava --watch"
+    "test": "jest -c jest.config.json",
+    "test:watch": "jest -c jest.config.json --watch"
   },
   "peerDependencies": {
     "bcrypt": "^3.0.6",
@@ -56,7 +57,10 @@
     "nodemon": "^2.0.0",
     "prettier": "^1.18.2",
     "semantic-release": "^15.13.17",
-    "typescript": "^3.6.3"
+    "typescript": "^3.6.3",
+    "@types/jest": "^24.0.18",
+    "jest": "^24.9.0",
+    "ts-jest": "^24.1.0"
   },
   "author": "",
   "license": "ISC",
@@ -83,7 +87,6 @@
   },
   "dependencies": {
     "accesscontrol": "^2.2.1",
-    "ava": "^2.4.0",
     "dotenv-flow": "^3.1.0",
     "reflect-metadata": "^0.1.13",
     "ts-node": "^8.4.1",

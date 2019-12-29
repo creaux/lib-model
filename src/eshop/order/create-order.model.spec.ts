@@ -1,87 +1,88 @@
 import { Validator } from 'class-validator';
-import test from 'ava';
 import { CreateOrderModel } from './create-order.model';
-import { MOCK_TOKEN } from '../../common/mockerizer.decorator';
+import { MOCK_TOKEN } from '../../common';
 
 const { keys } = Object;
 
-let createOrderModel: CreateOrderModel;
-let validator: Validator;
-let Mock: any;
+describe('CreateOrderModel', () => {
+  let createOrderModel: CreateOrderModel;
+  let validator: Validator;
+  let Mock: any;
 
-test.before(() => {
-  Mock = Reflect.getMetadata(MOCK_TOKEN, CreateOrderModel);
+  beforeEach(() => {
+    Mock = Reflect.getMetadata(MOCK_TOKEN, CreateOrderModel);
 
-  createOrderModel = new Mock();
-  validator = new Validator();
-});
-
-test('should raise error when user is undefined', async t => {
-  const { user, ...props } = createOrderModel;
-  const model = new CreateOrderModel({
-    // @ts-ignore
-    user: undefined,
-    ...props,
+    createOrderModel = new Mock();
+    validator = new Validator();
   });
 
-  const validated = (await validator.validate(model))[0];
+  it('should raise error when user is undefined', async () => {
+    const { user, ...props } = createOrderModel;
+    const model = new CreateOrderModel({
+      // @ts-ignore
+      user: undefined,
+      ...props,
+    });
 
-  t.is(validated.property, 'user');
-  t.deepEqual(keys(validated.constraints), ['isDefined', 'isMongoId']);
-});
+    const validated = (await validator.validate(model))[0];
 
-test('should raise error when user is not mongo id', async t => {
-  const { user, ...props } = createOrderModel;
-  const model = new CreateOrderModel({
-    // @ts-ignore
-    user: 'abc',
-    ...props,
+    expect(validated.property).toEqual('user');
+    expect(keys(validated.constraints)).toEqual(['isDefined', 'isMongoId']);
   });
 
-  const validated = (await validator.validate(model))[0];
+  it('should raise error when user is not mongo id', async () => {
+    const { user, ...props } = createOrderModel;
+    const model = new CreateOrderModel({
+      // @ts-ignore
+      user: 'abc',
+      ...props,
+    });
 
-  t.is(validated.property, 'user');
-  t.deepEqual(keys(validated.constraints), ['isMongoId']);
-});
+    const validated = (await validator.validate(model))[0];
 
-test('should raise error when products are not array', async t => {
-  const { products, ...props } = createOrderModel;
-  const model = new CreateOrderModel({
-    // @ts-ignore
-    products: undefined,
-    ...props,
+    expect(validated.property).toEqual('user');
+    expect(keys(validated.constraints)).toEqual(['isMongoId']);
   });
 
-  const validated = (await validator.validate(model))[0];
+  it('should raise error when products are not array', async () => {
+    const { products, ...props } = createOrderModel;
+    const model = new CreateOrderModel({
+      // @ts-ignore
+      products: undefined,
+      ...props,
+    });
 
-  t.is(validated.property, 'products');
-  t.deepEqual(keys(validated.constraints), ['arrayNotEmpty', 'isArray']);
-});
+    const validated = (await validator.validate(model))[0];
 
-test('should raise error when products are empty', async t => {
-  const { products, ...props } = createOrderModel;
-  const model = new CreateOrderModel({
-    // @ts-ignore
-    products: [],
-    ...props,
+    expect(validated.property).toEqual('products');
+    expect(keys(validated.constraints)).toEqual(['arrayNotEmpty', 'isArray']);
   });
 
-  const validated = (await validator.validate(model))[0];
+  it('should raise error when products are empty', async () => {
+    const { products, ...props } = createOrderModel;
+    const model = new CreateOrderModel({
+      // @ts-ignore
+      products: [],
+      ...props,
+    });
 
-  t.is(validated.property, 'products');
-  t.deepEqual(keys(validated.constraints), ['arrayNotEmpty']);
-});
+    const validated = (await validator.validate(model))[0];
 
-test('should raise error when products are not array of mongo ids', async t => {
-  const { products, ...props } = createOrderModel;
-  const model = new CreateOrderModel({
-    // @ts-ignore
-    products: [123],
-    ...props,
+    expect(validated.property).toEqual('products');
+    expect(keys(validated.constraints)).toEqual(['arrayNotEmpty']);
   });
 
-  const validated = (await validator.validate(model))[0];
+  it('should raise error when products are not array of mongo ids', async () => {
+    const { products, ...props } = createOrderModel;
+    const model = new CreateOrderModel({
+      // @ts-ignore
+      products: [123],
+      ...props,
+    });
 
-  t.is(validated.property, 'products');
-  t.deepEqual(keys(validated.constraints), ['isMongoId']);
+    const validated = (await validator.validate(model))[0];
+
+    expect(validated.property).toEqual('products');
+    expect(keys(validated.constraints)).toEqual(['isMongoId']);
+  });
 });

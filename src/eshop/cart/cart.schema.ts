@@ -19,5 +19,6 @@ export const CartSchema = new BaseScheme({
   user: {
     type: Types.ObjectId,
     ref: USER_MODEL,
+    required: true,
   },
 });

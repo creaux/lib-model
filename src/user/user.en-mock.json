@@ -47,5 +47,16 @@
       "name": "Superadmin",
       "id": "5dc9bc0c99e35856ffe90e66"
     }]
+  },
+  {
+    "id": "5e021cc4b0d0a6bd5f64b67c",
+    "forname": "Tonda",
+    "surname": "Zakaznik",
+    "email": "tonda@zakaznik.cz",
+    "password": "$2b$10$0JCol.4vgoaiy70z9XX8ZOyJHYV6PMidts.WToOrAZmj90wgbPIou",
+    "roles": [{
+      "id": "5e021e7c909b5abd8afb0ba5",
+      "name": "Customer"
+    }]
   }
 ]
