@@ -4,18 +4,18 @@
       "$oid": "507f1f77bcf86cd799439012"
     },
     "role": ["Superadmin"],
-    "resource": ["post"],
+    "resource": ["post", "order"],
     "attributes": ["*"],
     "action": "read",
     "possession": "any",
-    "denied": true
+    "denied": false
   },
   {
     "_id": {
       "$oid": "5dcc634a6a5a108f837936a4"
     },
     "role": ["Superadmin"],
-    "resource": ["post"],
+    "resource": ["post", "order"],
     "attributes": ["*"],
     "action": "create",
     "possession": "any",
@@ -26,7 +26,7 @@
       "$oid": "5dcc635008707c9ee0f66d53"
     },
     "role": ["Superadmin"],
-    "resource": ["post"],
+    "resource": ["post", "order"],
     "attributes": ["*"],
     "action": "update",
     "possession": "any",
@@ -37,7 +37,7 @@
       "$oid": "5dcc6355ddd59453030e2732"
     },
     "role": ["Superadmin"],
-    "resource": ["post"],
+    "resource": ["post", "order"],
     "attributes": ["*"],
     "action": "delete",
     "possession": "any",
@@ -86,5 +86,49 @@
     "action": "delete",
     "possession": "any",
     "denied": true
+  },
+  {
+    "_id": {
+      "$oid": "5e021bb691e6b827f73731a3"
+    },
+    "role": ["Customer"],
+    "resource": ["order"],
+    "attributes": ["*"],
+    "action": "read",
+    "possession": "own",
+    "denied": false
+  },
+  {
+    "_id": {
+      "$oid": "5e021bc45612659374f061b2"
+    },
+    "role": ["Customer"],
+    "resource": ["order"],
+    "attributes": ["*"],
+    "action": "create",
+    "possession": "any",
+    "denied": false
+  },
+  {
+    "_id": {
+      "$oid": "5e021bca057c4b6c825771a5"
+    },
+    "role": ["Customer"],
+    "resource": ["order"],
+    "attributes": ["*"],
+    "action": "update",
+    "possession": "any",
+    "denied": false
+  },
+  {
+    "_id": {
+      "$oid": "5e021bd0d94fccf5f56e8aae"
+    },
+    "role": ["Customer"],
+    "resource": ["order"],
+    "attributes": ["*"],
+    "action": "delete",
+    "possession": "any",
+    "denied": false
   }
 ]

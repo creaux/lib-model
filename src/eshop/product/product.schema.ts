@@ -2,7 +2,7 @@ import { BaseScheme } from '../../schemas/base.schema';
 import { Types, Document } from 'mongoose';
 import { ProductModel } from './product.model';
 
-export const PRODUCT_MODEL = 'Products';
+export const PRODUCT_MODEL = 'Product';
 
 export type ProductSchema = ProductModel & Document;
 

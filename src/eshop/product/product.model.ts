@@ -8,7 +8,7 @@ import {
   Length,
   ValidateNested,
 } from 'class-validator';
-import { ImageModel } from '../..';
+import { ImageModel } from '../../common/image.model';
 import { Types } from 'mongoose';
 import { lorem, random } from 'faker';
 import { Mockerizer } from '../../common/mockerizer.decorator';

@@ -51,7 +51,7 @@ export class CreateProductModel {
 
   @ApiModelProperty({
     required: true,
-    type: String,
+    type: [ImageModel],
     example: [ImageModel.MOCK],
   })
   @IsDefined()

@@ -10,5 +10,11 @@
       "$oid": "5dc9bc0c99e35856ffe90e66"
     },
     "name": "Superadmin"
+  },
+  {
+    "_id": {
+      "$oid": "5e021e7c909b5abd8afb0ba5"
+    },
+    "name": "Customer"
   }
 ]
