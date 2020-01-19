@@ -83,7 +83,7 @@
   },
   "dependencies": {
     "accesscontrol": "^2.2.1",
-    "ava": "^2.4.0",
+    "ava": "^3.0.0",
     "dotenv-flow": "^3.1.0",
     "reflect-metadata": "^0.1.13",
     "ts-node": "^8.4.1",
