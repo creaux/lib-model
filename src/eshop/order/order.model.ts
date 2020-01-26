@@ -1,10 +1,11 @@
-import { IsArray, IsDefined, IsInstance, IsMongoId, ValidateNested, IsDateString } from 'class-validator';
+import { IsArray, IsDefined, IsInstance, IsMongoId, ValidateNested, IsDateString, IsEnum } from 'class-validator';
 import { UserModel } from '../../user';
 import { MOCK_TOKEN, Mockerizer } from '../../common/mockerizer.decorator';
 import { Types } from 'mongoose';
 import { ProductModel } from '../product/product.model';
 import { Type } from 'class-transformer';
 import { ApiModelProperty } from '@nestjs/swagger';
+import { OrderProcess } from './order-process.enum';
 
 const ProductMock = Reflect.getMetadata(MOCK_TOKEN, ProductModel);
 
@@ -14,6 +15,7 @@ const ProductMock = Reflect.getMetadata(MOCK_TOKEN, ProductModel);
     user: () => UserModel.MOCK,
     products: (productModelMocks: ProductModel[]) => productModelMocks,
     createdAt: () => new Date().toDateString(),
+    process: () => OrderProcess.UNPAID,
   },
   [
     {
@@ -58,10 +60,22 @@ export class OrderModel {
   @IsDateString()
   public readonly createdAt: string;
 
-  constructor({ id, user, products, createdAt = new Date().toDateString() }: OrderModel) {
+  // TODO: Test
+  @IsDefined()
+  @IsEnum(OrderProcess)
+  public readonly process: OrderProcess;
+
+  constructor({
+    id,
+    user,
+    products,
+    createdAt = new Date().toDateString(),
+    process = OrderProcess.UNPAID,
+  }: OrderModel) {
     this.id = id;
     this.user = user;
     this.products = products;
     this.createdAt = createdAt;
+    this.process = process;
   }
 }

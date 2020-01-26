@@ -106,7 +106,7 @@
     "resource": ["order"],
     "attributes": ["*"],
     "action": "create",
-    "possession": "any",
+    "possession": "own",
     "denied": false
   },
   {
@@ -117,8 +117,8 @@
     "resource": ["order"],
     "attributes": ["*"],
     "action": "update",
-    "possession": "any",
-    "denied": false
+    "possession": "own",
+    "denied": true
   },
   {
     "_id": {
@@ -128,7 +128,29 @@
     "resource": ["order"],
     "attributes": ["*"],
     "action": "delete",
+    "possession": "own",
+    "denied": true
+  },
+  {
+    "_id": {
+      "$oid": "5e18a614c8054f66e64c7125"
+    },
+    "role": ["Anonymous"],
+    "resource": ["post"],
+    "attributes": ["*"],
+    "action": "read",
     "possession": "any",
+    "denied": false
+  },
+  {
+    "_id": {
+      "$oid": "5e2dc5efb2be67c62fc19dc1"
+    },
+    "role": ["Anonymous"],
+    "resource": ["post"],
+    "attributes": ["*"],
+    "action": "read",
+    "possession": "own",
     "denied": false
   }
 ]

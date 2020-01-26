@@ -1,28 +1,35 @@
-import { ArrayNotEmpty, IsArray, IsMongoId, IsDefined } from 'class-validator';
+import { IsArray, IsMongoId, IsOptional, ArrayNotEmpty } from 'class-validator';
 import { Mockerizer } from '../../common';
 import { Types } from 'mongoose';
 import { ApiModelPropertyMock } from '../../decorators';
-import { OrderProcess } from './order-process.enum';
+import { ApiModelProperty } from '@nestjs/swagger';
 
-@Mockerizer<Omit<CreateOrderModel, 'process'>>({
+@Mockerizer<UpdateOrderModel>({
   products: () => [Types.ObjectId().toHexString()],
+  user: () => Types.ObjectId().toHexString(),
 })
-export class CreateOrderModel {
+export class UpdateOrderModel {
   @ApiModelPropertyMock({
     required: false,
     type: [String],
     example: ['5de3e0a388e99a666e8ee8ab'],
   })
-  @IsDefined()
+  @IsOptional()
   @IsArray()
   @ArrayNotEmpty()
   @IsMongoId({ each: true })
   public readonly products!: string[];
 
-  // TODO: Test
-  public readonly process? = OrderProcess.UNPAID;
+  @ApiModelProperty({
+    required: true,
+    type: String,
+    example: '000000000000000000000d00',
+  })
+  @IsOptional()
+  @IsMongoId()
+  public readonly user!: string;
 
-  constructor(args: Partial<CreateOrderModel>) {
+  constructor(args: Partial<UpdateOrderModel>) {
     // This makes sure that plainToClass from class-transform will work
     // as it is initializing using empty constructor and then copying all keys one by one
     Object.assign(this, args);
