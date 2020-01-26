@@ -3,12 +3,14 @@
     "_id": { "$oid": "5e01c779d893e6938c118879" },
     "user": "000000000000000000000a00",
     "products": ["5de3e0a388e99a666e8ee8ad", "5de3e0a388e99a666e8ee8ab"],
-    "createdAt":  "Sun Dec 29 2019 11:28:45 GMT+0100 (CET)"
+    "createdAt":  "Sun Dec 29 2019 11:28:45 GMT+0100 (CET)",
+    "process": "unpaid"
   },
   {
     "_id": { "$oid": "5e03379ad2e5526d3d8eb277" },
     "user": "5e021cc4b0d0a6bd5f64b67c",
     "products": ["5de3e0a388e99a666e8ee8ad", "5de3e0a388e99a666e8ee8ab"],
-    "createdAt": "Sun Dec 29 2019 11:28:46 GMT+0100 (CET)"
+    "createdAt": "Sun Dec 29 2019 11:28:46 GMT+0100 (CET)",
+    "process": "paid"
   }
 ]

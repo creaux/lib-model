@@ -38,5 +38,25 @@
       "alt": "This is alt of image"
     },
     "price": 124
+  },
+  {
+    "_id": {
+      "$oid": "5e1efa1c284fd310a7387799"
+    },
+    "title": {
+      "en": "bMock title EN",
+      "de": "bMock title DE",
+      "fr": "bMock title FR"
+    },
+    "description": {
+      "en": "bThis is mock description EN",
+      "de": "bThis is mock description DE",
+      "fr": "bThis is mock description FR"
+    },
+    "images": {
+      "src": "https://picsum.photos/200/300",
+      "alt": "This is alt of image"
+    },
+    "price": 124
   }
 ]

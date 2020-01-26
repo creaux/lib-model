@@ -16,34 +16,6 @@ describe('CreateOrderModel', () => {
     validator = new Validator();
   });
 
-  it('should raise error when user is undefined', async () => {
-    const { user, ...props } = createOrderModel;
-    const model = new CreateOrderModel({
-      // @ts-ignore
-      user: undefined,
-      ...props,
-    });
-
-    const validated = (await validator.validate(model))[0];
-
-    expect(validated.property).toEqual('user');
-    expect(keys(validated.constraints)).toEqual(['isDefined', 'isMongoId']);
-  });
-
-  it('should raise error when user is not mongo id', async () => {
-    const { user, ...props } = createOrderModel;
-    const model = new CreateOrderModel({
-      // @ts-ignore
-      user: 'abc',
-      ...props,
-    });
-
-    const validated = (await validator.validate(model))[0];
-
-    expect(validated.property).toEqual('user');
-    expect(keys(validated.constraints)).toEqual(['isMongoId']);
-  });
-
   it('should raise error when products are not array', async () => {
     const { products, ...props } = createOrderModel;
     const model = new CreateOrderModel({
@@ -55,7 +27,7 @@ describe('CreateOrderModel', () => {
     const validated = (await validator.validate(model))[0];
 
     expect(validated.property).toEqual('products');
-    expect(keys(validated.constraints)).toEqual(['arrayNotEmpty', 'isArray']);
+    expect(keys(validated.constraints)).toEqual(['isDefined', 'arrayNotEmpty', 'isArray']);
   });
 
   it('should raise error when products are empty', async () => {
