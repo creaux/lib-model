@@ -17,7 +17,16 @@
       "src": "https://picsum.photos/200/300",
       "alt": "aThis is alt of image"
     },
-    "price": 123
+    "prices": [
+      {
+        "value": 123,
+        "currency": "usd"
+      },
+      {
+        "value": 10,
+        "currency": "czk"
+      }
+    ]
   },
   {
     "_id": {
@@ -37,7 +46,16 @@
       "src": "https://picsum.photos/200/300",
       "alt": "This is alt of image"
     },
-    "price": 124
+    "prices": [
+      {
+        "value": 124,
+        "currency": "usd"
+      },
+      {
+        "value": 11,
+        "currency": "czk"
+      }
+    ]
   },
   {
     "_id": {
@@ -57,6 +75,15 @@
       "src": "https://picsum.photos/200/300",
       "alt": "This is alt of image"
     },
-    "price": 124
+    "prices": [
+      {
+        "value": 123,
+        "currency": "usd"
+      },
+      {
+        "value": 10,
+        "currency": "czk"
+      }
+    ]
   }
 ]

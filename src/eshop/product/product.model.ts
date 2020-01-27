@@ -1,17 +1,10 @@
-import {
-  ArrayNotEmpty,
-  IsDefined,
-  IsInstance,
-  IsMongoId,
-  IsNumber,
-  IsString,
-  Length,
-  ValidateNested,
-} from 'class-validator';
+import { ArrayNotEmpty, IsDefined, IsInstance, IsMongoId, IsString, Length, ValidateNested } from 'class-validator';
 import { ImageModel } from '../../common/image.model';
 import { Types } from 'mongoose';
-import { lorem, random } from 'faker';
+import { lorem } from 'faker';
 import { Mockerizer } from '../../common/mockerizer.decorator';
+import { PriceModel } from './price.model';
+import { PriceEnum } from './prices.enum';
 
 const { assign } = Object;
 
@@ -21,7 +14,7 @@ const { assign } = Object;
     title: () => lorem.words(3),
     description: () => lorem.words(20),
     images: (imageMocks: ImageModel[]) => imageMocks,
-    price: random.number,
+    prices: () => [new PriceModel({ value: 123, currency: PriceEnum.USD })],
   },
   [
     {
@@ -52,8 +45,9 @@ export class ProductModel {
   public readonly description!: string;
 
   @IsDefined()
-  @IsNumber()
-  public readonly price!: number;
+  @IsInstance(PriceModel, { each: true })
+  @ValidateNested({ each: true })
+  public readonly prices!: PriceModel[];
 
   constructor(model: ProductModel) {
     assign(this, model);

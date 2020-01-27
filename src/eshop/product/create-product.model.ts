@@ -1,25 +1,18 @@
-import {
-  ArrayNotEmpty,
-  IsArray,
-  IsDefined,
-  IsInstance,
-  IsNumber,
-  IsString,
-  Length,
-  ValidateNested,
-} from 'class-validator';
+import { ArrayNotEmpty, IsArray, IsDefined, IsInstance, IsString, Length, ValidateNested } from 'class-validator';
 import { ImageModel } from '../../common/image.model';
 import { Mockerizer } from '../../common/mockerizer.decorator';
-import { lorem, random } from 'faker';
+import { lorem } from 'faker';
 import { ApiModelProperty } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
+import { PriceModel } from './price.model';
+import { PriceEnum } from './prices.enum';
 
 @Mockerizer<CreateProductModel>(
   {
     title: () => lorem.words(3),
     description: () => lorem.words(30),
     images: (imagesModel: ImageModel[]) => imagesModel,
-    price: () => random.number(),
+    prices: () => [new PriceModel({ value: 123, currency: PriceEnum.USD })],
   },
   [
     {
@@ -65,11 +58,13 @@ export class CreateProductModel {
   @ApiModelProperty({
     required: true,
     type: String,
-    example: random.number(),
+    example: [new PriceModel({ value: 123, currency: PriceEnum.USD })],
   })
   @IsDefined()
-  @IsNumber()
-  public readonly price!: number;
+  @IsArray()
+  @IsInstance(PriceModel, { each: true })
+  @ValidateNested({ each: true })
+  public readonly prices!: PriceModel[];
 
   constructor(model: CreateProductModel) {
     Object.assign(this, model);

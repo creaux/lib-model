@@ -1,6 +1,7 @@
 import { BaseScheme } from '../../schemas/base.schema';
 import { Types, Document } from 'mongoose';
 import { ProductModel } from './product.model';
+import { PriceEnum } from './prices.enum';
 
 export const PRODUCT_MODEL = 'Product';
 
@@ -21,7 +22,16 @@ export const ProductSchema = new BaseScheme(
       required: true,
       validate: [value => value.length > 0, 'Required one image by minimum'],
     },
-    price: { type: Number, required: true },
+    prices: {
+      type: [
+        new BaseScheme({
+          value: { type: Number, required: true },
+          currency: { type: String, required: true, enum: [...Object.values(PriceEnum)] },
+        }),
+      ],
+      required: true,
+      validate: [value => value.length > 0, 'Required one price by minimum'],
+    },
   },
   {
     versionKey: false,

@@ -138,27 +138,39 @@ describe('CreateProductModel', () => {
     expect(keys(validated.children[0].children[0].constraints)).toEqual(['isUrl']);
   });
 
-  it('should raise error when price is not defined', async () => {
-    const { price, ...props } = productModel;
+  it('should raise error when prices are not defined', async () => {
+    const { prices, ...props } = productModel;
     const model = new CreateProductModel({
       // @ts-ignore
-      price: undefined,
+      prices: undefined,
       ...props,
     });
     const validated = (await validator.validate(model))[0];
-    expect(validated.property).toEqual('price');
-    expect(keys(validated.constraints)).toEqual(['isDefined', 'isNumber']);
+    expect(validated.property).toEqual('prices');
+    expect(keys(validated.constraints)).toEqual(['isDefined', 'isArray']);
   });
 
-  it('should raise error when price is not valid', async () => {
-    const { price, ...props } = productModel;
+  it('should raise error when prices are not valid', async () => {
+    const { prices, ...props } = productModel;
     const model = new CreateProductModel({
       // @ts-ignore
-      price: 'abc',
+      prices: 'abc',
       ...props,
     });
     const validated = (await validator.validate(model))[0];
-    expect(validated.property).toEqual('price');
-    expect(keys(validated.constraints)).toEqual(['isNumber']);
+    expect(validated.property).toEqual('prices');
+    expect(keys(validated.constraints)).toEqual(['isArray']);
+  });
+
+  it("should raise error when prices don't contain PricesModel objects", async () => {
+    const { prices, ...props } = productModel;
+    const model = new CreateProductModel({
+      // @ts-ignore
+      prices: [{ husa: 'kure' }],
+      ...props,
+    });
+    const validated = (await validator.validate(model))[0];
+    expect(validated.property).toEqual('prices');
+    expect(keys(validated.constraints)).toEqual(['isInstance']);
   });
 });
