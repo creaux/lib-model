@@ -7,6 +7,15 @@
       "src": "https://picsum.photos/200/300",
       "alt": "This is alt of image"
     },
-    "price": 123
+    "prices": [
+      {
+        "value": 123,
+        "currency": "usd"
+      },
+      {
+        "value": 10,
+        "currency": "czk"
+      }
+    ]
   }
 ]

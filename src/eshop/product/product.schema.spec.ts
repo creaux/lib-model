@@ -44,16 +44,16 @@ describe('ProductSchema', () => {
     expect(validated.errors['images.0.src'].message).toEqual('Path `src` is required.');
   });
 
-  it('price has to be defined', () => {
-    instance = new ProductModel({ price: undefined });
+  it('prices have to be defined', () => {
+    instance = new ProductModel({ prices: undefined });
     const validated = instance.validateSync();
-    expect(validated.errors['price'].message).toEqual('Path `price` is required.');
+    expect(validated.errors['prices'].message).toEqual('Required one price by minimum');
   });
 
-  it('price has to be of type Number', () => {
-    instance = new ProductModel({ price: 'abc' });
+  it('prices have to be of type Number', () => {
+    instance = new ProductModel({ prices: 'abc' });
     const validated = instance.validateSync();
-    expect(validated.errors['price'].message).toEqual('Cast to Number failed for value "abc" at path "price"');
+    expect(validated.errors['prices'].message).toEqual('Cast to Array failed for value "abc" at path "prices"');
   });
 
   it('_id has to be ObjectId', () => {
