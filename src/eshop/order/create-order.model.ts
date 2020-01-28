@@ -1,4 +1,4 @@
-import { ArrayNotEmpty, IsArray, IsMongoId, IsDefined } from 'class-validator';
+import { ArrayNotEmpty, IsArray, IsMongoId, IsDefined, IsEnum } from 'class-validator';
 import { Mockerizer } from '../../common';
 import { Types } from 'mongoose';
 import { ApiModelPropertyMock } from '../../decorators';
@@ -20,6 +20,8 @@ export class CreateOrderModel {
   public readonly products!: string[];
 
   // TODO: Test
+  @IsDefined()
+  @IsEnum(OrderProcess)
   public readonly process? = OrderProcess.UNPAID;
 
   constructor(args: Partial<CreateOrderModel>) {
