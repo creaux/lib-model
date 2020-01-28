@@ -64,6 +64,7 @@ export class CreateProductModel {
   @IsArray()
   @IsInstance(PriceModel, { each: true })
   @ValidateNested({ each: true })
+  @Type(() => PriceModel)
   public readonly prices!: PriceModel[];
 
   constructor(model: CreateProductModel) {
