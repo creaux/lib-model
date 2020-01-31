@@ -1,6 +1,7 @@
 import { IsDefined, IsString, IsUrl } from 'class-validator';
 import { Mockerizer } from './mockerizer.decorator';
 import { image, lorem } from 'faker';
+import { Expose } from 'class-transformer';
 
 const { assign } = Object;
 
@@ -24,10 +25,12 @@ export class ImageModel {
 
   @IsDefined()
   @IsUrl()
+  @Expose()
   public readonly src!: string;
 
   @IsDefined()
   @IsString()
+  @Expose()
   public readonly alt!: string;
 
   constructor(model: ImageModel) {

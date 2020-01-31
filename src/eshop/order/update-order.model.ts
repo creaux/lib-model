@@ -3,6 +3,7 @@ import { Mockerizer } from '../../common';
 import { Types } from 'mongoose';
 import { ApiModelPropertyMock } from '../../decorators';
 import { ApiModelProperty } from '@nestjs/swagger';
+import { Expose } from 'class-transformer';
 
 @Mockerizer<UpdateOrderModel>({
   products: () => [Types.ObjectId().toHexString()],
@@ -18,6 +19,7 @@ export class UpdateOrderModel {
   @IsArray()
   @ArrayNotEmpty()
   @IsMongoId({ each: true })
+  @Expose()
   public readonly products!: string[];
 
   @ApiModelProperty({
@@ -27,6 +29,7 @@ export class UpdateOrderModel {
   })
   @IsOptional()
   @IsMongoId()
+  @Expose()
   public readonly user!: string;
 
   constructor(args: Partial<UpdateOrderModel>) {

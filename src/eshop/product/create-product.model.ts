@@ -5,14 +5,15 @@ import { lorem } from 'faker';
 import { ApiModelProperty } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
 import { PriceModel } from './price.model';
-import { PriceEnum } from './prices.enum';
+import { CurrenciesEnum } from './currencies.enum';
+import { Expose } from 'class-transformer';
 
 @Mockerizer<CreateProductModel>(
   {
     title: () => lorem.words(3),
-    description: () => lorem.words(30),
+    description: () => lorem.words(10),
     images: (imagesModel: ImageModel[]) => imagesModel,
-    prices: () => [new PriceModel({ value: 123, currency: PriceEnum.USD })],
+    prices: () => [new PriceModel({ value: 123, currency: CurrenciesEnum.USD })],
   },
   [
     {
@@ -30,6 +31,7 @@ export class CreateProductModel {
   @IsDefined()
   @IsString()
   @Length(1, 120)
+  @Expose()
   public readonly title!: string;
 
   @ApiModelProperty({
@@ -40,6 +42,7 @@ export class CreateProductModel {
   @IsDefined()
   @IsString()
   @Length(1, 240)
+  @Expose()
   public readonly description!: string;
 
   @ApiModelProperty({
@@ -53,18 +56,20 @@ export class CreateProductModel {
   @IsInstance(ImageModel, { each: true })
   @ValidateNested({ each: true })
   @Type(() => ImageModel)
+  @Expose()
   public readonly images!: ImageModel[];
 
   @ApiModelProperty({
     required: true,
     type: String,
-    example: [new PriceModel({ value: 123, currency: PriceEnum.USD })],
+    example: [new PriceModel({ value: 123, currency: CurrenciesEnum.USD })],
   })
   @IsDefined()
   @IsArray()
   @IsInstance(PriceModel, { each: true })
   @ValidateNested({ each: true })
   @Type(() => PriceModel)
+  @Expose()
   public readonly prices!: PriceModel[];
 
   constructor(model: CreateProductModel) {

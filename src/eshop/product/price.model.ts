@@ -1,14 +1,17 @@
 import { IsDefined, IsEnum, IsNumber } from 'class-validator';
-import { PriceEnum } from './prices.enum';
+import { CurrenciesEnum } from './currencies.enum';
+import { Expose } from 'class-transformer';
 
 export class PriceModel {
   @IsDefined()
   @IsNumber()
+  @Expose()
   public readonly value!: number;
 
   @IsDefined()
-  @IsEnum(PriceEnum)
-  public readonly currency!: PriceEnum;
+  @IsEnum(CurrenciesEnum)
+  @Expose()
+  public readonly currency!: CurrenciesEnum;
 
   constructor(args: PriceModel) {
     Object.assign(this, args);
