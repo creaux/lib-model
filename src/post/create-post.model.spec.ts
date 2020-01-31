@@ -98,7 +98,7 @@ describe('CreatePostModel', () => {
     const validated = await validator.validate(model);
     expect(validated[0].toString()).toEqual(
       'An instance of CreatePostModel has failed the validation:\n' +
-        ' - property content has failed the following constraints: isString \n',
+        ' - property content has failed the following constraints: length, isString \n',
     );
   });
 

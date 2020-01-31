@@ -1,18 +1,16 @@
 import 'reflect-metadata';
-import { ValueOf } from '../generics/ValueOf';
-import { Constructor } from '../generics/constructor';
 
 export const MOCK_TOKEN = Symbol('mockerizer:mock');
 
 // TODO: Implement fake directly for numbers,words,imageUrls
-export const Mockerizer = <T, K extends Constructor<T> = Constructor<T>>(
-  properties: Record<keyof T, (...args: any[]) => ValueOf<T>>,
+export const Mockerizer = <T, E extends string = '', K = new (...args: any[]) => T, O = Omit<T, E>>(
+  properties: Record<keyof O, (...args: any[]) => O[keyof O]>,
   mockModels?: {
-    model: Constructor<any>;
+    model: new (...args: any[]) => any;
     count?: number;
   }[],
 ): ((Target: K) => K) => {
-  return (Target: K): K => {
+  return Target => {
     class Mock {
       constructor(private readonly count: number = 1) {
         if (this.count === 1) {
@@ -35,7 +33,7 @@ export const Mockerizer = <T, K extends Constructor<T> = Constructor<T>>(
             return new Mock();
           });
         }
-        const result: { [key: string]: ValueOf<T> } = {};
+        const result: { [key: string]: O[keyof O] } = {};
         for (const key in properties) {
           if (properties.hasOwnProperty(key)) {
             result[key] = properties[key](...mocks);

@@ -1,8 +1,17 @@
-import { IsArray, IsDefined, IsInstance, IsMongoId, ValidateNested, IsDateString, IsEnum } from 'class-validator';
+import {
+  IsArray,
+  IsDefined,
+  IsInstance,
+  IsMongoId,
+  ValidateNested,
+  IsDateString,
+  IsEnum,
+  IsString,
+} from 'class-validator';
 import { UserModel } from '../../user';
-import { MOCK_TOKEN, Mockerizer } from '../../common/mockerizer.decorator';
+import { MOCK_TOKEN, Mockerizer } from '../../common';
 import { Types } from 'mongoose';
-import { ProductModel } from '../product/product.model';
+import { ProductModel } from '../product';
 import { Type } from 'class-transformer';
 import { ApiModelProperty } from '@nestjs/swagger';
 import { OrderProcess } from './order-process.enum';
@@ -16,6 +25,7 @@ const ProductMock = Reflect.getMetadata(MOCK_TOKEN, ProductModel);
     products: (productModelMocks: ProductModel[]) => productModelMocks,
     createdAt: () => new Date().toDateString(),
     process: () => OrderProcess.UNPAID,
+    paymentId: () => 'abc',
   },
   [
     {
@@ -32,7 +42,7 @@ export class OrderModel {
   })
   @IsDefined()
   @IsMongoId()
-  public readonly id: string;
+  public readonly id!: string;
 
   @ApiModelProperty({
     required: false,
@@ -42,7 +52,7 @@ export class OrderModel {
   @IsArray()
   @IsInstance(ProductModel, { each: true })
   @IsDefined()
-  public readonly products: ProductModel[];
+  public readonly products!: ProductModel[];
 
   @ApiModelProperty({
     required: true,
@@ -53,29 +63,23 @@ export class OrderModel {
   @IsInstance(UserModel)
   @ValidateNested()
   @Type(() => UserModel)
-  public readonly user: UserModel;
+  public readonly user!: UserModel;
 
   // TODO: Test
   @IsDefined()
   @IsDateString()
-  public readonly createdAt: string;
+  public readonly createdAt!: string;
 
   // TODO: Test
   @IsDefined()
   @IsEnum(OrderProcess)
-  public readonly process: OrderProcess;
+  public readonly process!: OrderProcess;
 
-  constructor({
-    id,
-    user,
-    products,
-    createdAt = new Date().toDateString(),
-    process = OrderProcess.UNPAID,
-  }: OrderModel) {
-    this.id = id;
-    this.user = user;
-    this.products = products;
-    this.createdAt = createdAt;
-    this.process = process;
+  @IsDefined()
+  @IsString()
+  public readonly paymentId!: string;
+
+  constructor(params: OrderModel) {
+    Object.assign(this, params);
   }
 }

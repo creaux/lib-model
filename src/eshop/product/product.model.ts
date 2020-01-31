@@ -4,7 +4,7 @@ import { Types } from 'mongoose';
 import { lorem } from 'faker';
 import { Mockerizer } from '../../common/mockerizer.decorator';
 import { PriceModel } from './price.model';
-import { PriceEnum } from './prices.enum';
+import { CurrenciesEnum } from './currencies.enum';
 
 const { assign } = Object;
 
@@ -14,7 +14,7 @@ const { assign } = Object;
     title: () => lorem.words(3),
     description: () => lorem.words(20),
     images: (imageMocks: ImageModel[]) => imageMocks,
-    prices: () => [new PriceModel({ value: 123, currency: PriceEnum.USD })],
+    prices: () => [new PriceModel({ value: 123, currency: CurrenciesEnum.USD })],
   },
   [
     {
