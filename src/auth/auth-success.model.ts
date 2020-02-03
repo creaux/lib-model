@@ -1,5 +1,7 @@
-import { IsMongoId, IsDateString, IsString } from 'class-validator';
+import { IsDateString, IsMongoId, IsString } from 'class-validator';
 import { UserModel } from '../user';
+import { L10nModel } from '../common/l10n.model';
+import { LanguageEnum, LocationEnum } from '../common';
 
 // TODO: Rename to AuthModel
 export class AuthSuccessModel {
@@ -20,6 +22,10 @@ export class AuthSuccessModel {
           name: 'Executive',
         },
       ],
+      l10n: new L10nModel({
+        language: LanguageEnum.EN,
+        location: LocationEnum.US,
+      }),
     },
   };
   public static MOCK: AuthSuccessModel = new AuthSuccessModel({

@@ -1,36 +1,9 @@
 import { Types } from 'mongoose';
 import { PasswordSchema } from '../schemas/password.schema';
 import { ROLE_MODEL } from './role.schema';
+import { BaseScheme } from '../schemas/base.schema';
 
 export const USER_MODEL = 'User';
-
-// class UserSchemaIs extends PasswordSchema {
-//   constructor(definition?: SchemaDefinition, options?: SchemaOptions) {
-//     super(definition, options);
-
-//     this.virtual('roles').get(function(this: { roles: Types.ObjectId[] }): string | undefined {
-//       if (!!this.roles) {
-//         this.roles.
-//         return this._id.toHexString();
-//       }
-//       return undefined;
-//     });
-
-//     this.set('toObject', {
-//       virtuals: true,
-//       transform: (_, ret) => {
-//         delete ret._id;
-//       },
-//     });
-
-//     this.set('toJSON', {
-//       virtuals: true,
-//       transform: (_, ret) => {
-//         delete ret._id;
-//       },
-//     });
-//   }
-// }
 
 export const UserSchema = new PasswordSchema(
   {
@@ -40,6 +13,16 @@ export const UserSchema = new PasswordSchema(
     email: { type: String, required: true, unique: true },
     password: { type: String },
     roles: [{ type: Types.ObjectId, ref: ROLE_MODEL }],
+    l10n: {
+      type: [
+        new BaseScheme({
+          language: { type: String, required: true },
+          location: { type: String, required: true },
+        }),
+      ],
+      required: true,
+      validate: [value => value.length > 0, 'Require l10n for user'],
+    },
   },
   {
     versionKey: false,
