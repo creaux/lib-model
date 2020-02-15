@@ -5,15 +5,15 @@ import { lorem } from 'faker';
 import { ApiModelProperty } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
 import { PriceModel } from './price.model';
-import { CurrenciesEnum } from './currencies.enum';
 import { Expose } from 'class-transformer';
+import { LocationEnum } from '../../common';
 
 @Mockerizer<CreateProductModel>(
   {
     title: () => lorem.words(3),
     description: () => lorem.words(10),
     images: (imagesModel: ImageModel[]) => imagesModel,
-    prices: () => [new PriceModel({ value: 123, currency: CurrenciesEnum.USD })],
+    prices: () => [new PriceModel({ value: 123, country: LocationEnum.US })],
   },
   [
     {
@@ -62,7 +62,7 @@ export class CreateProductModel {
   @ApiModelProperty({
     required: true,
     type: String,
-    example: [new PriceModel({ value: 123, currency: CurrenciesEnum.USD })],
+    example: [new PriceModel({ value: 123, country: LocationEnum.US })],
   })
   @IsDefined()
   @IsArray()

@@ -15,6 +15,7 @@ import { ProductModel } from '../product';
 import { Type } from 'class-transformer';
 import { ApiModelProperty } from '@nestjs/swagger';
 import { OrderProcess } from './order-process.enum';
+import { PaymentModel } from '../payment/payment.model';
 
 const ProductMock = Reflect.getMetadata(MOCK_TOKEN, ProductModel);
 
@@ -25,7 +26,7 @@ const ProductMock = Reflect.getMetadata(MOCK_TOKEN, ProductModel);
     products: (productModelMocks: ProductModel[]) => productModelMocks,
     createdAt: () => new Date().toDateString(),
     process: () => OrderProcess.UNPAID,
-    paymentId: () => 'abc',
+    payment: () => new PaymentModel({ paymentId: 'abc', createdAt: new Date().toDateString(), secret: 'cda' }),
   },
   [
     {
@@ -75,9 +76,12 @@ export class OrderModel {
   @IsEnum(OrderProcess)
   public readonly process!: OrderProcess;
 
+  // TODO: Test
   @IsDefined()
-  @IsString()
-  public readonly paymentId!: string;
+  @IsInstance(PaymentModel)
+  @ValidateNested()
+  @Type(() => PaymentModel)
+  public readonly payment?: PaymentModel;
 
   constructor(params: OrderModel) {
     Object.assign(this, params);

@@ -20,11 +20,11 @@
     "prices": [
       {
         "value": 123,
-        "currency": "usd"
+        "country": "US"
       },
       {
         "value": 10,
-        "currency": "czk"
+        "country": "CZ"
       }
     ]
   },
@@ -49,11 +49,11 @@
     "prices": [
       {
         "value": 124,
-        "currency": "usd"
+        "country": "US"
       },
       {
         "value": 11,
-        "currency": "czk"
+        "country": "FR"
       }
     ]
   },
@@ -78,11 +78,11 @@
     "prices": [
       {
         "value": 123,
-        "currency": "usd"
+        "country": "US"
       },
       {
         "value": 10,
-        "currency": "czk"
+        "country": "DE"
       }
     ]
   }

@@ -1,7 +1,8 @@
-import { UserAbstract } from './user.abstract';
-import { IsArray, IsMongoId, IsString } from 'class-validator';
+import { IsArray, IsDefined, IsInstance, IsMongoId, IsString } from 'class-validator';
 import { RoleModel } from './role.model';
-import { Exclude } from 'class-transformer';
+import { Exclude, Type } from 'class-transformer';
+import { L10nModel } from '../common/l10n.model';
+import { LanguageEnum, LocationEnum } from '../common';
 
 export class UserPopulatedModel {
   public static MOCK_PROPERTIES = {
@@ -11,6 +12,7 @@ export class UserPopulatedModel {
     email: 'frantisek@votrapa.cz',
     password: '12345',
     roles: [{ name: 'Superadmin', id: '000000000000000000000e00' }],
+    l10n: new L10nModel({ location: LocationEnum.US, language: LanguageEnum.EN }),
   };
 
   public static MOCK = new UserPopulatedModel(UserPopulatedModel.MOCK_PROPERTIES);
@@ -34,12 +36,12 @@ export class UserPopulatedModel {
   @IsArray()
   public readonly roles!: RoleModel[];
 
-  public constructor({ id, forname, surname, email, password, roles }: UserPopulatedModel) {
-    this.id = id;
-    this.forname = forname;
-    this.surname = surname;
-    this.email = email;
-    this.password = password;
-    this.roles = roles;
+  @IsDefined()
+  @IsInstance(L10nModel)
+  @Type(() => L10nModel)
+  public readonly l10n!: L10nModel;
+
+  constructor(args: UserPopulatedModel) {
+    Object.assign(this, args);
   }
 }

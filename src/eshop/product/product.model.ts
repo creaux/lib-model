@@ -1,10 +1,11 @@
 import { ArrayNotEmpty, IsDefined, IsInstance, IsMongoId, IsString, Length, ValidateNested } from 'class-validator';
+import { Expose, Type } from 'class-transformer';
 import { ImageModel } from '../../common/image.model';
 import { Types } from 'mongoose';
 import { lorem } from 'faker';
-import { Mockerizer } from '../../common/mockerizer.decorator';
+import { Mockerizer } from '../../common';
 import { PriceModel } from './price.model';
-import { CurrenciesEnum } from './currencies.enum';
+import { LocationEnum } from '../../common';
 
 const { assign } = Object;
 
@@ -14,7 +15,7 @@ const { assign } = Object;
     title: () => lorem.words(3),
     description: () => lorem.words(20),
     images: (imageMocks: ImageModel[]) => imageMocks,
-    prices: () => [new PriceModel({ value: 123, currency: CurrenciesEnum.USD })],
+    prices: () => [new PriceModel({ value: 123, country: LocationEnum.US })],
   },
   [
     {
@@ -28,25 +29,31 @@ export class ProductModel {
   @ArrayNotEmpty()
   @IsInstance(ImageModel, { each: true })
   @ValidateNested({ each: true })
+  @Expose()
   public readonly images!: ImageModel[];
 
   @IsDefined()
   @IsMongoId()
+  @Expose()
   public readonly id!: string;
 
   @IsDefined()
   @IsString()
   @Length(1, 120)
+  @Expose()
   public readonly title!: string;
 
   @IsDefined()
   @IsString()
   @Length(1, 240)
+  @Expose()
   public readonly description!: string;
 
   @IsDefined()
   @IsInstance(PriceModel, { each: true })
   @ValidateNested({ each: true })
+  @Type(() => PriceModel)
+  @Expose()
   public readonly prices!: PriceModel[];
 
   constructor(model: ProductModel) {

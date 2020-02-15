@@ -2,6 +2,7 @@ import { Types } from 'mongoose';
 import { PasswordSchema } from '../schemas/password.schema';
 import { ROLE_MODEL } from './role.schema';
 import { BaseScheme } from '../schemas/base.schema';
+import { LanguageEnum, LocationEnum } from '../common';
 
 export const USER_MODEL = 'User';
 
@@ -14,12 +15,13 @@ export const UserSchema = new PasswordSchema(
     password: { type: String },
     roles: [{ type: Types.ObjectId, ref: ROLE_MODEL }],
     l10n: {
-      type: [
-        new BaseScheme({
-          language: { type: String, required: true },
-          location: { type: String, required: true },
-        }),
-      ],
+      type: new BaseScheme(
+        {
+          language: { type: String, required: true, enum: [...Object.values(LanguageEnum)] },
+          location: { type: String, required: true, enum: [...Object.values(LocationEnum)] },
+        },
+        { _id: false },
+      ),
       required: true,
       validate: [value => value.length > 0, 'Require l10n for user'],
     },

@@ -2,9 +2,8 @@ import { ArrayNotEmpty, IsArray, IsDefined, IsMongoId, IsDateString } from 'clas
 import { Mockerizer } from '../../common';
 import { Types } from 'mongoose';
 import { ApiModelProperty } from '@nestjs/swagger';
-import { ApiModelPropertyMock } from '../../decorators';
 import { OrderProcess } from './order-process.enum';
-import { Exclude, Expose } from 'class-transformer';
+import { Expose } from 'class-transformer';
 
 @Mockerizer<Omit<CreateOrderUserModel, 'process' | 'paymentId'>>({
   products: () => [Types.ObjectId().toHexString()],
@@ -13,7 +12,7 @@ import { Exclude, Expose } from 'class-transformer';
   updatedAt: () => undefined,
 })
 export class CreateOrderUserModel {
-  @ApiModelPropertyMock({
+  @ApiModelProperty({
     required: false,
     type: [String],
     example: ['5e1882d4c4dbffe54e02eec5'],
