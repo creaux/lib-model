@@ -1,7 +1,6 @@
 import { IsArray, IsMongoId, IsOptional, ArrayNotEmpty } from 'class-validator';
 import { Mockerizer } from '../../common';
 import { Types } from 'mongoose';
-import { ApiModelPropertyMock } from '../../decorators';
 import { ApiModelProperty } from '@nestjs/swagger';
 import { Expose } from 'class-transformer';
 
@@ -10,7 +9,7 @@ import { Expose } from 'class-transformer';
   user: () => Types.ObjectId().toHexString(),
 })
 export class UpdateOrderModel {
-  @ApiModelPropertyMock({
+  @ApiModelProperty({
     required: false,
     type: [String],
     example: ['5de3e0a388e99a666e8ee8ab'],

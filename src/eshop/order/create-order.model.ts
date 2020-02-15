@@ -1,17 +1,18 @@
 import { ArrayNotEmpty, IsArray, IsMongoId, IsDefined, IsEnum } from 'class-validator';
 import { Mockerizer } from '../../common';
 import { Types } from 'mongoose';
-import { ApiModelPropertyMock } from '../../decorators';
 import { OrderProcess } from './order-process.enum';
 import { MapModel } from '../../common/map.model';
 import { Expose, Exclude } from 'class-transformer';
+import { ApiModelProperty } from '@nestjs/swagger';
+import { PaymentModel } from '../payment';
 
-type CreateOrderExcludedProps = 'process' | 'paymentId' | 'createdAt' | 'user' | keyof MapModel<CreateOrderModel>;
+type CreateOrderExcludedProps = 'process' | 'payment' | 'createdAt' | 'user' | keyof MapModel<CreateOrderModel>;
 
 interface CreateOrderInterface {
   products: string[];
   process: OrderProcess;
-  paymentId: string;
+  payment: PaymentModel;
   createdAt: string;
   user: string;
 }
@@ -21,7 +22,7 @@ interface CreateOrderInterface {
 })
 @Expose()
 export class CreateOrderModel extends MapModel<CreateOrderInterface> {
-  @ApiModelPropertyMock({
+  @ApiModelProperty({
     required: false,
     type: [String],
     example: ['5de3e0a388e99a666e8ee8ab'],
@@ -41,8 +42,8 @@ export class CreateOrderModel extends MapModel<CreateOrderInterface> {
   // TODO Test
   @Exclude({ toClassOnly: true })
   @Expose({ toPlainOnly: true })
-  public get paymentId(): string {
-    return this.get('paymentId') as string;
+  public get payment(): PaymentModel {
+    return this.get('payment') as PaymentModel;
   }
 
   @Exclude({ toClassOnly: true })
