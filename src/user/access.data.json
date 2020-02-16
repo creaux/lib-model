@@ -4,7 +4,7 @@
       "$oid": "507f1f77bcf86cd799439012"
     },
     "role": ["Superadmin"],
-    "resource": ["post", "order"],
+    "resource": ["post", "order", "access", "user", "role"],
     "attributes": ["*"],
     "action": "read",
     "possession": "any",
@@ -15,7 +15,7 @@
       "$oid": "5dcc634a6a5a108f837936a4"
     },
     "role": ["Superadmin"],
-    "resource": ["post", "order"],
+    "resource": ["post", "order", "access", "user", "role"],
     "attributes": ["*"],
     "action": "create",
     "possession": "any",
@@ -26,7 +26,7 @@
       "$oid": "5dcc635008707c9ee0f66d53"
     },
     "role": ["Superadmin"],
-    "resource": ["post", "order"],
+    "resource": ["post", "order", "access", "user", "role"],
     "attributes": ["*"],
     "action": "update",
     "possession": "any",
@@ -37,7 +37,7 @@
       "$oid": "5dcc6355ddd59453030e2732"
     },
     "role": ["Superadmin"],
-    "resource": ["post", "order"],
+    "resource": ["post", "order", "access", "user", "role"],
     "attributes": ["*"],
     "action": "delete",
     "possession": "any",

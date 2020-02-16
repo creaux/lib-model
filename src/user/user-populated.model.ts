@@ -1,6 +1,6 @@
 import { IsArray, IsDefined, IsInstance, IsMongoId, IsString } from 'class-validator';
 import { RoleModel } from './role.model';
-import { Exclude, Type } from 'class-transformer';
+import { Exclude, Type, Expose } from 'class-transformer';
 import { L10nModel } from '../common/l10n.model';
 import { LanguageEnum, LocationEnum } from '../common';
 
@@ -30,7 +30,8 @@ export class UserPopulatedModel {
   public readonly id!: string;
 
   @IsString()
-  @Exclude()
+  @Exclude({ toPlainOnly: true })
+  @Expose({ toClassOnly: true })
   public readonly password!: string;
 
   @IsArray()

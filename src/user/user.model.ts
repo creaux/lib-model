@@ -38,10 +38,14 @@ export class UserModel {
   public readonly id!: string;
 
   @IsString()
-  @Exclude()
+  @Exclude({ toPlainOnly: true })
+  @Expose({ toClassOnly: true })
   public readonly password!: string;
 
   @IsArray()
+  @ValidateNested()
+  @IsInstance(RoleModel, { each: true })
+  @Type(() => RoleModel)
   public readonly roles!: RoleModel[];
 
   // TODO: Test
