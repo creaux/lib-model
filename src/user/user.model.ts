@@ -11,10 +11,10 @@ export class UserModel {
     email: 'frantisek@votrapa.cz',
     password: '12345',
     roles: [
-      {
+      new RoleModel({
         id: '5dc84787046b05067ec1adc5',
         name: 'Executive',
-      },
+      }),
     ],
     id: '5dde8b96ed14209384f74d14',
     l10n: new L10nModel({
