@@ -1,7 +1,7 @@
 {
   "name": "@pyxismedia/lib-model",
   "version": "0.0.1",
-  "description": "",
+  "description": "Model library",
   "main": "./build/index.js",
   "scripts": {
     "lint": "eslint -c .eslintrc.json './src/**/*.ts'",
