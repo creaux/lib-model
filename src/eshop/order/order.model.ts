@@ -1,13 +1,4 @@
-import {
-  IsArray,
-  IsDefined,
-  IsInstance,
-  IsMongoId,
-  ValidateNested,
-  IsDateString,
-  IsEnum,
-  IsString,
-} from 'class-validator';
+import { IsArray, IsDefined, IsInstance, IsMongoId, ValidateNested, IsDateString, IsEnum } from 'class-validator';
 import { UserModel } from '../../user';
 import { MOCK_TOKEN, Mockerizer } from '../../common';
 import { Types } from 'mongoose';

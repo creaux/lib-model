@@ -1,4 +1,4 @@
-language: node_js
+  language: node_js
 
 node_js:
   - 10.15.3
@@ -20,5 +20,5 @@ jobs:
         provider: script
         skip_cleanup: true
         script:
-          - npm run release
           - npm run mongoimport
+          - npm run release

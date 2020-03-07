@@ -1,5 +1,4 @@
 import { IsDefined, IsString } from 'class-validator';
-import { ModelMap } from '../../common/model-map.abstract';
 import { Mockerizer } from '../../common/mockerizer.decorator';
 import { lorem } from 'faker';
 

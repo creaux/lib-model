@@ -1,7 +1,6 @@
 import { BaseScheme } from '../../schemas/base.schema';
 import { Types, Document } from 'mongoose';
 import { ProductModel } from './product.model';
-import { CurrenciesEnum } from './currencies.enum';
 import { LocationEnum } from '../../common';
 
 export const PRODUCT_MODEL = 'Product';
