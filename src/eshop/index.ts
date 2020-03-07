@@ -2,4 +2,4 @@ export { ProductSchema, PRODUCT_MODEL, CreateProductModel, ProductModel } from '
 export * from './order';
 export * from './cart';
 export * from './category';
-export * from './payment';
+export { PaymentModel, StripeAcknowledgeReceiptModel } from './payment';
