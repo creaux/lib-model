@@ -92,6 +92,6 @@
     "reflect-metadata": "^0.1.13",
     "sales-tax": "^2.0.10",
     "ts-node": "^8.4.1",
-    "typescript-json-serializer": "^1.4.2"
+    "typescript-json-serializer": "^2.0.0"
   }
 }
