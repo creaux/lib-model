@@ -1,38 +1,38 @@
 import 'reflect-metadata';
 import { PostModel } from './post.model';
 import { Validator } from 'class-validator';
-import { MockeriesFiber } from '../../framework/preparator';
 import { Injector } from '../../framework/injector';
 import { ImageModel } from '../image/image.model';
 import { UserModel } from '../user/user.model';
 import { L10nModel } from '../l10n/l10n.model';
 import { RoleModel } from '../role/role.model';
 import { SectionModel } from '../section/section.model';
+import { Mockeries } from '../../framework/mockeries';
 
 describe('PostModel', () => {
-  let fiber: MockeriesFiber;
+  let mockeries: Mockeries;
   let postModel: PostModel;
   let validator: Validator;
 
   beforeEach(() => {
-    fiber = Injector.resolve(MockeriesFiber);
-    fiber.prepareMockeries(ImageModel);
-    fiber.prepareMockeries(L10nModel);
-    fiber.prepareMockeries(RoleModel);
-    fiber.prepareMockeries(UserModel);
-    fiber.prepareMockeries(SectionModel);
-    fiber.prepareMockeries(PostModel);
-    postModel = fiber.retrieveMockeries(PostModel);
+    mockeries = Injector.resolve(Mockeries);
+    mockeries.prepare(ImageModel);
+    mockeries.prepare(L10nModel);
+    mockeries.prepare(RoleModel, 2);
+    mockeries.prepare(UserModel);
+    mockeries.prepare(SectionModel);
+    mockeries.prepare(PostModel);
+    postModel = mockeries.resolve(PostModel);
     validator = new Validator();
   });
 
   afterEach(() => {
-    fiber.cleanMockeries(ImageModel);
-    fiber.cleanMockeries(L10nModel);
-    fiber.cleanMockeries(RoleModel);
-    fiber.cleanMockeries(UserModel);
-    fiber.cleanMockeries(SectionModel);
-    fiber.cleanMockeries(PostModel);
+    mockeries.clean(ImageModel);
+    mockeries.clean(L10nModel);
+    mockeries.clean(RoleModel);
+    mockeries.clean(UserModel);
+    mockeries.clean(SectionModel);
+    mockeries.clean(PostModel);
   });
 
   test('should contain title', () => {

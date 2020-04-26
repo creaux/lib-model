@@ -1,25 +1,24 @@
 import { Validator } from 'class-validator';
 import { CreateCategoryModel } from './create-category.model';
-import { MockeriesFiber } from '../../framework/preparator';
 import { Injector } from '../../framework/injector';
+import { Mockeries } from '../../framework/mockeries';
 
 const { keys } = Object;
 
 describe('CreateCategoryModel', () => {
   let categoryModel: CreateCategoryModel;
   let validator: Validator;
-  let Mock: any;
-  let fiber: MockeriesFiber;
+  let mockeries: Mockeries;
 
   beforeEach(() => {
-    fiber = Injector.resolve(MockeriesFiber);
-    fiber.prepareMockeries(CreateCategoryModel);
-    categoryModel = fiber.retrieveMockeries(CreateCategoryModel);
+    mockeries = Injector.resolve(Mockeries);
+    mockeries.prepare<CreateCategoryModel>(CreateCategoryModel);
+    categoryModel = mockeries.resolve(CreateCategoryModel);
     validator = new Validator();
   });
 
   afterEach(() => {
-    fiber.cleanMockeries(CreateCategoryModel);
+    mockeries.clean(CreateCategoryModel);
   });
 
   it('should raise error when name is not defined', async () => {

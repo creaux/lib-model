@@ -9,11 +9,14 @@ export * from './enums/location.enum';
 export * from './enums/role.enum';
 export * from './enums/order-process.enum';
 export * from './enums/post-state.enum';
+export * from './enums/schema-name';
+export * from './enums/random-enum';
 
 // Framework
 export * from './framework/injector';
 export * from './framework/mockeries';
 export * from './framework/schema';
+export * from './framework/preparator';
 
 // Generics
 export * from './generics/builder.interface';
@@ -66,3 +69,18 @@ export * from './models/section/section.model';
 export * from './models/user/user.model';
 export * from './models/user/create-user.model';
 export * from './models/user/user-populated.model';
+
+// Schemas
+export * from './schemas/user/user.schema';
+export * from './schemas/user/user-schema.interface';
+export * from './schemas/product/product.schema';
+export * from './schemas/section/section.schema';
+export * from './schemas/role/role.schema';
+export * from './schemas/role/role-schema.interface';
+export * from './schemas/post/post.schema';
+export * from './schemas/order/order.schema';
+export * from './schemas/category/category.schema';
+export * from './schemas/cart/cart.schema';
+export * from './schemas/auth/auth.schema';
+export * from './schemas/access/access.schema';
+export * from './schemas/access/access-schema.interface';

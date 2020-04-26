@@ -16,7 +16,7 @@ export const PostSchema = new BaseScheme(
     image: { type: String },
     createdBy: { type: Types.ObjectId, ref: SchemaName.USER },
     updatedBy: { type: Types.ObjectId, ref: SchemaName.USER },
-    section: { type: Types.ObjectId, ref: 'Section' },
+    section: { type: Types.ObjectId, ref: SchemaName.SECTION },
   },
   {
     versionKey: false,

@@ -19,5 +19,3 @@ export const AccessSchema = new BaseScheme(
     },
   },
 );
-
-export const ACCESS_MODEL = 'access';

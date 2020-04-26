@@ -2,35 +2,35 @@ import { Validator } from 'class-validator';
 import { CartModel } from './cart.model';
 import { ProductModel } from '../product/product.model';
 import { Injector } from '../../framework/injector';
-import { MockeriesFiber } from '../../framework/preparator';
 import { UserModel } from '../user/user.model';
 import { L10nModel } from '../l10n/l10n.model';
 import { RoleModel } from '../role/role.model';
+import { Mockeries } from '../../framework/mockeries';
 
 const { keys } = Object;
 
 describe('CartModel', () => {
   let cartModelMap: CartModel;
   let validator: Validator;
-  let fiber: MockeriesFiber;
+  let mockeries: Mockeries;
 
   beforeEach(() => {
-    fiber = Injector.resolve(MockeriesFiber);
-    fiber.prepareMockeries(RoleModel);
-    fiber.prepareMockeries(L10nModel);
-    fiber.prepareMockeries(UserModel);
-    fiber.prepareMockeries(ProductModel);
-    fiber.prepareMockeries(CartModel);
-    cartModelMap = fiber.retrieveMockeries(CartModel);
+    mockeries = Injector.resolve(Mockeries);
+    mockeries.prepare<RoleModel>(RoleModel);
+    mockeries.prepare<L10nModel>(L10nModel);
+    mockeries.prepare<UserModel>(UserModel);
+    mockeries.prepare<ProductModel>(ProductModel);
+    mockeries.prepare<CartModel>(CartModel);
+    cartModelMap = mockeries.resolve(CartModel);
     validator = new Validator();
   });
 
   afterEach(() => {
-    fiber.cleanMockeries(RoleModel);
-    fiber.cleanMockeries(L10nModel);
-    fiber.cleanMockeries(UserModel);
-    fiber.cleanMockeries(ProductModel);
-    fiber.cleanMockeries(CartModel);
+    mockeries.clean(RoleModel);
+    mockeries.clean(L10nModel);
+    mockeries.clean(UserModel);
+    mockeries.clean(ProductModel);
+    mockeries.clean(CartModel);
   });
 
   it('should raise error when id is not defined', async () => {
@@ -109,7 +109,7 @@ describe('CartModel', () => {
 
   it('should raise error when products are not valid', async () => {
     const { products, ...props } = cartModelMap;
-    const { title, ...productModelMock } = fiber.retrieveMockeries(ProductModel);
+    const { title, ...productModelMock } = mockeries.resolve(ProductModel);
     const productModel = { ...productModelMock, title: 123 };
     // @ts-ignore
     const model = new CartModel({

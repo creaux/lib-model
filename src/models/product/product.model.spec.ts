@@ -2,24 +2,23 @@ import { Validator } from 'class-validator';
 import { ProductModel } from './product.model';
 import { ImageModel } from '../image/image.model';
 import { Injector } from '../../framework/injector';
-import { MockeriesFiber } from '../../framework/preparator';
+import { Mockeries } from '../../framework/mockeries';
 const { keys } = Object;
 
 describe('ProductModel', () => {
   let productModel: ProductModel;
   let validator: Validator;
-  let fiber: MockeriesFiber;
-  let mock: ProductModel;
+  let mockeries: Mockeries;
 
   beforeEach(() => {
-    fiber = Injector.resolve(MockeriesFiber);
-    fiber.prepareMockeries(ProductModel);
-    productModel = fiber.retrieveMockeries(ProductModel);
+    mockeries = Injector.resolve(Mockeries);
+    mockeries.prepare<ProductModel>(ProductModel);
+    productModel = mockeries.resolve(ProductModel);
     validator = new Validator();
   });
 
   afterEach(() => {
-    fiber.cleanMockeries(ProductModel);
+    mockeries.clean(ProductModel);
   });
 
   it('should raise error when id is not defined', async () => {

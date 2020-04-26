@@ -1,33 +1,32 @@
 import 'reflect-metadata';
 import { Validator } from 'class-validator';
 import { OrderModel } from './order.model';
-import { MockeriesFiber } from '../../framework/preparator';
 import { Injector } from '../../framework/injector';
 import { UserModel } from '../user/user.model';
 import { L10nModel } from '../l10n/l10n.model';
 import { RoleModel } from '../role/role.model';
+import { Mockeries } from '../../framework/mockeries';
 
 const { keys } = Object;
 
 describe('OrderModel', () => {
   let orderModel: OrderModel;
   let validator: Validator;
-  let Mock: any;
-  let fiber: MockeriesFiber;
+  let mockeries: Mockeries;
 
   beforeEach(() => {
-    fiber = Injector.resolve(MockeriesFiber);
-    fiber.prepareMockeries(RoleModel);
-    fiber.prepareMockeries(L10nModel);
-    fiber.prepareMockeries(OrderModel);
-    orderModel = fiber.retrieveMockeries(OrderModel);
+    mockeries = Injector.resolve(Mockeries);
+    mockeries.prepare<RoleModel>(RoleModel);
+    mockeries.prepare<L10nModel>(L10nModel);
+    mockeries.prepare<OrderModel>(OrderModel);
+    orderModel = mockeries.resolve<OrderModel>(OrderModel);
     validator = new Validator();
   });
 
   afterEach(() => {
-    fiber.cleanMockeries(RoleModel);
-    fiber.cleanMockeries(L10nModel);
-    fiber.cleanMockeries(OrderModel);
+    mockeries.clean(RoleModel);
+    mockeries.clean(L10nModel);
+    mockeries.clean(OrderModel);
   });
 
   it('should raise error when id is undefined', async () => {
@@ -88,8 +87,8 @@ describe('OrderModel', () => {
 
   it('should raise error when user is user model with incorrect fields', async () => {
     const { user, ...props } = orderModel;
-    fiber.prepareMockeries(UserModel);
-    const { forname, ...userProps } = fiber.retrieveMockeries(UserModel);
+    mockeries.prepare(UserModel);
+    const { forname, ...userProps } = mockeries.resolve(UserModel);
     const model = new OrderModel({
       // @ts-ignore
       user: new UserModel({ ...userProps, forname: 123 }),

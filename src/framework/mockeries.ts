@@ -4,7 +4,7 @@ import { Injectable, Injector } from './injector';
 import { Constructor } from '../generics/constructor.type';
 
 export interface MockeriesInterface<T = object> extends BuilderInterface<T> {
-  mock(): object;
+  mock(): T;
 }
 
 enum MockeriesType {
@@ -32,17 +32,37 @@ function factorize(mockeries: MockeriesInterface) {
   };
 }
 
-function instantiate(target: any, multi = 0) {
+function instantiate<T>(target: Constructor): T;
+function instantiate<T>(target: Constructor, multi: number): T[];
+function instantiate(target: Constructor, multi = 0) {
   if (has(MockeriesType.INSTANCE, target)) {
     throw new Error(`There is already exists mock on ${target.name}`);
+  }
+
+  if (!has(MockeriesType.CLASS, target)) {
+    throw new Error(`Mockeries for ${target.name} are not assigned`);
   }
 
   const mock = get(MockeriesType.CLASS, target);
 
   if (multi > 0) {
-    define(MockeriesType.INSTANCE, [...mock(multi)], target);
+    const mocks = [...mock(multi)];
+    define(MockeriesType.INSTANCE, mocks, target);
+    return mocks;
   } else {
-    define(MockeriesType.INSTANCE, mock().next().value, target);
+    const mocks = mock().next().value;
+    define(MockeriesType.INSTANCE, mocks, target);
+    return mocks;
+  }
+}
+
+function create(target: Constructor, multi = 0) {
+  const mock = get(MockeriesType.CLASS, target);
+
+  if (multi > 0) {
+    return [...mock(multi)];
+  } else {
+    return mock().next().value;
   }
 }
 
@@ -77,18 +97,14 @@ export function Retrieve(...models: Constructor[]): MethodDecorator {
       for (const model of models) {
         mocks.add(resolve(model));
       }
-      return method.apply(this, ...mocks.values());
+      return method.call(this, ...mocks.values());
     };
   };
 }
 
 @Injectable()
 export class Mockeries {
-  public retrieve(target: Function): Object | Function {
-    return get(MockeriesType.CLASS, target);
-  }
-
-  public resolve(target: any): typeof target {
+  public resolve<T extends object | object[]>(target: Constructor): T {
     const instance = get(MockeriesType.INSTANCE, target);
     if (instance) {
       return instance;
@@ -96,13 +112,33 @@ export class Mockeries {
     throw new Error(`There is no mock INSTANCE of class ${target.name}.`);
   }
 
-  public prepare(target: Constructor, multi: number) {
-    return instantiate(target, multi);
+  /**
+   * Creates static instance mock on model
+   * @param target
+   * @param multi
+   */
+  public prepare<T extends object>(target: Constructor): T;
+  public prepare<T extends object[]>(target: Constructor, multi: number): T;
+  public prepare<T>(target: Constructor, multi = 0) {
+    return instantiate<T>(target, multi);
   }
 
+  /**
+   * Clean up mock from model
+   * @param target
+   */
   public clean(target: Constructor) {
     return clean(target);
   }
-}
 
-export const mockeries = new Mockeries();
+  /**
+   * Create dynamic mock which is immediatelly returned
+   * @param target
+   * @param multi
+   */
+  public create<T extends object>(target: Constructor): T;
+  public create<T extends object[]>(target: Constructor, multi: number): T;
+  public create(target: Constructor, multi = 0) {
+    return create(target, multi);
+  }
+}

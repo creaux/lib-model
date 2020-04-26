@@ -9,7 +9,7 @@ import { Injectable } from '../../framework/injector';
 import { AssignMockeries, MockeriesInterface } from '../../framework/mockeries';
 import { PaymentModel } from '../payment/payment.model';
 import { ProductSchema } from '../../schemas/product/product.schema';
-import { AssignSchema, SchemaObject } from '../../framework/schema';
+import { AssignSchema, AssignSchemaOptions } from '../../framework/schema';
 import { SchemaName } from '../../enums/schema-name';
 
 export abstract class CreateOrderBuilderAbstract {
@@ -63,7 +63,7 @@ interface CreateOrderInterface {
 }
 
 @AssignMockeries(CreateOrderMockeries)
-@AssignSchema(new SchemaObject(ProductSchema, SchemaName.PRODUCT))
+@AssignSchema(new AssignSchemaOptions(ProductSchema, SchemaName.PRODUCT))
 @Expose()
 export class CreateOrderModel extends MapModel<CreateOrderInterface> {
   @ApiModelProperty({

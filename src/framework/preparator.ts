@@ -1,11 +1,11 @@
 import { Mockeries } from './mockeries';
-import { Schema, SchemaObject } from './schema';
+import { Schema } from './schema';
 import { Injectable } from './injector';
-import { Mongoose, Schema as MongooseSchema, Model } from 'mongoose';
-import { MongoMemoryServer } from 'mongodb-memory-server';
+import { Schema as MongooseSchema, Model } from 'mongoose';
 import { BuilderInterface } from '../generics/builder.interface';
 import { SchemaName } from '../enums/schema-name';
 import { Constructor } from '../generics/constructor.type';
+import { MongooseConnector } from './mongoose-connector';
 
 export enum Entity {
   POSTS = 'posts',
@@ -58,100 +58,45 @@ export class ResourceBuilder implements BuilderInterface {
 }
 
 @Injectable()
-class Server {
-  private server: MongoMemoryServer;
-
-  constructor() {
-    this.server = new MongoMemoryServer();
-  }
-
-  public get connectionString(): Promise<string> {
-    return this.server.getConnectionString();
-  }
-
-  public get ensureConnection() {
-    return this.server.ensureInstance();
-  }
-
-  public stop() {
-    return this.server.stop();
-  }
-}
-
-@Injectable()
-class Wire {
-  private mongoose: Mongoose;
-
-  constructor(private server: Server) {
-    this.mongoose = new Mongoose();
-  }
-
-  public async connect() {
-    const connectionString = await this.server.connectionString;
-    try {
-      return await this.mongoose.connect(connectionString);
-    } catch (error) {
-      throw new Error(error);
-    }
-  }
-
-  public stop() {
-    return this.server.stop();
-  }
-}
-
-@Injectable()
-export class MockeriesFiber {
-  constructor(protected mockeries: Mockeries) {}
-
-  public prepareMockeries(target: Constructor, count = 0) {
-    return this.mockeries.prepare(target, count);
-  }
-
-  public retrieveMockeries(target: Constructor) {
-    return this.mockeries.resolve(target);
-  }
-
-  public cleanMockeries(target: Constructor) {
-    return this.mockeries.clean(target);
-  }
-}
-
-@Injectable()
-export class Fiber extends MockeriesFiber {
+export class Fiber {
   protected resources: Map<Constructor, Resource>;
 
   private connect() {
     return this.wire.connect();
   }
 
-  constructor(mockeries: Mockeries, private schema: Schema, private wire: Wire) {
-    super(mockeries);
+  constructor(private mockeries: Mockeries, private wire: MongooseConnector) {
     this.resources = new Map<Constructor, Resource>();
   }
 
-  public retrieveMockFromModel(target: Constructor, count = 1) {
-    this.prepareMockeries(target, count);
-    return this.retrieveMockeries(target);
+  public retrieveFromModel(target: Constructor, count = 1) {
+    this.mockeries.prepare(target, count);
+    return this.mockeries.resolve(target);
   }
 
-  public async createFromModel(target: Constructor, count = 1) {
+  public async createFromModel(target: Constructor, count = 0) {
     const connection = await this.connect();
-    this.prepareMockeries(target, count);
-    const data = this.retrieveMockeries(target);
-    const schema = this.schema.resolve(target);
+    this.mockeries.prepare(target, count);
+    const data = this.mockeries.resolve(target);
+    const schema = Schema.resolve(target);
     const model = connection.model(schema.name, schema.schema);
-    const resource = new ResourceBuilder()
+    const resourceBuilder = new ResourceBuilder()
       .withName(schema.name)
       .withSchema(schema.schema)
-      .withData(data as any[])
-      .withModel(model)
-      .build();
+      .withModel(model);
+
+    if (Array.isArray(data)) {
+      resourceBuilder.withData(data as any[]);
+    } else {
+      resourceBuilder.withData([data]);
+    }
+
+    const resource = resourceBuilder.build();
 
     try {
       await model.collection.insertMany(resource.data);
     } catch (error) {
-      throw new Error(error);
+      throw new Error(`${Fiber.name}: model insertAll - ${error}`);
     }
 
     this.resources.set(target, resource);
@@ -168,17 +113,14 @@ export class Fiber extends MockeriesFiber {
     }
   }
 
-  public retrieveFromCache(target: Constructor) {
-    if (this.resources.has(target)) {
-      const resource: Resource = this.resources.get(target) as Resource;
-      return resource.data;
-    }
-  }
-
   public tearDown() {
     for (const [target] of this.resources.entries()) {
       this.mockeries.clean(target);
     }
     return this.wire.stop();
+  }
+
+  public get dbUri(): Promise<string> {
+    return this.wire.uri;
   }
 }

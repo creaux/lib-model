@@ -5,4 +5,9 @@ export enum SchemaName {
   TESTING2 = 'Testing2',
   CART = 'Cart',
   PRODUCT = 'Product',
+  ROLE = 'Role',
+  ACCESS = 'Access',
+  POST = 'Post',
+  AUTH = 'Auth',
+  ORDER = 'Order',
 }

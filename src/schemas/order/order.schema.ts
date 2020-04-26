@@ -12,7 +12,7 @@ export type OrderSchema = OrderModel & Document;
 export const OrderSchema = new BaseScheme(
   {
     _id: { type: Types.ObjectId },
-    products: [{ type: Types.ObjectId, ref: PRODUCT_MODEL }],
+    products: [{ type: Types.ObjectId, ref: SchemaName.PRODUCT }],
     user: { type: Types.ObjectId, ref: SchemaName.USER, required: true },
     createdAt: { type: Date, required: true },
     process: {

@@ -13,7 +13,7 @@ describe('CreatePostModel', () => {
 
   beforeAll(async () => {
     fiber = Injector.resolve(Fiber);
-    createPostModel = await fiber.retrieveMockFromModel(CreatePostModel, 0);
+    createPostModel = await fiber.retrieveFromModel(CreatePostModel, 0);
     validator = new Validator();
   });
 

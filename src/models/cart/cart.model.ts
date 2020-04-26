@@ -5,7 +5,7 @@ import { Types } from 'mongoose';
 import { BuilderInterface } from '../../generics/builder.interface';
 import { ProductMockeries, ProductModel } from '../../models/product/product.model';
 import { Injectable } from '../../framework/injector';
-import { AssignSchema, SchemaObject } from '../../framework/schema';
+import { AssignSchema, AssignSchemaOptions } from '../../framework/schema';
 import { SchemaName } from '../../enums/schema-name';
 import { CartSchema } from '../../schemas/cart/cart.schema';
 const { assign } = Object;
@@ -67,7 +67,7 @@ export class CartMockeries extends CartBuilder implements MockeriesInterface<Car
 }
 
 @AssignMockeries(CartMockeries)
-@AssignSchema(new SchemaObject(CartSchema, SchemaName.CART))
+@AssignSchema(new AssignSchemaOptions(CartSchema, SchemaName.CART))
 export class CartModel {
   @IsDefined()
   @IsMongoId()

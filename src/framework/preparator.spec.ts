@@ -1,6 +1,6 @@
 import { Fiber } from './preparator';
-import { AssignMockeries, MockeriesInterface, Retrieve } from './mockeries';
-import { AssignSchema, SchemaObject } from './schema';
+import { AssignMockeries, Mockeries, MockeriesInterface, Retrieve } from './mockeries';
+import { AssignSchema, AssignSchemaOptions } from './schema';
 import { BuilderInterface } from '../generics/builder.interface';
 import { Injector } from './injector';
 import { lorem } from 'faker';
@@ -39,7 +39,7 @@ const TestingSchema = new BaseScheme({
 });
 
 @AssignMockeries(Testing1Mockeries)
-@AssignSchema(new SchemaObject(TestingSchema, SchemaName.TESTING1))
+@AssignSchema(new AssignSchemaOptions(TestingSchema, SchemaName.TESTING1))
 class Testing1Model {
   public title!: string;
 
@@ -94,7 +94,7 @@ class Testing2Mockeries extends Testing2Builder implements MockeriesInterface {
 }
 
 @AssignMockeries(Testing2Mockeries)
-@AssignSchema(new SchemaObject(Testing2Schema, SchemaName.TESTING2))
+@AssignSchema(new AssignSchemaOptions(Testing2Schema, SchemaName.TESTING2))
 class Testing2Model {
   public name!: string;
 
@@ -107,8 +107,10 @@ class Testing2Model {
 
 describe('Preparator', () => {
   let fiber: Fiber;
+  let mockeries: Mockeries;
 
   beforeEach(async () => {
+    mockeries = Injector.resolve<Mockeries>(Mockeries);
     fiber = Injector.resolve<Fiber>(Fiber);
     await fiber.createFromModel(Testing1Model);
     await fiber.createFromModel(Testing2Model);
@@ -120,13 +122,13 @@ describe('Preparator', () => {
 
   it('should create model', async () => {
     const mongoData = await fiber.retrieveFromMongo(Testing1Model);
-    const sessionData = await fiber.retrieveFromCache(Testing1Model);
-    expect(mongoData).toEqual(sessionData);
+    const sessionData = await mockeries.resolve<Testing1Model>(Testing1Model);
+    expect(mongoData).toEqual([sessionData]);
   });
 
   it('should create model with ref', async () => {
     const mongoData = await fiber.retrieveFromMongo(Testing2Model, [SchemaName.TESTING1]);
-    const sessionData = await fiber.retrieveFromCache(Testing2Model);
-    expect(mongoData).toEqual(sessionData);
+    const sessionData = await mockeries.resolve<Testing1Model>(Testing2Model);
+    expect(mongoData).toEqual([sessionData]);
   });
 });

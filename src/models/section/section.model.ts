@@ -3,7 +3,7 @@ import { Types } from 'mongoose';
 import { AssignMockeries, MockeriesInterface } from '../../framework/mockeries';
 import { BuilderInterface } from '../../generics/builder.interface';
 import { Injectable } from '../../framework/injector';
-import { AssignSchema, SchemaObject } from '../..';
+import { AssignSchema, AssignSchemaOptions } from '../..';
 import { SectionSchema } from '../../schemas/section/section.schema';
 import { SchemaName } from '../../enums/schema-name';
 
@@ -47,7 +47,7 @@ export class SectionMockeries extends SectionBuilder implements MockeriesInterfa
 }
 
 @AssignMockeries(SectionMockeries)
-@AssignSchema(new SchemaObject(SectionSchema, SchemaName.SECTION))
+@AssignSchema(new AssignSchemaOptions(SectionSchema, SchemaName.SECTION))
 export class SectionModel {
   public id!: string;
 

@@ -6,6 +6,9 @@ import { ApiModelProperty } from '@nestjs/swagger';
 import { BuilderInterface } from '../../generics/builder.interface';
 import { Injectable } from '../../framework/injector';
 import { RolesEnum } from '../../enums/role.enum';
+import { AssignSchema, AssignSchemaOptions } from '../../framework/schema';
+import { SchemaName } from '../../enums/schema-name';
+import { RoleSchema } from '../../schemas/role/role.schema';
 
 export abstract class RoleBuilderAbstract {
   protected id!: string;
@@ -46,8 +49,18 @@ export class RoleModelMockerizer extends RoleModelBuilder implements MockeriesIn
   }
 }
 
+export class RoleStatics {
+  private statics = new Set();
+
+  constructor() {}
+}
+
+// Using new Decorator we can define statics, one static is basically statically defined mock based on model
+// This will require to know possible relations between models and its properties
+// or we can defined Mockeries builder in sense that first call will generate specific data and second another specific data etc.
 // TODO We have to create all four roles in db and session
 @AssignMockeries(RoleModelMockerizer)
+@AssignSchema(new AssignSchemaOptions(RoleSchema, SchemaName.ROLE))
 export class RoleModel {
   @ApiModelProperty({
     type: String,

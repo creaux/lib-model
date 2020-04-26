@@ -1,24 +1,24 @@
 import { Validator } from 'class-validator';
 import { CreateOrderModel } from './create-order.model';
 import { Injector } from '../../framework/injector';
-import { MockeriesFiber } from '../../framework/preparator';
+import { Mockeries } from '../../framework/mockeries';
 
 const { keys } = Object;
 
 describe('CreateOrderModel', () => {
   let createOrderModel: CreateOrderModel;
   let validator: Validator;
-  let fiber: MockeriesFiber;
+  let mockeries: Mockeries;
 
   beforeEach(() => {
-    fiber = Injector.resolve(MockeriesFiber);
-    fiber.prepareMockeries(CreateOrderModel);
-    createOrderModel = fiber.retrieveMockeries(CreateOrderModel);
+    mockeries = Injector.resolve(Mockeries);
+    mockeries.prepare<CreateOrderModel>(CreateOrderModel);
+    createOrderModel = mockeries.resolve(CreateOrderModel);
     validator = new Validator();
   });
 
   afterEach(() => {
-    fiber.cleanMockeries(CreateOrderModel);
+    mockeries.clean(CreateOrderModel);
   });
 
   it('should raise error when products are not array', async () => {

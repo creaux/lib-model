@@ -13,7 +13,7 @@ export const CartSchema = new BaseScheme({
   products: [
     {
       type: Types.ObjectId,
-      ref: PRODUCT_MODEL,
+      ref: SchemaName.PRODUCT,
     },
   ],
   user: {

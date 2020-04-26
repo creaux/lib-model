@@ -7,7 +7,7 @@ import { internet, name } from 'faker';
 import { BuilderInterface } from '../../generics/builder.interface';
 import { Types } from 'mongoose';
 import { Injectable } from '../../framework/injector';
-import { AssignSchema, SchemaObject } from '../../framework/schema';
+import { AssignSchema, AssignSchemaOptions } from '../../framework/schema';
 import { UserSchema } from '../../schemas/user/user.schema';
 import { SchemaName } from '../../enums/schema-name';
 
@@ -124,7 +124,7 @@ export class UserMockeries extends UserBuilder implements MockeriesInterface<Use
 }
 
 @AssignMockeries(UserMockeries)
-@AssignSchema(new SchemaObject(UserSchema, SchemaName.USER))
+@AssignSchema(new AssignSchemaOptions(UserSchema, SchemaName.USER))
 export class UserModel {
   @IsString()
   public readonly forname!: string;

@@ -14,5 +14,3 @@ export const RoleSchema = new BaseScheme(
     },
   },
 );
-
-export const ROLE_MODEL = 'Role';

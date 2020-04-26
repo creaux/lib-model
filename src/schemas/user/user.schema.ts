@@ -1,9 +1,9 @@
 import { Types } from 'mongoose';
 import { PasswordSchema } from '../password.schema';
-import { ROLE_MODEL } from '../role/role.schema';
 import { BaseScheme } from '../base.schema';
 import { LanguageEnum } from '../../enums/language.enum';
 import { LocationEnum } from '../../enums/location.enum';
+import { SchemaName } from '../../enums/schema-name';
 
 export const UserSchema = new PasswordSchema(
   {
@@ -12,7 +12,7 @@ export const UserSchema = new PasswordSchema(
     surname: { type: String, required: true },
     email: { type: String, required: true, unique: true },
     password: { type: String },
-    roles: [{ type: Types.ObjectId, ref: ROLE_MODEL }],
+    roles: [{ type: Types.ObjectId, ref: SchemaName.ROLE }],
     l10n: {
       type: new BaseScheme(
         {

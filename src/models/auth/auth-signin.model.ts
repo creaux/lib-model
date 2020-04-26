@@ -3,6 +3,10 @@ import { AssignMockeries, MockeriesInterface } from '../../framework/mockeries';
 import { internet } from 'faker';
 import { BuilderInterface } from '../../generics/builder.interface';
 import { Injectable } from '../../framework/injector';
+import { ApiModelProperty } from '@nestjs/swagger';
+import { AssignSchema, AssignSchemaOptions } from '../../framework/schema';
+import { SchemaName } from '../../enums/schema-name';
+import { AuthSchema } from '../../schemas/auth/auth.schema';
 
 export abstract class AuthSigninBuilderAbstract {
   protected email!: string;
@@ -45,11 +49,18 @@ export class AuthSigninMockeries extends AuthSignInBuilder implements MockeriesI
   }
 }
 
+@AssignSchema(new AssignSchemaOptions(AuthSchema, SchemaName.AUTH))
 @AssignMockeries(AuthSigninMockeries)
 export class AuthSignInModel {
+  @ApiModelProperty({
+    type: String,
+  })
   @IsEmail()
   public readonly email!: string;
 
+  @ApiModelProperty({
+    type: String,
+  })
   @IsString()
   public readonly password!: string;
 

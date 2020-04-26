@@ -2,28 +2,28 @@ import 'reflect-metadata';
 import { Validator } from 'class-validator';
 import { CreateProductModel } from './create-product.model';
 import { Injector } from '../../framework/injector';
-import { MockeriesFiber } from '../../framework/preparator';
 import { ImageModel } from '../image/image.model';
 import { L10nModel } from '../l10n/l10n.model';
+import { Mockeries } from '../../framework/mockeries';
 
 const { keys } = Object;
 
 describe('CreateProductModel', () => {
   let productModel: CreateProductModel;
   let validator: Validator;
-  let fiber: MockeriesFiber;
+  let fiber: Mockeries;
 
   beforeEach(() => {
-    fiber = Injector.resolve(MockeriesFiber);
-    fiber.prepareMockeries(L10nModel);
-    fiber.prepareMockeries(CreateProductModel);
-    productModel = fiber.retrieveMockeries(CreateProductModel);
+    fiber = Injector.resolve(Mockeries);
+    fiber.prepare<L10nModel>(L10nModel);
+    fiber.prepare<CreateProductModel>(CreateProductModel);
+    productModel = fiber.resolve(CreateProductModel);
     validator = new Validator();
   });
 
   afterEach(() => {
-    fiber.cleanMockeries(L10nModel);
-    fiber.cleanMockeries(CreateProductModel);
+    fiber.clean(L10nModel);
+    fiber.clean(CreateProductModel);
   });
 
   it('should raise error when title is defined', async () => {
