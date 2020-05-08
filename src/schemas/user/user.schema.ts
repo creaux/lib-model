@@ -21,8 +21,7 @@ export const UserSchema = new PasswordSchema(
         },
         { _id: false },
       ),
-      required: true,
-      validate: [value => value.length > 0, 'Require l10n for user'],
+      required: [true, 'require l10n for user'],
     },
   },
   {

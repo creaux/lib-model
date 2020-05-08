@@ -2,7 +2,7 @@ import { Schema, SchemaDefinition, SchemaOptions, Types } from 'mongoose';
 
 export class BaseScheme extends Schema {
   public constructor(definition?: SchemaDefinition, options?: SchemaOptions) {
-    super(definition, options);
+    super(definition, { strict: true, versionKey: false, ...options });
 
     this.virtual('id').get(function(this: { _id: Types.ObjectId }): string | undefined {
       if (!!this._id) {
@@ -23,6 +23,12 @@ export class BaseScheme extends Schema {
       transform: (_, ret) => {
         delete ret._id;
       },
+    });
+
+    this.pre('save', function() {
+      if (this.id) {
+        this._id = this.id;
+      }
     });
   }
 }

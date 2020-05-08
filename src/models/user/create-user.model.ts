@@ -1,4 +1,4 @@
-import { IsInstance, IsString, ValidateNested } from 'class-validator';
+import { IsInstance, IsMongoId, IsString, ValidateNested } from 'class-validator';
 import { Expose, Type } from 'class-transformer';
 import { ApiModelProperty } from '@nestjs/swagger';
 import { Types } from 'mongoose';
@@ -6,8 +6,141 @@ import { CreateEntityAbstract } from '../create-entity.abstract';
 import { L10nModel } from '../l10n/l10n.model';
 import { LanguageEnum } from '../../enums/language.enum';
 import { LocationEnum } from '../../enums/location.enum';
+import { Injectable } from '../../framework/injector';
+import { RoleModel } from '../role/role.model';
+import { BuilderInterface } from '../../generics/builder.interface';
+import { AssignMockeries, MockeriesInterface, Retrieve } from '../../framework/mockeries';
+import { internet, name } from 'faker';
+import { AssignSchema, AssignSchemaOptions } from '../../framework/schema';
+import { UserSchema } from '../../schemas/user/user.schema';
+import { SchemaName } from '../../enums/schema-name';
+import { AssignReadUpdate, AssignReadUpdateOptions } from '../../framework/readUpdate';
+import { UserModel } from './user.model';
 
+export abstract class UserBuilderAbstract {
+  id!: string;
+  forname!: string;
+  surname!: string;
+  email!: string;
+  password!: string;
+  roles!: string[];
+  l10n!: L10nModel;
+}
+
+@Injectable()
+export class CreateUserBuilder extends UserBuilderAbstract implements BuilderInterface<CreateUserModel> {
+  public withId(id: string) {
+    this.id = id;
+    return this;
+  }
+  public withForname(forname: string) {
+    this.forname = forname;
+    return this;
+  }
+
+  public withSurname(surname: string) {
+    this.surname = surname;
+    return this;
+  }
+
+  public withEmail(email: string) {
+    this.email = email;
+    return this;
+  }
+
+  public withPassword(password: string) {
+    this.password = password;
+    return this;
+  }
+
+  public withRoles(roles: string[]) {
+    this.roles = roles;
+    return this;
+  }
+
+  public withL10n(l10n: L10nModel) {
+    this.l10n = l10n;
+    return this;
+  }
+
+  build(): CreateUserModel {
+    return new CreateUserModel({
+      id: this.id,
+      forname: this.forname,
+      surname: this.surname,
+      email: this.email,
+      password: this.password,
+      roles: this.roles,
+      l10n: this.l10n,
+    });
+  }
+}
+
+@Injectable()
+export class CreateUserMockeries extends CreateUserBuilder implements MockeriesInterface<CreateUserModel> {
+  public mockId(): CreateUserMockeries {
+    this.withId(Types.ObjectId().toHexString());
+    return this;
+  }
+
+  public mockForname(): CreateUserMockeries {
+    this.withForname(name.firstName());
+    return this;
+  }
+
+  public mockSurname(): CreateUserMockeries {
+    this.withSurname(name.lastName());
+    return this;
+  }
+
+  public mockEmail(): CreateUserMockeries {
+    this.withEmail(internet.email());
+    return this;
+  }
+
+  public mockPassword(): CreateUserMockeries {
+    const password = internet.password();
+    this.withPassword(password);
+    return this;
+  }
+
+  @Retrieve(RoleModel)
+  public mockRoles(rolesModel: RoleModel[]): CreateUserMockeries {
+    // @ts-ignore
+    this.withRoles(rolesModel.map((roleModel: RoleModel) => roleModel.id));
+    return this;
+  }
+
+  @Retrieve(L10nModel)
+  public mockL10n(l10nMock: L10nModel): CreateUserMockeries {
+    this.withL10n(l10nMock);
+    return this;
+  }
+
+  mock(): CreateUserModel {
+    return (
+      this.mockForname()
+        .mockId()
+        .mockSurname()
+        .mockPassword()
+        .mockEmail()
+        // @ts-ignore
+        .mockL10n()
+        // @ts-ignore
+        .mockRoles()
+        .build()
+    );
+  }
+}
+
+@AssignReadUpdate(new AssignReadUpdateOptions(UserModel))
+@AssignMockeries(CreateUserMockeries)
+@AssignSchema(new AssignSchemaOptions(UserSchema, SchemaName.USER))
+@Injectable()
 export class CreateUserModel extends CreateEntityAbstract {
+  @IsMongoId()
+  public readonly id!: string;
+
   @IsString()
   @ApiModelProperty({
     required: true,

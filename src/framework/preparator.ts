@@ -6,6 +6,7 @@ import { BuilderInterface } from '../generics/builder.interface';
 import { SchemaName } from '../enums/schema-name';
 import { Constructor } from '../generics/constructor.type';
 import { MongooseConnector } from './mongoose-connector';
+import { AssignReadUpdateOptions, ReadUpdate } from './readUpdate';
 
 export enum Entity {
   POSTS = 'posts',
@@ -69,9 +70,9 @@ export class Fiber {
     this.resources = new Map<Constructor, Resource>();
   }
 
-  public retrieveFromModel(target: Constructor, count = 1) {
+  public retrieveFromModel<T extends object | object[]>(target: Constructor, count = 1): T {
     this.mockeries.prepare(target, count);
-    return this.mockeries.resolve(target);
+    return this.mockeries.resolve<T>(target);
   }
 
   public async createFromModel(target: Constructor, count = 0) {
@@ -94,12 +95,23 @@ export class Fiber {
     const resource = resourceBuilder.build();
 
     try {
-      await model.collection.insertMany(resource.data);
+      await model.insertMany(resource.data);
     } catch (error) {
       throw new Error(`${Fiber.name}: model insertAll - ${error}`);
     }
 
     this.resources.set(target, resource);
+
+    // TODO: This should be extracted
+    const readUpdate: AssignReadUpdateOptions = ReadUpdate.resolve(target);
+    if (readUpdate && readUpdate.read) {
+      this.mockeries.use(readUpdate.read, data);
+
+      // TODO
+      if (readUpdate.update) {
+        this.mockeries.use(readUpdate.update, data);
+      }
+    }
   }
 
   public retrieveFromMongo(target: Constructor, populate: SchemaName[] = []) {

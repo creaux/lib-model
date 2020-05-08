@@ -12,7 +12,7 @@ enum MockeriesType {
   INSTANCE = 'mockeries:instance',
 }
 
-function define(type: MockeriesType, mock: Object, target: Function) {
+function define(type: MockeriesType, mock: object, target: Constructor) {
   Reflect.defineMetadata(type, mock, target);
 }
 
@@ -20,7 +20,7 @@ function get(type: MockeriesType, target: any): typeof target {
   return Reflect.getMetadata(type, target) as IterableIterator<typeof target>;
 }
 
-function has(type: MockeriesType, target: Function): boolean {
+function has(type: MockeriesType, target: Constructor): boolean {
   return Reflect.hasMetadata(type, target);
 }
 
@@ -84,7 +84,7 @@ function resolve(Target: Constructor) {
 export function AssignMockeries(token: Constructor<MockeriesInterface>): ClassDecorator {
   return target => {
     const mock = factorize(Injector.resolve<MockeriesInterface>(token));
-    define(MockeriesType.CLASS, mock, target);
+    define(MockeriesType.CLASS, mock, (target as unknown) as Constructor);
   };
 }
 
@@ -121,6 +121,11 @@ export class Mockeries {
   public prepare<T extends object[]>(target: Constructor, multi: number): T;
   public prepare<T>(target: Constructor, multi = 0) {
     return instantiate<T>(target, multi);
+  }
+
+  public use(target: Constructor, mocks: object) {
+    // TODO: mocks plainToClass
+    define(MockeriesType.INSTANCE, mocks, target);
   }
 
   /**
