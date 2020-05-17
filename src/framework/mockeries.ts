@@ -5,6 +5,7 @@ import { Constructor } from '../generics/constructor.type';
 
 export interface MockeriesInterface<T = object> extends BuilderInterface<T> {
   mock(): T;
+  statics?: () => T[];
 }
 
 enum MockeriesType {
@@ -26,6 +27,12 @@ function has(type: MockeriesType, target: Constructor): boolean {
 
 function factorize(mockeries: MockeriesInterface) {
   return function* mock(count = 1) {
+    if (mockeries.statics) {
+      for (const mockeri of mockeries.statics()) {
+        yield mockeri;
+      }
+    }
+
     for (let i = 0; i < count; i++) {
       yield mockeries.mock();
     }
@@ -81,9 +88,9 @@ function resolve(Target: Constructor) {
   return get(MockeriesType.INSTANCE, Target);
 }
 
-export function AssignMockeries(token: Constructor<MockeriesInterface>): ClassDecorator {
+export function AssignMockeries(mockeries: Constructor<MockeriesInterface>): ClassDecorator {
   return target => {
-    const mock = factorize(Injector.resolve<MockeriesInterface>(token));
+    const mock = factorize(Injector.resolve<MockeriesInterface>(mockeries));
     define(MockeriesType.CLASS, mock, (target as unknown) as Constructor);
   };
 }

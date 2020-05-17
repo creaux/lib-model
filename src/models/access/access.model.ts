@@ -8,6 +8,7 @@ import { AssignMockeries, MockeriesInterface } from '../../framework/mockeries';
 import { lorem } from 'faker';
 import { randomEnum } from '../../enums/random-enum';
 import { IAccessInfo } from 'accesscontrol';
+import { Injectable } from '../../framework/injector';
 
 enum Action {
   CREATE = 'create',
@@ -129,6 +130,7 @@ export class AccessMockeries extends AccessModelBuilder implements MockeriesInte
 
 @AssignMockeries(AccessMockeries)
 @AssignSchema(new AssignSchemaOptions(AccessSchema, SchemaName.ACCESS))
+@Injectable()
 export class AccessModel implements IAccessInfo {
   @IsMongoId()
   public readonly id!: string;

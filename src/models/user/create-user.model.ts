@@ -2,7 +2,6 @@ import { IsInstance, IsMongoId, IsString, ValidateNested } from 'class-validator
 import { Expose, Type } from 'class-transformer';
 import { ApiModelProperty } from '@nestjs/swagger';
 import { Types } from 'mongoose';
-import { CreateEntityAbstract } from '../create-entity.abstract';
 import { L10nModel } from '../l10n/l10n.model';
 import { LanguageEnum } from '../../enums/language.enum';
 import { LocationEnum } from '../../enums/location.enum';
@@ -16,9 +15,10 @@ import { UserSchema } from '../../schemas/user/user.schema';
 import { SchemaName } from '../../enums/schema-name';
 import { AssignReadUpdate, AssignReadUpdateOptions } from '../../framework/readUpdate';
 import { UserModel } from './user.model';
+import { CreateRoleModelMockeries } from '../role/create-role.model';
 
-export abstract class UserBuilderAbstract {
-  id!: string;
+export abstract class CreateUserBuilderAbstract {
+  _id!: string;
   forname!: string;
   surname!: string;
   email!: string;
@@ -28,9 +28,9 @@ export abstract class UserBuilderAbstract {
 }
 
 @Injectable()
-export class CreateUserBuilder extends UserBuilderAbstract implements BuilderInterface<CreateUserModel> {
+export class CreateUserBuilder extends CreateUserBuilderAbstract implements BuilderInterface<CreateUserModel> {
   public withId(id: string) {
-    this.id = id;
+    this._id = id;
     return this;
   }
   public withForname(forname: string) {
@@ -65,7 +65,7 @@ export class CreateUserBuilder extends UserBuilderAbstract implements BuilderInt
 
   build(): CreateUserModel {
     return new CreateUserModel({
-      id: this.id,
+      _id: this._id,
       forname: this.forname,
       surname: this.surname,
       email: this.email,
@@ -78,6 +78,8 @@ export class CreateUserBuilder extends UserBuilderAbstract implements BuilderInt
 
 @Injectable()
 export class CreateUserMockeries extends CreateUserBuilder implements MockeriesInterface<CreateUserModel> {
+  public static karel = '5ec059ac0d3440f899e635fa';
+
   public mockId(): CreateUserMockeries {
     this.withId(Types.ObjectId().toHexString());
     return this;
@@ -131,15 +133,29 @@ export class CreateUserMockeries extends CreateUserBuilder implements MockeriesI
         .build()
     );
   }
+
+  statics() {
+    return [
+      this.withId(CreateUserMockeries.karel)
+        .withForname('Karel')
+        .withSurname('Vomacka')
+        .withRoles([CreateRoleModelMockeries.admin])
+        // @ts-ignore
+        .mockL10n()
+        .withEmail('karel@vomacka.com')
+        .withPassword('12345')
+        .build(),
+    ];
+  }
 }
 
 @AssignReadUpdate(new AssignReadUpdateOptions(UserModel))
 @AssignMockeries(CreateUserMockeries)
 @AssignSchema(new AssignSchemaOptions(UserSchema, SchemaName.USER))
 @Injectable()
-export class CreateUserModel extends CreateEntityAbstract {
+export class CreateUserModel {
   @IsMongoId()
-  public readonly id!: string;
+  public readonly _id!: string;
 
   @IsString()
   @ApiModelProperty({
@@ -202,9 +218,7 @@ export class CreateUserModel extends CreateEntityAbstract {
   @Expose()
   public readonly l10n!: L10nModel;
 
-  public constructor(data: Partial<CreateUserModel>) {
-    super();
-
+  public constructor(data: CreateUserModel) {
     Object.assign(this, data);
   }
 }

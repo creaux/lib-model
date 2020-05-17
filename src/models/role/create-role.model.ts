@@ -10,15 +10,15 @@ import { SchemaName } from '../../enums/schema-name';
 import { AssignReadUpdate, AssignReadUpdateOptions } from '../../framework/readUpdate';
 import { RoleModel } from './role.model';
 
-export abstract class RoleBuilderAbstract {
-  protected id!: string;
+export abstract class CreateRoleBuilderAbstract {
+  protected _id!: string;
   protected name!: string;
 }
 
 @Injectable()
-export class CreateRoleModelBuilder extends RoleBuilderAbstract implements BuilderInterface<CreateRoleModel> {
+export class CreateRoleModelBuilder extends CreateRoleBuilderAbstract implements BuilderInterface<CreateRoleModel> {
   public withId(id: string) {
-    this.id = id;
+    this._id = id;
     return this;
   }
 
@@ -28,12 +28,14 @@ export class CreateRoleModelBuilder extends RoleBuilderAbstract implements Build
   }
 
   public build(): CreateRoleModel {
-    return new CreateRoleModel({ id: this.id, name: this.name });
+    return new CreateRoleModel({ _id: this._id, name: this.name });
   }
 }
 
 @Injectable()
 export class CreateRoleModelMockeries extends CreateRoleModelBuilder implements MockeriesInterface<CreateRoleModel> {
+  public static admin = '5e17734e841b06a773bd300b';
+
   public mockId() {
     return this.withId(Types.ObjectId().toHexString());
   }
@@ -47,6 +49,14 @@ export class CreateRoleModelMockeries extends CreateRoleModelBuilder implements 
       .mockName()
       .build();
   }
+
+  statics() {
+    return [
+      this.withId(CreateRoleModelMockeries.admin)
+        .withName('Admin')
+        .build(),
+    ];
+  }
 }
 
 @AssignReadUpdate(new AssignReadUpdateOptions(RoleModel))
@@ -55,7 +65,7 @@ export class CreateRoleModelMockeries extends CreateRoleModelBuilder implements 
 @Injectable()
 export class CreateRoleModel {
   @IsMongoId()
-  public readonly id!: string;
+  public readonly _id!: string;
 
   @IsString()
   public readonly name!: string;

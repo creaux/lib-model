@@ -95,7 +95,10 @@ export class Fiber {
     const resource = resourceBuilder.build();
 
     try {
-      await model.insertMany(resource.data);
+      // Do not use insertMany as it ignores presave hooks
+      for (const entity of resource.data) {
+        await model.create(entity);
+      }
     } catch (error) {
       throw new Error(`${Fiber.name}: model insertAll - ${error}`);
     }

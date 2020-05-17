@@ -1,9 +1,15 @@
 import { IAccessInfo } from 'accesscontrol';
-import { IsString, IsBoolean, IsEnum } from 'class-validator';
+import { IsString, IsBoolean, IsEnum, IsMongoId } from 'class-validator';
 import { BuilderInterface } from '../../generics/builder.interface';
 import { AssignMockeries, MockeriesInterface } from '../../framework/mockeries';
 import { lorem } from 'faker';
 import { randomEnum } from '../../enums/random-enum';
+import { CreateRoleModelMockeries } from '../role/create-role.model';
+import { AssignSchema, AssignSchemaOptions } from '../../framework/schema';
+import { AccessSchema } from '../../schemas/access/access.schema';
+import { SchemaName } from '../../enums/schema-name';
+import { Injectable } from '../../framework/injector';
+import { Types } from 'mongoose';
 
 enum Action {
   CREATE = 'create',
@@ -18,6 +24,7 @@ enum Possession {
 }
 
 export abstract class CreateAccessBuilderAbstract {
+  protected _id!: string;
   protected role!: string | string[];
   protected resource!: string | string[];
   protected attributes!: string | string[];
@@ -28,6 +35,11 @@ export abstract class CreateAccessBuilderAbstract {
 
 export class CreateAccessModelBuilder extends CreateAccessBuilderAbstract
   implements BuilderInterface<CreateAccessModel> {
+  withId(id: string) {
+    this._id = id;
+    return this;
+  }
+
   withRole(role: string | string[]) {
     this.role = role;
     return this;
@@ -60,6 +72,7 @@ export class CreateAccessModelBuilder extends CreateAccessBuilderAbstract
 
   build(): CreateAccessModel {
     return new CreateAccessModel({
+      _id: this._id,
       role: this.role,
       resource: this.resource,
       attributes: this.attributes,
@@ -71,6 +84,11 @@ export class CreateAccessModelBuilder extends CreateAccessBuilderAbstract
 }
 
 export class CreateAccessMockeries extends CreateAccessModelBuilder implements MockeriesInterface<CreateAccessModel> {
+  mockId() {
+    this.withId(Types.ObjectId().toHexString());
+    return this;
+  }
+
   mockRole() {
     this.withRole(lorem.word());
     return this;
@@ -110,10 +128,28 @@ export class CreateAccessMockeries extends CreateAccessModelBuilder implements M
       .mockDenied()
       .build();
   }
+
+  statics() {
+    return [
+      this.withId('5ec065ca4a245a7b91d6ba03')
+        .withRole(CreateRoleModelMockeries.admin)
+        .mockResource()
+        .mockAttributes()
+        .mockAction()
+        .mockPossession()
+        .mockDenied()
+        .build(),
+    ];
+  }
 }
 
 @AssignMockeries(CreateAccessMockeries)
+@AssignSchema(new AssignSchemaOptions(AccessSchema, SchemaName.ACCESS))
+@Injectable()
 export class CreateAccessModel implements IAccessInfo {
+  @IsMongoId()
+  public readonly _id!: string;
+
   @IsString({ each: true })
   public readonly role!: string | string[];
 
