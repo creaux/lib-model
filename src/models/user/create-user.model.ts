@@ -78,7 +78,7 @@ export class CreateUserBuilder extends CreateUserBuilderAbstract implements Buil
 
 @Injectable()
 export class CreateUserMockeries extends CreateUserBuilder implements MockeriesInterface<CreateUserModel> {
-  public static karel = '5ec059ac0d3440f899e635fa';
+  public static ADMIN = '5ec059ac0d3440f899e635fa';
 
   public mockId(): CreateUserMockeries {
     this.withId(Types.ObjectId().toHexString());
@@ -136,10 +136,10 @@ export class CreateUserMockeries extends CreateUserBuilder implements MockeriesI
 
   statics() {
     return [
-      this.withId(CreateUserMockeries.karel)
+      this.withId(CreateUserMockeries.ADMIN)
         .withForname('Karel')
         .withSurname('Vomacka')
-        .withRoles([CreateRoleModelMockeries.admin])
+        .withRoles(['5ec1a27d634e59e52fe0a6ab'])
         // @ts-ignore
         .mockL10n()
         .withEmail('karel@vomacka.com')

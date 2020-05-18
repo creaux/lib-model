@@ -34,8 +34,6 @@ export class CreateRoleModelBuilder extends CreateRoleBuilderAbstract implements
 
 @Injectable()
 export class CreateRoleModelMockeries extends CreateRoleModelBuilder implements MockeriesInterface<CreateRoleModel> {
-  public static admin = '5e17734e841b06a773bd300b';
-
   public mockId() {
     return this.withId(Types.ObjectId().toHexString());
   }
@@ -52,7 +50,10 @@ export class CreateRoleModelMockeries extends CreateRoleModelBuilder implements 
 
   statics() {
     return [
-      this.withId(CreateRoleModelMockeries.admin)
+      this.withId('5e17734e841b06a773bd300b')
+        .withName('Anonymous')
+        .build(),
+      this.withId('5ec1a27d634e59e52fe0a6ab')
         .withName('Admin')
         .build(),
     ];

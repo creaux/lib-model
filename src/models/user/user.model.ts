@@ -12,7 +12,7 @@ import { UserSchema } from '../../schemas/user/user.schema';
 import { SchemaName } from '../../enums/schema-name';
 
 export abstract class UserBuilderAbstract {
-  id!: string;
+  _id!: string;
   forname!: string;
   surname!: string;
   email!: string;
@@ -24,7 +24,7 @@ export abstract class UserBuilderAbstract {
 @Injectable()
 export class UserBuilder extends UserBuilderAbstract implements BuilderInterface<UserModel> {
   public withId(id: string) {
-    this.id = id;
+    this._id = id;
     return this;
   }
   public withForname(forname: string) {
@@ -59,7 +59,7 @@ export class UserBuilder extends UserBuilderAbstract implements BuilderInterface
 
   build(): UserModel {
     return new UserModel({
-      id: this.id,
+      _id: this._id,
       forname: this.forname,
       surname: this.surname,
       email: this.email,
@@ -136,7 +136,7 @@ export class UserModel {
   public readonly email!: string;
 
   @IsMongoId()
-  public readonly id!: string;
+  public readonly _id!: string;
 
   @IsString()
   @Exclude({ toPlainOnly: true })

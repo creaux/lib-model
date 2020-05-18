@@ -12,7 +12,7 @@ export const UserSchema = new PasswordSchema(
     surname: { type: String, required: true },
     email: { type: String, required: true, unique: true },
     password: { type: String },
-    roles: [{ type: Types.ObjectId, ref: SchemaName.ROLE }],
+    roles: { type: [Types.ObjectId], ref: SchemaName.ROLE },
     l10n: {
       type: new BaseScheme(
         {

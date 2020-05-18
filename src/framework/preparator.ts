@@ -100,7 +100,7 @@ export class Fiber {
         await model.create(entity);
       }
     } catch (error) {
-      throw new Error(`${Fiber.name}: model insertAll - ${error}`);
+      throw new Error(`${Fiber.name}: model create - ${error}`);
     }
 
     this.resources.set(target, resource);

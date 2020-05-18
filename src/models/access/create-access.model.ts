@@ -10,18 +10,7 @@ import { AccessSchema } from '../../schemas/access/access.schema';
 import { SchemaName } from '../../enums/schema-name';
 import { Injectable } from '../../framework/injector';
 import { Types } from 'mongoose';
-
-enum Action {
-  CREATE = 'create',
-  READ = 'read',
-  UPDATE = 'update',
-  DELETE = 'delete',
-}
-
-enum Possession {
-  OWN = 'own',
-  ANY = 'any',
-}
+import { Action, Possession } from './access.model';
 
 export abstract class CreateAccessBuilderAbstract {
   protected _id!: string;
@@ -120,7 +109,8 @@ export class CreateAccessMockeries extends CreateAccessModelBuilder implements M
   }
 
   mock(): CreateAccessModel {
-    return this.mockRole()
+    return this.mockId()
+      .mockRole()
       .mockResource()
       .mockAttributes()
       .mockAction()
@@ -131,11 +121,19 @@ export class CreateAccessMockeries extends CreateAccessModelBuilder implements M
 
   statics() {
     return [
-      this.withId('5ec065ca4a245a7b91d6ba03')
-        .withRole(CreateRoleModelMockeries.admin)
+      this.withId('5ec1a3e02a7218e03a71c99f')
+        .withRole('Anonymous')
         .mockResource()
         .mockAttributes()
-        .mockAction()
+        .withAction(Action.READ)
+        .mockPossession()
+        .mockDenied()
+        .build(),
+      this.withId('5ec065ca4a245a7b91d6ba03')
+        .withRole('Admin')
+        .mockResource()
+        .mockAttributes()
+        .withAction(Action.CREATE)
         .mockPossession()
         .mockDenied()
         .build(),

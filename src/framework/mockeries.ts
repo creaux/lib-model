@@ -27,14 +27,14 @@ function has(type: MockeriesType, target: Constructor): boolean {
 
 function factorize(mockeries: MockeriesInterface) {
   return function* mock(count = 1) {
+    for (let i = 0; i < count; i++) {
+      yield mockeries.mock();
+    }
+
     if (mockeries.statics) {
       for (const mockeri of mockeries.statics()) {
         yield mockeri;
       }
-    }
-
-    for (let i = 0; i < count; i++) {
-      yield mockeries.mock();
     }
   };
 }

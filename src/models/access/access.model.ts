@@ -10,14 +10,14 @@ import { randomEnum } from '../../enums/random-enum';
 import { IAccessInfo } from 'accesscontrol';
 import { Injectable } from '../../framework/injector';
 
-enum Action {
+export enum Action {
   CREATE = 'create',
   READ = 'read',
   UPDATE = 'update',
   DELETE = 'delete',
 }
 
-enum Possession {
+export enum Possession {
   OWN = 'own',
   ANY = 'any',
 }

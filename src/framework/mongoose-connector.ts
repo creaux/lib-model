@@ -11,8 +11,8 @@ export class MongooseConnector {
   }
 
   public async connect() {
-    const connectionString: string = await this.server.getUri();
     try {
+      const connectionString: string = await this.server.getUri();
       return await this.mongoose.connect(connectionString);
     } catch (error) {
       throw new Error(error);
