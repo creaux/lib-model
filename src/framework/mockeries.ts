@@ -39,9 +39,9 @@ function factorize(mockeries: MockeriesInterface) {
   };
 }
 
-function instantiate<T>(target: Constructor): T;
-function instantiate<T>(target: Constructor, multi: number): T[];
-function instantiate(target: Constructor, multi = 0) {
+function instantiate<T>(target: Constructor & { statics?: Function }): T;
+function instantiate<T>(target: Constructor & { statics?: Function }, multi: number): T[];
+function instantiate(target: Constructor & { statics?: Function }, multi = 0) {
   if (has(MockeriesType.INSTANCE, target)) {
     throw new Error(`There is already exists mock on ${target.name}`);
   }

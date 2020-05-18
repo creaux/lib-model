@@ -121,16 +121,24 @@ export class CreateAccessMockeries extends CreateAccessModelBuilder implements M
 
   statics() {
     return [
+      // this.withId('5ec2cbe5fd5301a882bc7d81')
+      //   .withRole(['Anonymous'])
+      //   .withResource('user')
+      //   .mockAttributes()
+      //   .withAction(Action.CREATE)
+      //   .withPossession(Possession.ANY)
+      //   .withDenied(true)
+      //   .build(),
       this.withId('5ec1a3e02a7218e03a71c99f')
-        .withRole('Anonymous')
-        .mockResource()
+        .withRole(['Anonymous'])
+        .withResource('user')
         .mockAttributes()
         .withAction(Action.READ)
-        .mockPossession()
-        .mockDenied()
+        .withPossession(Possession.ANY)
+        .withDenied(false)
         .build(),
       this.withId('5ec065ca4a245a7b91d6ba03')
-        .withRole('Admin')
+        .withRole(['Admin'])
         .mockResource()
         .mockAttributes()
         .withAction(Action.CREATE)

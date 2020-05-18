@@ -109,7 +109,7 @@ export class CreateUserMockeries extends CreateUserBuilder implements MockeriesI
   @Retrieve(RoleModel)
   public mockRoles(rolesModel: RoleModel[]): CreateUserMockeries {
     // @ts-ignore
-    this.withRoles(rolesModel.map((roleModel: RoleModel) => roleModel.id));
+    this.withRoles(rolesModel.map((roleModel: RoleModel) => roleModel._id));
     return this;
   }
 
