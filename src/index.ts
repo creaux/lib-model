@@ -68,7 +68,6 @@ export * from './models/section/section.model';
 // User
 export * from './models/user/user.model';
 export * from './models/user/create-user.model';
-export * from './models/user/user-populated.model';
 
 // Schemas
 export * from './schemas/user/user.schema';
