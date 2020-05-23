@@ -11,14 +11,14 @@ import { AssignReadUpdate, AssignReadUpdateOptions } from '../../framework/readU
 import { RoleModel } from './role.model';
 
 export abstract class CreateRoleBuilderAbstract {
-  protected _id!: string;
+  protected id!: string;
   protected name!: string;
 }
 
 @Injectable()
 export class CreateRoleModelBuilder extends CreateRoleBuilderAbstract implements BuilderInterface<CreateRoleModel> {
   public withId(id: string) {
-    this._id = id;
+    this.id = id;
     return this;
   }
 
@@ -28,7 +28,7 @@ export class CreateRoleModelBuilder extends CreateRoleBuilderAbstract implements
   }
 
   public build(): CreateRoleModel {
-    return new CreateRoleModel({ _id: this._id, name: this.name });
+    return new CreateRoleModel({ id: this.id, name: this.name });
   }
 }
 
@@ -66,7 +66,7 @@ export class CreateRoleModelMockeries extends CreateRoleModelBuilder implements 
 @Injectable()
 export class CreateRoleModel {
   @IsMongoId()
-  public readonly _id!: string;
+  public readonly id!: string;
 
   @IsString()
   public readonly name!: string;

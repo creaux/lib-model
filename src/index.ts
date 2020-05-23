@@ -24,6 +24,7 @@ export * from './generics/constructor.type';
 export * from './generics/value-of.type';
 
 // Models
+export * from './models/query-populate-options';
 // Access
 export * from './models/access/access.model';
 export * from './models/access/create-access.model';
@@ -68,7 +69,6 @@ export * from './models/section/section.model';
 // User
 export * from './models/user/user.model';
 export * from './models/user/create-user.model';
-export * from './models/user/user-populated.model';
 
 // Schemas
 export * from './schemas/user/user.schema';
