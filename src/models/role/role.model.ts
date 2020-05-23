@@ -11,14 +11,14 @@ import { SchemaName } from '../../enums/schema-name';
 import { RoleSchema } from '../../schemas/role/role.schema';
 
 export abstract class RoleBuilderAbstract {
-  protected _id!: string;
+  protected id!: string;
   protected name!: string;
 }
 
 @Injectable()
 export class RoleModelBuilder extends RoleBuilderAbstract implements BuilderInterface<RoleModel> {
   public withId(id: string) {
-    this._id = id;
+    this.id = id;
     return this;
   }
 
@@ -28,7 +28,7 @@ export class RoleModelBuilder extends RoleBuilderAbstract implements BuilderInte
   }
 
   public build(): RoleModel {
-    return new RoleModel({ _id: this._id, name: this.name });
+    return new RoleModel({ id: this.id, name: this.name });
   }
 }
 
@@ -67,7 +67,7 @@ export class RoleModel {
     example: Types.ObjectId().toHexString(),
   })
   @IsMongoId()
-  public readonly _id!: string;
+  public readonly id!: string;
 
   @ApiModelProperty({
     type: String,

@@ -108,11 +108,13 @@ export class Fiber {
     // TODO: This should be extracted
     const readUpdate: AssignReadUpdateOptions = ReadUpdate.resolve(target);
     if (readUpdate && readUpdate.read) {
-      this.mockeries.use(readUpdate.read, data);
+      if (Array.isArray(data)) {
+        this.mockeries.use(readUpdate.read, data.map(modelData => new readUpdate.read(modelData)));
+      }
 
       // TODO
       if (readUpdate.update) {
-        this.mockeries.use(readUpdate.update, data);
+        this.mockeries.use(readUpdate.update, new readUpdate.update(data));
       }
     }
   }

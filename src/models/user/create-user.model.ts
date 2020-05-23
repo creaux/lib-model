@@ -1,4 +1,4 @@
-import { IsInstance, IsMongoId, IsString, ValidateNested } from 'class-validator';
+import { IsArray, IsInstance, IsMongoId, IsString, ValidateNested } from 'class-validator';
 import { Expose, Type } from 'class-transformer';
 import { ApiModelProperty } from '@nestjs/swagger';
 import { Types } from 'mongoose';
@@ -18,7 +18,7 @@ import { UserModel } from './user.model';
 import { CreateRoleModelMockeries } from '../role/create-role.model';
 
 export abstract class CreateUserBuilderAbstract {
-  _id!: string;
+  id!: string;
   forname!: string;
   surname!: string;
   email!: string;
@@ -30,7 +30,7 @@ export abstract class CreateUserBuilderAbstract {
 @Injectable()
 export class CreateUserBuilder extends CreateUserBuilderAbstract implements BuilderInterface<CreateUserModel> {
   public withId(id: string) {
-    this._id = id;
+    this.id = id;
     return this;
   }
   public withForname(forname: string) {
@@ -65,7 +65,7 @@ export class CreateUserBuilder extends CreateUserBuilderAbstract implements Buil
 
   build(): CreateUserModel {
     return new CreateUserModel({
-      _id: this._id,
+      id: this.id,
       forname: this.forname,
       surname: this.surname,
       email: this.email,
@@ -109,7 +109,7 @@ export class CreateUserMockeries extends CreateUserBuilder implements MockeriesI
   @Retrieve(RoleModel)
   public mockRoles(rolesModel: RoleModel[]): CreateUserMockeries {
     // @ts-ignore
-    this.withRoles(rolesModel.map((roleModel: RoleModel) => roleModel._id));
+    this.withRoles(rolesModel.map((roleModel: RoleModel) => roleModel.id));
     return this;
   }
 
@@ -155,7 +155,7 @@ export class CreateUserMockeries extends CreateUserBuilder implements MockeriesI
 @Injectable()
 export class CreateUserModel {
   @IsMongoId()
-  public readonly _id!: string;
+  public readonly id!: string;
 
   @IsString()
   @ApiModelProperty({
@@ -199,7 +199,7 @@ export class CreateUserModel {
     isArray: true,
     example: ['5e021e7c909b5abd8afb0ba5'],
   })
-  @IsString()
+  @IsMongoId({ each: true })
   @Expose()
   public readonly roles!: string[];
 

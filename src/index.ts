@@ -24,6 +24,7 @@ export * from './generics/constructor.type';
 export * from './generics/value-of.type';
 
 // Models
+export * from './models/query-populate-options';
 // Access
 export * from './models/access/access.model';
 export * from './models/access/create-access.model';
