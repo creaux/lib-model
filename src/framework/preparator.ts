@@ -7,6 +7,7 @@ import { SchemaName } from '../enums/schema-name';
 import { Constructor } from '../generics/constructor.type';
 import { MongooseConnector } from './mongoose-connector';
 import { AssignReadUpdateOptions, ReadUpdate } from './readUpdate';
+import { omit } from 'lodash';
 
 export enum Entity {
   POSTS = 'posts',
@@ -97,7 +98,7 @@ export class Fiber {
     try {
       // Do not use insertMany as it ignores presave hooks
       for (const entity of resource.data) {
-        await model.create(entity);
+        await model.create({ ...omit(entity, 'id'), _id: entity.id });
       }
     } catch (error) {
       throw new Error(`${Fiber.name}: model create - ${error}`);
@@ -108,6 +109,7 @@ export class Fiber {
     // TODO: This should be extracted
     const readUpdate: AssignReadUpdateOptions = ReadUpdate.resolve(target);
     if (readUpdate && readUpdate.read) {
+      // TODO this is partial as if it is not array it is not covered
       if (Array.isArray(data)) {
         this.mockeries.use(readUpdate.read, data.map(modelData => new readUpdate.read(modelData)));
       }
