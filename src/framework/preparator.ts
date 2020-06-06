@@ -112,6 +112,11 @@ export class Fiber {
       // TODO this is partial as if it is not array it is not covered
       if (Array.isArray(data)) {
         this.mockeries.use(readUpdate.read, data.map(modelData => new readUpdate.read(modelData)));
+        // TODO: This needs much bigger refactoring
+        // 1. Mockeries should be just assigned to Create*Model
+        // 2. Thus each Mockeri has to have mock and build function (builder) for each CRUD model
+        // 3. This will be accessed in instantiate function in mockeries.ts
+        // 4. This instantiate function will instantiate all crud models with relevant build function
       }
 
       // TODO

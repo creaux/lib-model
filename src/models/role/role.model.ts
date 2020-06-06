@@ -9,6 +9,7 @@ import { RolesEnum } from '../../enums/role.enum';
 import { AssignSchema, AssignSchemaOptions } from '../../framework/schema';
 import { SchemaName } from '../../enums/schema-name';
 import { RoleSchema } from '../../schemas/role/role.schema';
+import { Expose } from 'class-transformer/decorators';
 
 export abstract class RoleBuilderAbstract {
   protected id!: string;
@@ -67,6 +68,7 @@ export class RoleModel {
     example: Types.ObjectId().toHexString(),
   })
   @IsMongoId()
+  @Expose()
   public readonly id!: string;
 
   @ApiModelProperty({
@@ -74,6 +76,7 @@ export class RoleModel {
     example: RolesEnum.ADMIN,
   })
   @IsString()
+  @Expose()
   public readonly name!: string;
 
   constructor(model: RoleModel) {
